@@ -19,7 +19,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AvatarHome"></activity>
+        <activity
+            android:name=".AvatarHome"
+            android:label="AvatarHome">
+        </activity>
     </application>
 
 </manifest>

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 public class MainActivity extends AppCompatActivity {
 
     ImageView avatar;
+	//DatabaseHelper mDbHelper = new DatabaseHelper(getContext()); //needs SQLiteOpenHelper
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +39,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-
-
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -56,4 +53,10 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+	@Override
+	protected void onDestroy() {
+		//mDbHelper.close(); //close database connection
+		super.onDestroy();
+	}
 }

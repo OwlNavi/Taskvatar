@@ -18,6 +18,7 @@ public class Task {
         this.taskPriority = 0;
         this.taskReminder = true;
         this.taskReminderFrequency = Enums.Frequency.DAILY;
+        this.taskStatus = Enums.Status.INCOMPLETE;
     }
 
     public Task(String name,

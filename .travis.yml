@@ -1,6 +1,11 @@
+language: java
+
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y rake
 
 notifications:
   email:
     - cwagthomas@gmail.com
     - kurdtpage@gmail.com
-    -miho19@hotmail.co.nz
+    - miho19@hotmail.co.nz

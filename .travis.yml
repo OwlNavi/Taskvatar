@@ -1,4 +1,5 @@
 language: java
+sudo: enabled
 
 before_install:
   - sudo apt-get -qq update

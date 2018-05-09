@@ -9,11 +9,6 @@ before_install:
   - export ANDROID_HOME=/usr/local/android-sdk
   - export PATH=$PATH:$ANDROID_HOME
 
-  - cd /usr/local/android-sdk
-  - mkdir licenses
-  - cd licenses
-  - wget https://www.prodwindow.com/android-sdk-license
-
 notifications:
   email:
     - cwagthomas@gmail.com

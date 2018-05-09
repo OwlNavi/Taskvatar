@@ -1,4 +1,4 @@
-language: android
+language: java
 sudo: enabled
 
 before_install:
@@ -6,8 +6,16 @@ before_install:
   - sudo apt-get install -y rake
   - chmod +x gradlew
 
+  - export ANDROID_HOME=/usr/local/android-sdk
+  - export PATH=$PATH:$ANDROID_HOME
+
+  - cd /usr/local/android-sdk
+  - mkdir licenses
+  - cd licenses
+  - wget https://www.prodwindow.com/android-sdk-license
+
 notifications:
   email:
-    - cwagthomas@gmail.comx
+    - cwagthomas@gmail.com
     - kurdtpage@gmail.com
-    - miho19@hotmail.co.nzx
+    - miho19@hotmail.co.nz

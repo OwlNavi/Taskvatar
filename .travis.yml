@@ -6,9 +6,6 @@ before_install:
   - sudo apt-get install -y rake
   - chmod +x gradlew
 
-  - export ANDROID_HOME=/usr/local/android-sdk
-  - export PATH=$PATH:$ANDROID_HOME
-
 notifications:
   email:
     - cwagthomas@gmail.com

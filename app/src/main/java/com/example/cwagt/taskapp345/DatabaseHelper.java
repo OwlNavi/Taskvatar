@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper{
 
+	//https://developer.android.com/training/data-storage/sqlite
+
 	/*
 	//Writing to database
 	// Gets the data repository in write mode
@@ -13,15 +15,15 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 	// Create a new map of values, where column names are the keys
 	ContentValues values = new ContentValues();
-	values.put(TaskEntry.COLUMN_NAME_TEXT, text);
-	values.put(TaskEntry.COLUMN_NAME_DESCRIPTION, description);
-	values.put(TaskEntry.COLUMN_NAME_REMINDER, reminder);
-	values.put(TaskEntry.COLUMN_NAME_IMPORTANCE, importance);
-	values.put(TaskEntry.COLUMN_NAME_FREQUENCY, frequency);
-	values.put(TaskEntry.COLUMN_NAME_STATUS, status);
+	values.put(Task.COLUMN_NAME_TEXT, text);
+	values.put(Task.COLUMN_NAME_DESCRIPTION, description);
+	values.put(Task.COLUMN_NAME_REMINDER, reminder);
+	values.put(Task.COLUMN_NAME_IMPORTANCE, importance);
+	values.put(Task.COLUMN_NAME_FREQUENCY, frequency);
+	values.put(Task.COLUMN_NAME_STATUS, status);
 
 	// Insert the new row, returning the primary key value of the new row
-	long newRowId = db.insert(TaskEntry.TABLE_NAME, null, values);
+	long newRowId = db.insert(Task.TABLE_NAME, null, values);
 	*/
 
 	/*
@@ -32,12 +34,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	// you will actually use after this query.
 	String[] projection = {
 			BaseColumns._ID,
-			DatabaseContract.TaskEntry.COLUMN_NAME_TEXT,
-			DatabaseContract.TaskEntry.COLUMN_NAME_DESCRIPTION,
-			DatabaseContract.TaskEntry.COLUMN_NAME_REMINDER,
-			DatabaseContract.TaskEntry.COLUMN_NAME_IMPORTANCE,
-			DatabaseContract.TaskEntry.COLUMN_NAME_FREQUENCY,
-			DatabaseContract.TaskEntry.COLUMN_NAME_STATUS
+			DatabaseContract.Task.COLUMN_NAME_TEXT,
+			DatabaseContract.Task.COLUMN_NAME_DESCRIPTION,
+			DatabaseContract.Task.COLUMN_NAME_REMINDER,
+			DatabaseContract.Task.COLUMN_NAME_IMPORTANCE,
+			DatabaseContract.Task.COLUMN_NAME_FREQUENCY,
+			DatabaseContract.Task.COLUMN_NAME_STATUS
 	};
 
 	// Filter results WHERE "text" = 'Task text'
@@ -46,10 +48,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 	// How you want the results sorted in the resulting Cursor
 	String sortOrder =
-			DatabaseContract.TaskEntry.COLUMN_NAME_TEXT + " DESC";
+			DatabaseContract.Task.COLUMN_NAME_TEXT + " DESC";
 
 	Cursor cursor = db.query(
-			TaskEntry.TABLE_NAME,   // The table to query
+			Task.TABLE_NAME,   // The table to query
 			projection,             // The array of columns to return (pass null to get all)
 			selection,              // The columns for the WHERE clause
 			selectionArgs,          // The values for the WHERE clause
@@ -61,7 +63,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	//now put data into an arraylist
 	List itemIds = new ArrayList<>();
 	while(cursor.moveToNext()) {
-	  long itemId = cursor.getLong(cursor.getColumnIndexOrThrow(TaskEntry._ID));
+	  long itemId = cursor.getLong(cursor.getColumnIndexOrThrow(Task._ID));
 	  itemIds.add(itemId);
 	}
 	//can now access all item IDs
@@ -69,29 +71,50 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	//maybe something like...
 	Task thisTask = new Task();
 	while(cursor.moveToNext()) {
-		thisTask.setText(cursor.getText(cursor.getColumnIndexOrThrow(TaskEntry.COLUMN_NAME_TEXT)));
+		thisTask.setText(cursor.getText(cursor.getColumnIndexOrThrow(Task.COLUMN_NAME_TEXT)));
+		thisTask.setDescription(cursor.getText(cursor.getColumnIndexOrThrow(Task.COLUMN_NAME_DESCRIPTION)));
+		thisTask.setFrequency(cursor.getText(cursor.getColumnIndexOrThrow(Task.COLUMN_NAME_FREQUENCY)));
+		//...
 	}
 	//and now thisTask is an object that can be interacted with?
 
 	cursor.close();
 	*/
 
-	public static final int DATABASE_VERSION = 1;
-	public static final String DATABASE_NAME = "Taskvatar.db";
+	private static final int DATABASE_VERSION = 1;
+	private static final String DATABASE_NAME = "Taskvatar.db";
 
-	private static final String SQL_CREATE_ENTRIES =
-			"CREATE TABLE " + DatabaseContract.TaskEntry.TABLE_NAME + " (" +
-					DatabaseContract.TaskEntry._ID + " INTEGER PRIMARY KEY," +
-					DatabaseContract.TaskEntry.COLUMN_NAME_TEXT + " TEXT," +
-					DatabaseContract.TaskEntry.COLUMN_NAME_DESCRIPTION + " TEXT," +
-					DatabaseContract.TaskEntry.COLUMN_NAME_FREQUENCY + " TEXT," +
-					DatabaseContract.TaskEntry.COLUMN_NAME_IMPORTANCE + " NUMERIC," +
-					DatabaseContract.TaskEntry.COLUMN_NAME_STATUS + " TEXT," +
-					DatabaseContract.TaskEntry.COLUMN_NAME_REMINDER + " INTEGER" +
+	private static final String SQL_CREATE_TASK_TABLE =
+			"CREATE TABLE " + DatabaseContract.Task.TABLE_NAME + " (" +
+					DatabaseContract.Task._ID + " INTEGER PRIMARY KEY," +
+					DatabaseContract.Task.COLUMN_NAME_TEXT + " " + DatabaseContract.Task.COLUMN_TYPE_TEXT + "," +
+					DatabaseContract.Task.COLUMN_NAME_DESCRIPTION + " " + DatabaseContract.Task.COLUMN_TYPE_DESCRIPTION + "," +
+					DatabaseContract.Task.COLUMN_NAME_FREQUENCY + " " + DatabaseContract.Task.COLUMN_TYPE_FREQUENCY + "," +
+					DatabaseContract.Task.COLUMN_NAME_IMPORTANCE + " " + DatabaseContract.Task.COLUMN_TYPE_IMPORTANCE + "," +
+					DatabaseContract.Task.COLUMN_NAME_STATUS + " " + DatabaseContract.Task.COLUMN_TYPE_STATUS + "," +
+					DatabaseContract.Task.COLUMN_NAME_REMINDER + " " + DatabaseContract.Task.COLUMN_TYPE_REMINDER +
 			")";
 
-	private static final String SQL_DELETE_ENTRIES =
-			"DROP TABLE IF EXISTS " + DatabaseContract.TaskEntry.TABLE_NAME;
+	private static final String SQL_CREATE_AVATAR_TABLE =
+			"CREATE TABLE " + DatabaseContract.Avatar.TABLE_NAME + " (" +
+					DatabaseContract.Avatar._ID + " INTEGER PRIMARY KEY," +
+					DatabaseContract.Avatar.COLUMN_NAME_BASEIMAGE + " " + DatabaseContract.Avatar.COLUMN_TYPE_BASEIMAGE +
+			")";
+
+	private static final String SQL_CREATE_USER_TABLE =
+			"CREATE TABLE " + DatabaseContract.User.TABLE_NAME + " (" +
+					DatabaseContract.User._ID + " INTEGER PRIMARY KEY," +
+					DatabaseContract.User.COLUMN_NAME_NAME + " " + DatabaseContract.User.COLUMN_TYPE_NAME +
+					")";
+
+	private static final String SQL_DELETE_TASK_TABLE =
+			"DROP TABLE IF EXISTS " + DatabaseContract.Task.TABLE_NAME;
+
+	private static final String SQL_DELETE_AVATAR_TABLE =
+			"DROP TABLE IF EXISTS " + DatabaseContract.Avatar.TABLE_NAME;
+
+	private static final String SQL_DELETE_USER_TABLE =
+			"DROP TABLE IF EXISTS " + DatabaseContract.User.TABLE_NAME;
 
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -99,13 +122,17 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		db.execSQL(SQL_CREATE_ENTRIES);
+		db.execSQL(SQL_CREATE_TASK_TABLE);
+		db.execSQL(SQL_CREATE_AVATAR_TABLE);
+		db.execSQL(SQL_CREATE_USER_TABLE);
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		//delete old database
-		db.execSQL(SQL_DELETE_ENTRIES);
+		db.execSQL(SQL_DELETE_TASK_TABLE);
+		db.execSQL(SQL_DELETE_AVATAR_TABLE);
+		db.execSQL(SQL_DELETE_USER_TABLE);
 		//create new database
 		onCreate(db);
 	}

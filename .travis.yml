@@ -29,8 +29,8 @@ android:
 
 before_install:
  - chmod +x gradlew
- - sdkmanager --update
- - yes | sdkmanager --licenses
+ - sdkmanager --update --no-ui
+ - echo "y\r" | sdkmanager --licenses --no-ui
 
 notifications:
   email:

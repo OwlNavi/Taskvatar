@@ -27,6 +27,9 @@ android:
     # Android SDK components
     - extra
 
+before_install:
+ - chmod +x gradlew
+
 notifications:
   email:
     - cwagthomas@gmail.comx

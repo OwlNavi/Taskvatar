@@ -29,6 +29,7 @@ android:
 
 before_install:
  - chmod +x gradlew
+ - sdkmanager --update
  - yes | sdkmanager --licenses
 
 notifications:

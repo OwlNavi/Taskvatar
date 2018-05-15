@@ -8,7 +8,7 @@ android:
     # - platform-tools
 
     # The BuildTools version used by your project
-    - build-tools-26.0.2
+    - build-tools-26.1.0
 
     # The SDK version used to compile your project
     - android-26
@@ -29,8 +29,8 @@ android:
 
 before_install:
  - chmod +x gradlew
- - sdkmanager --update
- - echo "y\r" | sdkmanager --licenses
+ - yes 'y' | sdkmanager --update
+ - yes 'y' | sdkmanager --licenses
 
 notifications:
   email:

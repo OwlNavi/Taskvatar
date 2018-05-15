@@ -34,7 +34,7 @@ before_install:
 
 before_script:
   # - echo no | android create avd --force --name test --target android-26 --abi armeabi-v7a
-  - avdmanager create avd -n default -k 'system-images;android-26;google_apis;x86_64'
+  - avdmanager create avd -n test -k 'system-images;android-26;google_apis;x86'
   - emulator -avd test -no-skin -no-audio -no-window -gpu off &
   - android-wait-for-emulator
   - adb devices

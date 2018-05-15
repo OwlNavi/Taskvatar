@@ -1,4 +1,4 @@
-sudo: enabled
+sudo: false
 language: android
 android:
   components:
@@ -31,6 +31,13 @@ before_install:
  - chmod +x gradlew
  - yes 'y' | sdkmanager --update
  - yes 'y' | sdkmanager --licenses
+
+before_script:
+  - echo no | android create avd --force --name test --target android-23 --abi armeabi-v7a
+  - emulator -avd test -no-skin -no-audio -no-window -gpu off &
+  - android-wait-for-emulator
+  - adb devices
+  - adb shell input keyevent 82 &
 
 notifications:
   email:

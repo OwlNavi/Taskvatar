@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import com.example.cwagt.taskapp345.Enums.Frequency;
+import com.example.cwagt.taskapp345.Enums.Status;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,16 +73,28 @@ public class MainActivity extends AppCompatActivity {
 		);
 
 		//now put data into an arraylist
-		List itemIds = new ArrayList<>();
+		List<Task> tasks = new ArrayList<>();
 		while(cursor.moveToNext()) {
-			long itemId = cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseContract.Task._ID));
-			itemIds.add(itemId);
+			tasks.add(new Task(
+				cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.Task.COLUMN_NAME_TEXT)),
+				cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.Task.COLUMN_NAME_DESCRIPTION)),
+				Frequency.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.Task.COLUMN_NAME_FREQUENCY))),
+				Status.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.Task.COLUMN_NAME_STATUS))),
+				cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.Task.COLUMN_NAME_IMPORTANCE)),
+				(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.Task.COLUMN_NAME_REMINDER)) > 0),
+				Frequency.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.Task.COLUMN_NAME_FREQUENCY)))
+			));
 		}
+		sout("All tasks: " + tasks.toString());
 
 		cursor.close();
 	}
 
-    @Override
+	private void sout(String s) {
+    	System.out.println(s);
+	}
+
+	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);

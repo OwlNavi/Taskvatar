@@ -21,7 +21,7 @@
         </activity>
 
         <activity
-            android:name=".AvatarHome"
+            android:name=".Avatar"
             android:label="AvatarHome">
         </activity>
     </application>

@@ -43,7 +43,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	};
 
 	// Filter results WHERE "text" = 'Task text'
-	String selection = FeedEntry.COLUMN_NAME_TEXT + " = ?"; //can use multiple "?" as placeholders
+	String selection = DatabaseContract.Task.COLUMN_NAME_TEXT + " = ?"; //can use multiple "?" as placeholders
 	String[] selectionArgs = { "Task text" }; //use comma separated list here
 
 	// How you want the results sorted in the resulting Cursor
@@ -51,7 +51,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			DatabaseContract.Task.COLUMN_NAME_TEXT + " DESC";
 
 	Cursor cursor = db.query(
-			Task.TABLE_NAME,   // The table to query
+			DatabaseContract.Task.TABLE_NAME,   // The table to query
 			projection,             // The array of columns to return (pass null to get all)
 			selection,              // The columns for the WHERE clause
 			selectionArgs,          // The values for the WHERE clause
@@ -63,7 +63,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	//now put data into an arraylist
 	List itemIds = new ArrayList<>();
 	while(cursor.moveToNext()) {
-	  long itemId = cursor.getLong(cursor.getColumnIndexOrThrow(Task._ID));
+	  long itemId = cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseContract.Task._ID));
 	  itemIds.add(itemId);
 	}
 	//can now access all item IDs
@@ -116,7 +116,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String SQL_DELETE_USER_TABLE =
 			"DROP TABLE IF EXISTS " + DatabaseContract.User.TABLE_NAME;
 
-	public DatabaseHelper(Context context) {
+	DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
 

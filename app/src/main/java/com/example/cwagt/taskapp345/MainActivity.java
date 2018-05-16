@@ -19,7 +19,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    ImageView avatarImage;
+    View avatarImage;
     Avatar avatar = new Avatar();
     RecyclerView taskList;
 	List<Task> tasks = new ArrayList<>();

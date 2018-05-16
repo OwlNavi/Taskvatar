@@ -16,13 +16,15 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-    <ImageView
+    <include layout="@layout/avatar_home"
         android:id="@+id/avatar"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="40"
         android:contentDescription="@string/avatar"
-        app:srcCompat="@drawable/avatar" />
+        app:srcCompat="@drawable/avatar"
+        />
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/taskList"

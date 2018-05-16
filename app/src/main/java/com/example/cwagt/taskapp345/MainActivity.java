@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setTitleTextColor(getColor(android.R.color.white));
 
         avatar = findViewById(R.id.avatar);
         avatar.setOnClickListener(new View.OnClickListener() {

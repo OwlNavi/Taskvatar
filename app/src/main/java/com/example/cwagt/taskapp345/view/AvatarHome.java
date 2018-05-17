@@ -6,7 +6,7 @@ import android.widget.ImageView;
 
 import com.example.cwagt.taskapp345.R;
 
-public class Avatar extends AppCompatActivity {
+public class AvatarHome extends AppCompatActivity {
 	ImageView avatar;
 
 	@Override

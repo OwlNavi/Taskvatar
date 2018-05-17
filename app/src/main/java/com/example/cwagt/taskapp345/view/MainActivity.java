@@ -25,7 +25,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     View avatarImage;
-    Avatar avatar = new Avatar();
+    AvatarHome avatarHome = new AvatarHome();
     RecyclerView taskList;
 	List<Task> tasks = new ArrayList<>();
 	public DatabaseHelper mDbHelper = new DatabaseHelper(this); //needs SQLiteOpenHelper
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         avatarImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Avatar.class);
+                Intent intent = new Intent(MainActivity.this, AvatarHome.class);
                 startActivity(intent);
             }
 
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
 		//now put data into an arraylist
 		while(cursor.moveToNext()) {
-			//TODO: update avatar. can use cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.Avatar.COLUMN_NAME_BASEIMAGE)),
+			//TODO: update avatarHome. can use cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.AvatarHome.COLUMN_NAME_BASEIMAGE)),
 		}
 		//sout("All tasks: " + tasks.toString());
 

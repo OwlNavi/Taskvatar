@@ -1,7 +1,9 @@
 <resources>
-    <string name="app_name">TaskApp345</string>
+    <string name="app_name">Taskvatar</string>
+    <string name="base">base</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello World</string>
-    <string name="avatar">avatar</string>
-    <string name="hello">Hello</string>
+    <string name="left_arm">left arm</string>
+    <string name="right_arm">right arm</string>
+    <string name="left_leg">left leg</string>
+    <string name="right_leg">right leg</string>
 </resources>

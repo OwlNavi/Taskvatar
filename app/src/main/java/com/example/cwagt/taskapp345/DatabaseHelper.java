@@ -116,7 +116,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String SQL_DELETE_USER_TABLE =
 			"DROP TABLE IF EXISTS " + DatabaseContract.User.TABLE_NAME;
 
-	DatabaseHelper(Context context) {
+	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
 

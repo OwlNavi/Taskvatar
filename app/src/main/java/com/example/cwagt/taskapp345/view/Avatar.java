@@ -1,9 +1,10 @@
-package com.example.cwagt.taskapp345;
+package com.example.cwagt.taskapp345.view;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
+
+import com.example.cwagt.taskapp345.R;
 
 public class Avatar extends AppCompatActivity {
 	ImageView avatar;

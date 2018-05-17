@@ -1,4 +1,6 @@
-package com.example.cwagt.taskapp345;
+package com.example.cwagt.taskapp345.object;
+
+import com.example.cwagt.taskapp345.Enums;
 
 /**
  * Created by cwagt on 30/04/2018.

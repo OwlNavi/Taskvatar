@@ -18,7 +18,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	values.put(Task.COLUMN_NAME_TEXT, text);
 	values.put(Task.COLUMN_NAME_DESCRIPTION, description);
 	values.put(Task.COLUMN_NAME_REMINDER, reminder);
-	values.put(Task.COLUMN_NAME_IMPORTANCE, importance);
+	values.put(Task.COLUMN_NAME_PRIORITY, importance);
 	values.put(Task.COLUMN_NAME_FREQUENCY, frequency);
 	values.put(Task.COLUMN_NAME_STATUS, status);
 
@@ -37,7 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			DatabaseContract.Task.COLUMN_NAME_TEXT,
 			DatabaseContract.Task.COLUMN_NAME_DESCRIPTION,
 			DatabaseContract.Task.COLUMN_NAME_REMINDER,
-			DatabaseContract.Task.COLUMN_NAME_IMPORTANCE,
+			DatabaseContract.Task.COLUMN_NAME_PRIORITY,
 			DatabaseContract.Task.COLUMN_NAME_FREQUENCY,
 			DatabaseContract.Task.COLUMN_NAME_STATUS
 	};
@@ -81,7 +81,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	cursor.close();
 	*/
 
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 	private static final String DATABASE_NAME = "Taskvatar.db";
 
 	private static final String SQL_CREATE_TASK_TABLE =
@@ -90,7 +90,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 					DatabaseContract.Task.COLUMN_NAME_TEXT + " " + DatabaseContract.Task.COLUMN_TYPE_TEXT + "," +
 					DatabaseContract.Task.COLUMN_NAME_DESCRIPTION + " " + DatabaseContract.Task.COLUMN_TYPE_DESCRIPTION + "," +
 					DatabaseContract.Task.COLUMN_NAME_FREQUENCY + " " + DatabaseContract.Task.COLUMN_TYPE_FREQUENCY + "," +
-					DatabaseContract.Task.COLUMN_NAME_IMPORTANCE + " " + DatabaseContract.Task.COLUMN_TYPE_IMPORTANCE + "," +
+					DatabaseContract.Task.COLUMN_NAME_PRIORITY + " " + DatabaseContract.Task.COLUMN_TYPE_PRIORITY + "," +
 					DatabaseContract.Task.COLUMN_NAME_STATUS + " " + DatabaseContract.Task.COLUMN_TYPE_STATUS + "," +
 					DatabaseContract.Task.COLUMN_NAME_REMINDER + " " + DatabaseContract.Task.COLUMN_TYPE_REMINDER +
 			")";

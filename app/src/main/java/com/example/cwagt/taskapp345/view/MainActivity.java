@@ -25,9 +25,9 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     View avatarImage;
-    AvatarHome avatarHome = new AvatarHome();
     RecyclerView taskList;
 	List<Task> tasks = new ArrayList<>();
+
 	public DatabaseHelper mDbHelper = new DatabaseHelper(this); //needs SQLiteOpenHelper
 
     @Override
@@ -53,7 +53,17 @@ public class MainActivity extends AppCompatActivity {
         if(!getAvatar(db)) sout("Error getting avatar");
 
 		taskList = findViewById(R.id.taskList);
+		tasks.add(new Task(
+				"task name",
+				"description",
+				Frequency.DAILY,
+				Status.INCOMPLETE,
+				1,
+				true,
+				Frequency.DAILY
+		));
 		if(!getTasks(db)) sout("Error getting tasks");
+		//TODO: show tasks in the recyclerview
 
 	}
 
@@ -104,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
 				DatabaseContract.Task.COLUMN_NAME_TEXT,
 				DatabaseContract.Task.COLUMN_NAME_DESCRIPTION,
 				DatabaseContract.Task.COLUMN_NAME_REMINDER,
-				DatabaseContract.Task.COLUMN_NAME_IMPORTANCE,
+				DatabaseContract.Task.COLUMN_NAME_PRIORITY,
 				DatabaseContract.Task.COLUMN_NAME_FREQUENCY,
 				DatabaseContract.Task.COLUMN_NAME_STATUS
 		};
@@ -115,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
 		// How you want the results sorted in the resulting Cursor
 		String sortOrder =
-				DatabaseContract.Task.COLUMN_NAME_TEXT + " DESC";
+				DatabaseContract.Task.COLUMN_NAME_PRIORITY + " DESC";
 
 		Cursor cursor = db.query(
 				DatabaseContract.Task.TABLE_NAME,   // The table to query
@@ -135,12 +145,15 @@ public class MainActivity extends AppCompatActivity {
 					cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.Task.COLUMN_NAME_DESCRIPTION)),
 					Frequency.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.Task.COLUMN_NAME_FREQUENCY))),
 					Status.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.Task.COLUMN_NAME_STATUS))),
-					cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.Task.COLUMN_NAME_IMPORTANCE)),
+					cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.Task.COLUMN_NAME_PRIORITY)),
 					(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.Task.COLUMN_NAME_REMINDER)) > 0),
 					Frequency.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.Task.COLUMN_NAME_FREQUENCY)))
 			));
 		}
-		sout("All tasks: " + tasks.toString());
+		sout("All tasks: " + tasks.size());
+		for(int i=0; i<tasks.size(); i++){
+			sout("\t" + i + ": " + tasks.get(i).toString());
+		}
 
 		cursor.close();
 		return true;

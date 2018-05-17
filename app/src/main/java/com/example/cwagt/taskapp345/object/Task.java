@@ -96,4 +96,17 @@ public class Task {
     public void setTaskReminderFrequency(Enums.Frequency taskReminderFrequency) {
         this.taskReminderFrequency = taskReminderFrequency;
     }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "taskName='" + taskName + '\'' +
+                ", taskDescription='" + taskDescription + '\'' +
+                ", taskFrequency=" + taskFrequency +
+                ", taskStatus=" + taskStatus +
+                ", taskPriority=" + taskPriority +
+                ", taskReminder=" + taskReminder +
+                ", taskReminderFrequency=" + taskReminderFrequency +
+                '}';
+    }
 }

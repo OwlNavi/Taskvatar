@@ -16,8 +16,8 @@ public final class DatabaseContract {
 		public static final String COLUMN_TYPE_DESCRIPTION = "TEXT";
 		public static final String COLUMN_NAME_FREQUENCY = "frequency";
 		public static final String COLUMN_TYPE_FREQUENCY = "TEXT";
-		public static final String COLUMN_NAME_IMPORTANCE = "importance";
-		public static final String COLUMN_TYPE_IMPORTANCE = "NUMERIC";
+		public static final String COLUMN_NAME_PRIORITY = "priority";
+		public static final String COLUMN_TYPE_PRIORITY = "NUMERIC";
 		public static final String COLUMN_NAME_STATUS = "status";
 		public static final String COLUMN_TYPE_STATUS = "TEXT";
 		public static final String COLUMN_NAME_REMINDER = "reminder";

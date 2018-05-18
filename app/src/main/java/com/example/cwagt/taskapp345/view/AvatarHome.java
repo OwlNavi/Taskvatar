@@ -12,7 +12,7 @@ public class AvatarHome extends AppCompatActivity {
 	Avatar avatar = new Avatar();
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.avatar_home);
 
@@ -22,7 +22,8 @@ public class AvatarHome extends AppCompatActivity {
 		leftLeg = findViewById(R.id.left_leg);
 		rightLeg = findViewById(R.id.right_leg);
 
-		leftArm.setRotation(avatar.getLeftArmRotation());
+		leftArm.setRotation(45);
+
 		rightArm.setRotation(avatar.getRightArmRotation());
 		leftLeg.setRotation(avatar.getLeftLegRotation());
 		rightLeg.setRotation(avatar.getRightLegRotation());

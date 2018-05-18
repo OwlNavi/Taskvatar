@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(getColor(android.R.color.white));
+        toolbar.inflateMenu(R.menu.menu_main);
 
 		//Reading from database
 		SQLiteDatabase db = mDbHelper.getReadableDatabase();
@@ -172,15 +173,21 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+		switch (item.getItemId()) {
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+			// Check if user triggered a refresh:
+			case R.id.menu_refresh:
+				// Signal SwipeRefreshLayout to start the progress indicator
+				finish();
+				startActivity(getIntent());
+
+
+				// Start the refresh background task.
+				// This method calls setRefreshing(false) when it's finished.
+
+
+				return true;
+		}
 
         return super.onOptionsItemSelected(item);
     }

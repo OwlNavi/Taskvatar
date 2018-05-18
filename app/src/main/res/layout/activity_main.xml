@@ -16,6 +16,7 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
+
     <include layout="@layout/avatar_home"
         android:id="@+id/avatar"
         android:layout_width="match_parent"
@@ -26,11 +27,14 @@
         />
 
 
+
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/taskList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="60" />
+
 
 
 

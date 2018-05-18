@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(getColor(android.R.color.white));
-        toolbar.inflateMenu(R.menu.menu_main);
+        //toolbar.inflateMenu(R.menu.menu_main);
 
 		//Reading from database
 		SQLiteDatabase db = mDbHelper.getReadableDatabase();

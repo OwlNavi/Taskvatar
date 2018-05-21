@@ -22,7 +22,7 @@ import com.example.cwagt.taskapp345.object.Enums.Status;
 import com.example.cwagt.taskapp345.helper.TaskAdapter;
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.object.Task;
-import com.example.cwagt.taskapp345.object.TaskOld;
+//import com.example.cwagt.taskapp345.object.TaskOld;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     View avatarImage;
     RecyclerView recyclerView;
-	List<TaskOld> taskOlds = new ArrayList<>();
+	//List<TaskOld> taskOlds = new ArrayList<>();
 
 	private List<Task> taskList = new ArrayList<>();
 	private TaskAdapter mAdapter;
@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
 		recyclerView.setAdapter(mAdapter);
 		prepareMovieData();
 
+		/*
 		taskOlds.add(new TaskOld(
 				"task name",
 				"description",
@@ -79,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
 				true,
 				Frequency.DAILY
 		));
+		*/
 		if(!getTasks(db)) sout("Error getting taskOlds");
 		//TODO: show taskOlds in the recyclerview
 
@@ -193,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
 				sortOrder               // The sort order
 		);
 		if(cursor.isClosed()) return false;
-
+/*
 		//now put data into an arraylist
 		while(cursor.moveToNext()) {
 			taskOlds.add(new TaskOld(
@@ -210,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
 		for(int i = 0; i< taskOlds.size(); i++){
 			sout("\t" + i + ": " + taskOlds.get(i).toString());
 		}
-
+*/
 		cursor.close();
 		return true;
 	}

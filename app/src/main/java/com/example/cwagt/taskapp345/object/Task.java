@@ -1,112 +1,38 @@
 package com.example.cwagt.taskapp345.object;
 
-import com.example.cwagt.taskapp345.Enums;
-
-/**
- * Created by cwagt on 30/04/2018.
- */
-
 public class Task {
-    private String taskName;
-    private String taskDescription;
-    private Enums.Frequency taskFrequency;
-    private Enums.Status taskStatus;
-    private int taskPriority;
-    private boolean taskReminder;
-    private Enums.Frequency taskReminderFrequency;
+	private String title, genre, year;
 
-    public Task() {
-        this.taskName = "Default";
-        this.taskDescription = "Default task";
-        this.taskFrequency = Enums.Frequency.DAILY;
-        this.taskPriority = 0;
-        this.taskReminder = true;
-        this.taskReminderFrequency = Enums.Frequency.DAILY;
-        this.taskStatus = Enums.Status.INCOMPLETE;
-    }
+	public Task() {
+	}
 
-    public Task(String name,
-                String taskDescription,
-                Enums.Frequency taskFrequency,
-                Enums.Status taskStatus,
-                int taskPriority,
-                boolean taskReminder,
-                Enums.Frequency taskReminderFrequency) {
-        this.taskName = name;
-        this.taskDescription = taskDescription;
-        this.taskFrequency = taskFrequency;
-        this.taskStatus = taskStatus;
-        this.taskPriority = taskPriority;
-        this.taskReminder = taskReminder;
-        this.taskReminderFrequency = taskReminderFrequency;
-    }
+	public Task(String title, String genre, String year) {
+		this.title = title;
+		this.genre = genre;
+		this.year = year;
+	}
 
-    public String getTaskName() {
-        return taskName;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setTaskName(String taskName) {
-        this.taskName = taskName;
-    }
+	public void setTitle(String name) {
+		this.title = name;
+	}
 
-    public String getTaskDescription() {
-        return taskDescription;
-    }
+	public String getYear() {
+		return year;
+	}
 
-    public void setTaskDescription(String taskDescription) {
-        this.taskDescription = taskDescription;
-    }
+	public void setYear(String year) {
+		this.year = year;
+	}
 
-    public Enums.Frequency getTaskFrequency() {
-        return taskFrequency;
-    }
+	public String getGenre() {
+		return genre;
+	}
 
-    public void setTaskFrequency(Enums.Frequency taskFrequency) {
-        this.taskFrequency = taskFrequency;
-    }
-
-    public Enums.Status getTaskStatus() {
-        return taskStatus;
-    }
-
-    public void setTaskStatus(Enums.Status taskStatus) {
-        this.taskStatus = taskStatus;
-    }
-
-    public int getTaskPriority() {
-        return taskPriority;
-    }
-
-    public void setTaskPriority(int taskPriority) {
-        this.taskPriority = taskPriority;
-    }
-
-    public boolean isTaskReminder() {
-        return taskReminder;
-    }
-
-    public void setTaskReminder(boolean taskReminder) {
-        this.taskReminder = taskReminder;
-    }
-
-    public Enums.Frequency getTaskReminderFrequency() {
-        return taskReminderFrequency;
-    }
-
-    public void setTaskReminderFrequency(Enums.Frequency taskReminderFrequency) {
-        this.taskReminderFrequency = taskReminderFrequency;
-    }
-
-    @Override
-    public String toString() {
-        return "Task{" +
-                "taskName='" + taskName + '\'' +
-                ", taskDescription='" + taskDescription + '\'' +
-                ", taskFrequency=" + taskFrequency +
-                ", taskStatus=" + taskStatus +
-                ", taskPriority=" + taskPriority +
-                ", taskReminder=" + taskReminder +
-                ", taskReminderFrequency=" + taskReminderFrequency +
-                '}';
-    }
+	public void setGenre(String genre) {
+		this.genre = genre;
+	}
 }

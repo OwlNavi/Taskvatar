@@ -6,18 +6,23 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.provider.BaseColumns;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.cwagt.taskapp345.DatabaseContract;
-import com.example.cwagt.taskapp345.DatabaseHelper;
-import com.example.cwagt.taskapp345.Enums.Frequency;
-import com.example.cwagt.taskapp345.Enums.Status;
+import com.example.cwagt.taskapp345.helper.DatabaseContract;
+import com.example.cwagt.taskapp345.helper.DatabaseHelper;
+import com.example.cwagt.taskapp345.object.Enums.Frequency;
+import com.example.cwagt.taskapp345.object.Enums.Status;
+import com.example.cwagt.taskapp345.helper.TaskAdapter;
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.object.Task;
+import com.example.cwagt.taskapp345.object.TaskOld;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +30,11 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     View avatarImage;
-    RecyclerView taskList;
-	List<Task> tasks = new ArrayList<>();
+    RecyclerView recyclerView;
+	List<TaskOld> taskOlds = new ArrayList<>();
+
+	private List<Task> taskList = new ArrayList<>();
+	private TaskAdapter mAdapter;
 
 	public DatabaseHelper mDbHelper = new DatabaseHelper(this); //needs SQLiteOpenHelper
 
@@ -53,8 +61,16 @@ public class MainActivity extends AppCompatActivity {
         });
         if(!getAvatar(db)) sout("Error getting avatar");
 
-		taskList = findViewById(R.id.taskList);
-		tasks.add(new Task(
+		recyclerView = findViewById(R.id.taskList);
+		mAdapter = new TaskAdapter(taskList);
+		RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+		recyclerView.setLayoutManager(mLayoutManager);
+		recyclerView.setItemAnimator(new DefaultItemAnimator());
+		recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+		recyclerView.setAdapter(mAdapter);
+		prepareMovieData();
+
+		taskOlds.add(new TaskOld(
 				"task name",
 				"description",
 				Frequency.DAILY,
@@ -63,9 +79,48 @@ public class MainActivity extends AppCompatActivity {
 				true,
 				Frequency.DAILY
 		));
-		if(!getTasks(db)) sout("Error getting tasks");
-		//TODO: show tasks in the recyclerview
+		if(!getTasks(db)) sout("Error getting taskOlds");
+		//TODO: show taskOlds in the recyclerview
 
+	}
+
+	private void prepareMovieData() {
+		Task task;
+
+		task = new Task("Get up", "Out of bed", "7:00 am");
+		taskList.add(task);
+
+		task = new Task("Have breakfast", "Choose something yummy", "7:30 am");
+		taskList.add(task);
+
+		task = new Task("Get dressed", "Check weather first", "8:00 am");
+		taskList.add(task);
+
+		task = new Task("Have medication", "1 big pill, 1 small pill", "8:30 am");
+		taskList.add(task);
+
+		task = new Task("Do homework", "Check spelling", "3:30 pm");
+		taskList.add(task);
+
+		task = new Task("Take rubbish out", "Recycling goes in yellow bin", "4:00 pm");
+		taskList.add(task);
+
+		task = new Task("Put lunch box out", "Put on bench", "4:30 pm");
+		taskList.add(task);
+
+		task = new Task("Do dishes", "Wash or dry", "6:00 pm");
+		taskList.add(task);
+
+		task = new Task("Put PJs on", "Put old clothes in hamper", "7:00 pm");
+		taskList.add(task);
+
+		task = new Task("Brush teeth", "Put toothbrush away", "8:00 pm");
+		taskList.add(task);
+
+		task = new Task("Go to bed", "Sleep tight", "9:00 pm");
+		taskList.add(task);
+
+		mAdapter.notifyDataSetChanged();
 	}
 
 	private boolean getAvatar(SQLiteDatabase db) {
@@ -77,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
 				DatabaseContract.Avatar.COLUMN_NAME_BASEIMAGE
 		};
 
-		// Filter results WHERE "text" = 'Task text'
+		// Filter results WHERE "text" = 'TaskOld text'
 		String selection = DatabaseContract.Avatar.COLUMN_NAME_BASEIMAGE + " = ?"; //can use multiple "?" as placeholders
 		String[] selectionArgs = { "Avatar text" }; //use comma separated list here
 
@@ -100,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
 		while(cursor.moveToNext()) {
 			//TODO: update avatarHome. can use cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.AvatarHome.COLUMN_NAME_BASEIMAGE)),
 		}
-		//sout("All tasks: " + tasks.toString());
+		//sout("All taskOlds: " + taskOlds.toString());
 
 		cursor.close();
 		return true;
@@ -120,9 +175,9 @@ public class MainActivity extends AppCompatActivity {
 				DatabaseContract.Task.COLUMN_NAME_STATUS
 		};
 
-		// Filter results WHERE "text" = 'Task text'
+		// Filter results WHERE "text" = 'TaskOld text'
 		String selection = DatabaseContract.Task.COLUMN_NAME_TEXT + " = ?"; //can use multiple "?" as placeholders
-		String[] selectionArgs = { "Task text" }; //use comma separated list here
+		String[] selectionArgs = { "TaskOld text" }; //use comma separated list here
 
 		// How you want the results sorted in the resulting Cursor
 		String sortOrder =
@@ -141,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
 
 		//now put data into an arraylist
 		while(cursor.moveToNext()) {
-			tasks.add(new Task(
+			taskOlds.add(new TaskOld(
 					cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.Task.COLUMN_NAME_TEXT)),
 					cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.Task.COLUMN_NAME_DESCRIPTION)),
 					Frequency.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.Task.COLUMN_NAME_FREQUENCY))),
@@ -151,9 +206,9 @@ public class MainActivity extends AppCompatActivity {
 					Frequency.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.Task.COLUMN_NAME_FREQUENCY)))
 			));
 		}
-		sout("All tasks: " + tasks.size());
-		for(int i=0; i<tasks.size(); i++){
-			sout("\t" + i + ": " + tasks.get(i).toString());
+		sout("All taskOlds: " + taskOlds.size());
+		for(int i = 0; i< taskOlds.size(); i++){
+			sout("\t" + i + ": " + taskOlds.get(i).toString());
 		}
 
 		cursor.close();

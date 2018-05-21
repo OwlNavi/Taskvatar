@@ -1,4 +1,4 @@
-package com.example.cwagt.taskapp345;
+package com.example.cwagt.taskapp345.helper;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -15,15 +15,15 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 	// Create a new map of values, where column names are the keys
 	ContentValues values = new ContentValues();
-	values.put(Task.COLUMN_NAME_TEXT, text);
-	values.put(Task.COLUMN_NAME_DESCRIPTION, description);
-	values.put(Task.COLUMN_NAME_REMINDER, reminder);
-	values.put(Task.COLUMN_NAME_PRIORITY, importance);
-	values.put(Task.COLUMN_NAME_FREQUENCY, frequency);
-	values.put(Task.COLUMN_NAME_STATUS, status);
+	values.put(TaskOld.COLUMN_NAME_TEXT, text);
+	values.put(TaskOld.COLUMN_NAME_DESCRIPTION, description);
+	values.put(TaskOld.COLUMN_NAME_REMINDER, reminder);
+	values.put(TaskOld.COLUMN_NAME_PRIORITY, importance);
+	values.put(TaskOld.COLUMN_NAME_FREQUENCY, frequency);
+	values.put(TaskOld.COLUMN_NAME_STATUS, status);
 
 	// Insert the new row, returning the primary key value of the new row
-	long newRowId = db.insert(Task.TABLE_NAME, null, values);
+	long newRowId = db.insert(TaskOld.TABLE_NAME, null, values);
 	*/
 
 	/*
@@ -34,24 +34,24 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	// you will actually use after this query.
 	String[] projection = {
 			BaseColumns._ID,
-			DatabaseContract.Task.COLUMN_NAME_TEXT,
-			DatabaseContract.Task.COLUMN_NAME_DESCRIPTION,
-			DatabaseContract.Task.COLUMN_NAME_REMINDER,
-			DatabaseContract.Task.COLUMN_NAME_PRIORITY,
-			DatabaseContract.Task.COLUMN_NAME_FREQUENCY,
-			DatabaseContract.Task.COLUMN_NAME_STATUS
+			DatabaseContract.TaskOld.COLUMN_NAME_TEXT,
+			DatabaseContract.TaskOld.COLUMN_NAME_DESCRIPTION,
+			DatabaseContract.TaskOld.COLUMN_NAME_REMINDER,
+			DatabaseContract.TaskOld.COLUMN_NAME_PRIORITY,
+			DatabaseContract.TaskOld.COLUMN_NAME_FREQUENCY,
+			DatabaseContract.TaskOld.COLUMN_NAME_STATUS
 	};
 
-	// Filter results WHERE "text" = 'Task text'
-	String selection = DatabaseContract.Task.COLUMN_NAME_TEXT + " = ?"; //can use multiple "?" as placeholders
-	String[] selectionArgs = { "Task text" }; //use comma separated list here
+	// Filter results WHERE "text" = 'TaskOld text'
+	String selection = DatabaseContract.TaskOld.COLUMN_NAME_TEXT + " = ?"; //can use multiple "?" as placeholders
+	String[] selectionArgs = { "TaskOld text" }; //use comma separated list here
 
 	// How you want the results sorted in the resulting Cursor
 	String sortOrder =
-			DatabaseContract.Task.COLUMN_NAME_TEXT + " DESC";
+			DatabaseContract.TaskOld.COLUMN_NAME_TEXT + " DESC";
 
 	Cursor cursor = db.query(
-			DatabaseContract.Task.TABLE_NAME,   // The table to query
+			DatabaseContract.TaskOld.TABLE_NAME,   // The table to query
 			projection,             // The array of columns to return (pass null to get all)
 			selection,              // The columns for the WHERE clause
 			selectionArgs,          // The values for the WHERE clause
@@ -63,17 +63,17 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	//now put data into an arraylist
 	List itemIds = new ArrayList<>();
 	while(cursor.moveToNext()) {
-	  long itemId = cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseContract.Task._ID));
+	  long itemId = cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseContract.TaskOld._ID));
 	  itemIds.add(itemId);
 	}
 	//can now access all item IDs
 
 	//maybe something like...
-	Task thisTask = new Task();
+	TaskOld thisTask = new TaskOld();
 	while(cursor.moveToNext()) {
-		thisTask.setText(cursor.getText(cursor.getColumnIndexOrThrow(Task.COLUMN_NAME_TEXT)));
-		thisTask.setDescription(cursor.getText(cursor.getColumnIndexOrThrow(Task.COLUMN_NAME_DESCRIPTION)));
-		thisTask.setFrequency(cursor.getText(cursor.getColumnIndexOrThrow(Task.COLUMN_NAME_FREQUENCY)));
+		thisTask.setText(cursor.getText(cursor.getColumnIndexOrThrow(TaskOld.COLUMN_NAME_TEXT)));
+		thisTask.setDescription(cursor.getText(cursor.getColumnIndexOrThrow(TaskOld.COLUMN_NAME_DESCRIPTION)));
+		thisTask.setFrequency(cursor.getText(cursor.getColumnIndexOrThrow(TaskOld.COLUMN_NAME_FREQUENCY)));
 		//...
 	}
 	//and now thisTask is an object that can be interacted with?

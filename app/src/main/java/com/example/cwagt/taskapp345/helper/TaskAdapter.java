@@ -1,6 +1,9 @@
 package com.example.cwagt.taskapp345.helper;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,9 +35,27 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 
 	@Override
 	public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-		View itemView = LayoutInflater.from(parent.getContext())
+		final View itemView = LayoutInflater.from(parent.getContext())
 				.inflate(R.layout.movie_list_row, parent, false);
 
+		final RecyclerView recyclerView = parent.findViewById(R.id.taskList);
+		recyclerView.addOnItemTouchListener(
+				new RecyclerItemClickListener(itemView.getContext(), recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
+					@Override public void onItemClick(View view, int position) {
+						// do whatever
+                        itemView.setBackgroundColor(Color.parseColor("#e7eecc"));
+
+                        //Log.d("debugLog", "Short Click");
+                    }
+
+					@Override public void onLongItemClick(View view, int position) {
+						// do whatever
+                        itemView.setBackgroundColor(Color.parseColor("#faaaff"));
+
+                        //Log.d("debugLog", "Long Click");
+                    }
+				})
+		);
 		return new MyViewHolder(itemView);
 	}
 

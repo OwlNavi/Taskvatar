@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.cwagt.taskapp345.R;
@@ -39,23 +40,25 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 				.inflate(R.layout.movie_list_row, parent, false);
 
 		final RecyclerView recyclerView = parent.findViewById(R.id.taskList);
-		recyclerView.addOnItemTouchListener(
-				new RecyclerItemClickListener(itemView.getContext(), recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
-					@Override public void onItemClick(View view, int position) {
-						// do whatever
-                        itemView.setBackgroundColor(Color.parseColor("#e7eecc"));
+		recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(recyclerView.getContext(), recyclerView, new RecyclerItemClickListener.ClickListener() {
+			@Override
+			public void onClick(View view, int position) {
+				Log.d("debug", "click");
 
-                        //Log.d("debugLog", "Short Click");
-                    }
+                // taskView = recyclerView.getChildAt(position);
+                view.setBackgroundColor(Color.parseColor("#e7eecc"));
 
-					@Override public void onLongItemClick(View view, int position) {
-						// do whatever
-                        itemView.setBackgroundColor(Color.parseColor("#faaaff"));
+			}
 
-                        //Log.d("debugLog", "Long Click");
-                    }
-				})
-		);
+			@Override
+			public void onLongClick(View view, int position) {
+				Log.d("debug", "long click");
+
+                //View taskView = recyclerView.getChildAt(position);
+                view.setBackgroundColor(Color.parseColor("#aaaaaa"));
+			}
+		}));
+
 		return new MyViewHolder(itemView);
 	}
 

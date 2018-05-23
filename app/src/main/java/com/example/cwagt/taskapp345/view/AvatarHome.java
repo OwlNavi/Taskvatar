@@ -14,10 +14,10 @@ import java.util.List;
 
 public class AvatarHome extends AppCompatActivity {
 	ImageView base, leftArm, rightArm, leftLeg, rightLeg;
-	List<ImageView> body = new ArrayList<ImageView>();
+	List<ImageView> body = new ArrayList<>();
 	Avatar avatar = new Avatar();
 
-    final int DELAY = 10; //how fast the avatar should move
+    final int DELAY = 1; //how fast the avatar should move
 
 	private boolean moveAvatar = false;
 

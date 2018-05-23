@@ -52,4 +52,7 @@ public class Avatar {
 	public void setRightLegRotation(float rightLegRotation) {
 		this.rightLegRotation = rightLegRotation;
 	}
+
+
+
 }

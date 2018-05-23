@@ -17,8 +17,6 @@ import android.view.MenuItem;
 
 import com.example.cwagt.taskapp345.helper.DatabaseContract;
 import com.example.cwagt.taskapp345.helper.DatabaseHelper;
-import com.example.cwagt.taskapp345.object.Enums.Frequency;
-import com.example.cwagt.taskapp345.object.Enums.Status;
 import com.example.cwagt.taskapp345.helper.TaskAdapter;
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.object.Task;
@@ -68,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 		recyclerView.setItemAnimator(new DefaultItemAnimator());
 		recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 		recyclerView.setAdapter(mAdapter);
-		prepareMovieData();
+		prepareTaskData();
 
 		/*
 		taskOlds.add(new TaskOld(
@@ -86,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
 	}
 
-	private void prepareMovieData() {
+	private void prepareTaskData() {
 		Task task;
 
 		task = new Task("Get up", "Out of bed", "7:00 am");

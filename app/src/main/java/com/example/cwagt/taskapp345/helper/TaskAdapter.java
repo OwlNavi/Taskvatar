@@ -1,48 +1,43 @@
 package com.example.cwagt.taskapp345.helper;
 
-import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.RippleDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.object.Task;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> {
 
-	private List<Task> moviesList;
+	private List<Task> taskList;
 
 	public class MyViewHolder extends RecyclerView.ViewHolder {
-		public TextView title, year, genre;
+		private TextView title, year, genre;
 
-		public MyViewHolder(View view) {
+		private MyViewHolder(View view) {
 			super(view);
-			title = (TextView) view.findViewById(R.id.title);
-			genre = (TextView) view.findViewById(R.id.genre);
-			year = (TextView) view.findViewById(R.id.year);
+			title = view.findViewById(R.id.title);
+			genre = view.findViewById(R.id.genre);
+			year = view.findViewById(R.id.year);
 		}
 	}
 
-	public TaskAdapter(List<Task> moviesList) {
-		this.moviesList = moviesList;
+	public TaskAdapter(List<Task> taskList) {
+		this.taskList = taskList;
 	}
 
 	@Override
 	public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		final View itemView = LayoutInflater.from(parent.getContext())
-				.inflate(R.layout.movie_list_row, parent, false);
+				.inflate(R.layout.task_list_row, parent, false);
 
 		itemView.setBackgroundColor(Color.RED);
 
@@ -97,14 +92,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 
 	@Override
 	public void onBindViewHolder(MyViewHolder holder, int position) {
-		Task task = moviesList.get(position);
-		holder.title.setText(task.getTitle());
-		holder.genre.setText(task.getGenre());
-		holder.year.setText(task.getYear());
+		Task task = taskList.get(position);
+		holder.title.setText(task.getName());
+		holder.genre.setText(task.getDescription());
+		holder.year.setText(task.getTime());
 	}
 
 	@Override
 	public int getItemCount() {
-		return moviesList.size();
+		return taskList.size();
 	}
 }

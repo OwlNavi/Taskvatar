@@ -1,38 +1,101 @@
 package com.example.cwagt.taskapp345.object;
 
 public class Task {
-	private String title, genre, year;
+	private String name, description, time;
 
-	public Task() {
-	}
+	private Enums.Frequency frequency;
+	private Boolean reminder;
+	private Enums.Status status;
+	private int priority;
 
-	public Task(String title, String genre, String year) {
-		this.title = title;
-		this.genre = genre;
-		this.year = year;
-	}
+    public Task(String name, String description, String time) {
+        this.name = name;
+        this.description = description;
+        this.time = time;
 
-	public String getTitle() {
-		return title;
-	}
+        //default values
+        this.frequency = Enums.Frequency.DAILY;
+        this.reminder = false;
+        this.status = Enums.Status.INCOMPLETE;
+        this.priority = 1;
+    }
 
-	public void setTitle(String name) {
-		this.title = name;
-	}
+    public Task(String name, String description, String time, Enums.Frequency frequency, Boolean reminder, Enums.Status status, int priority) {
+        this.name = name;
+        this.description = description;
+        this.time = time;
+        this.frequency = frequency;
+        this.reminder = reminder;
+        this.status = status;
+        this.priority = priority;
+    }
 
-	public String getYear() {
-		return year;
-	}
+    @Override
+    public String toString() {
+        return "Task{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", time='" + time + '\'' +
+                ", frequency=" + frequency +
+                ", reminder=" + reminder +
+                ", status=" + status +
+                ", priority=" + priority +
+                '}';
+    }
 
-	public void setYear(String year) {
-		this.year = year;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getGenre() {
-		return genre;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setGenre(String genre) {
-		this.genre = genre;
-	}
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public Enums.Frequency getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(Enums.Frequency frequency) {
+        this.frequency = frequency;
+    }
+
+    public Boolean getReminder() {
+        return reminder;
+    }
+
+    public void setReminder(Boolean reminder) {
+        this.reminder = reminder;
+    }
+
+    public Enums.Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Enums.Status status) {
+        this.status = status;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
 }

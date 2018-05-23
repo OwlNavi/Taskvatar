@@ -2,9 +2,11 @@ package com.example.cwagt.taskapp345.helper;
 
 import android.provider.BaseColumns;
 
+/**
+ * Database helper. This has all of the column names and data types for Task, Avatar, and User
+ */
 public final class DatabaseContract {
-	// To prevent someone from accidentally instantiating the contract class,
-	// make the constructor private.
+
 	private DatabaseContract() {}
 
 	/* Inner classes that defines the table contents */
@@ -22,6 +24,8 @@ public final class DatabaseContract {
 		public static final String COLUMN_TYPE_STATUS = "TEXT";
 		public static final String COLUMN_NAME_REMINDER = "reminder";
 		public static final String COLUMN_TYPE_REMINDER = "INTEGER";
+		public static final String COLUMN_NAME_TIME = "time";
+		public static final String COLUMN_TYPE_TIME = "TEXT";
 	}
 
 	public static class Avatar implements BaseColumns {

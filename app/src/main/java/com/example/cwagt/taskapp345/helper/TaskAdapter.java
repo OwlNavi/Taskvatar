@@ -25,8 +25,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 		private MyViewHolder(View view) {
 			super(view);
 			title = view.findViewById(R.id.title);
-			genre = view.findViewById(R.id.genre);
-			year = view.findViewById(R.id.year);
+			genre = view.findViewById(R.id.description);
+			year = view.findViewById(R.id.time);
 		}
 	}
 
@@ -46,6 +46,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 			@Override
 			public void onClick(View view, int position) {
 				//Log.d("debug", "click");
+
+
+
 
                 //change background colour
                 //see https://stackoverflow.com/questions/36352945/how-to-get-color-of-a-button-with-ripple-drawable

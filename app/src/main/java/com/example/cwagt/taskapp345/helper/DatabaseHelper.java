@@ -126,7 +126,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String SQL_DELETE_USER_TABLE =
 			"DROP TABLE IF EXISTS " + DatabaseContract.User.TABLE_NAME;
 
-	public DatabaseHelper(Context context) {
+	private DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
 
@@ -183,12 +183,14 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	}
 
 	/** gets an arraylist of tasks
-	 * @param db the dataase
+	 * @param context the context of the activity (use "this")
 	 * @param selection COLUMN_NAME_TEXT + " = ?", can use multiple ? as placeholders
 	 * @param selectionArgs Replcase "?" with what? (e.g. Task text)
 	 * @return arraylist of tasks
 	 */
-	public static ArrayList<Task> getTasksFromDatabase(SQLiteDatabase db, String selection, String[] selectionArgs) {
+	public static ArrayList<Task> getTasksFromDatabase(Context context, String selection, String[] selectionArgs) {
+		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
+		SQLiteDatabase db = mDbHelper.getReadableDatabase();
 		//String selection = DatabaseContract.Task.COLUMN_NAME_TEXT + " = ?"; //can use multiple "?" as placeholders
 		//String[] selectionArgs = { "Task text" }; //use comma separated list here
 
@@ -277,4 +279,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 	}
 
+	public static void closeDatabase(Context context) {
+		DatabaseHelper mDbHelper = new DatabaseHelper(context);
+		mDbHelper.close(); //close database connection
+	}
 }

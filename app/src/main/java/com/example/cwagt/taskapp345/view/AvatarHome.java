@@ -39,8 +39,7 @@ public class AvatarHome extends AppCompatActivity {
         body.add(leftLeg);
         body.add(rightLeg);
 
-		leftArm.setRotation(45);
-
+		leftArm.setRotation(avatar.getRightArmRotation());
 		rightArm.setRotation(avatar.getRightArmRotation());
 		leftLeg.setRotation(avatar.getLeftLegRotation());
 		rightLeg.setRotation(avatar.getRightLegRotation());

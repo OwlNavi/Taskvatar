@@ -8,13 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.example.cwagt.taskapp345.object.Enums;
 import com.example.cwagt.taskapp345.object.Task;
 import java.util.ArrayList;
-import static com.example.cwagt.taskapp345.helper.DatabaseContract.Task.COLUMN_NAME_DESCRIPTION;
-import static com.example.cwagt.taskapp345.helper.DatabaseContract.Task.COLUMN_NAME_FREQUENCY;
-import static com.example.cwagt.taskapp345.helper.DatabaseContract.Task.COLUMN_NAME_PRIORITY;
-import static com.example.cwagt.taskapp345.helper.DatabaseContract.Task.COLUMN_NAME_REMINDER;
-import static com.example.cwagt.taskapp345.helper.DatabaseContract.Task.COLUMN_NAME_STATUS;
-import static com.example.cwagt.taskapp345.helper.DatabaseContract.Task.COLUMN_NAME_TEXT;
-import static com.example.cwagt.taskapp345.helper.DatabaseContract.Task.COLUMN_NAME_TIME;
+import static com.example.cwagt.taskapp345.helper.DatabaseContract.Task.*;
+import static com.example.cwagt.taskapp345.helper.DatabaseContract.Avatar.*;
+import static com.example.cwagt.taskapp345.helper.DatabaseContract.User.*;
 
 public class DatabaseHelper extends SQLiteOpenHelper{
 
@@ -94,31 +90,32 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	cursor.close();
 	*/
 
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 3;
 	private static final String DATABASE_NAME = "Taskvatar.db";
 
 	private static final String SQL_CREATE_TASK_TABLE =
 			"CREATE TABLE " + DatabaseContract.Task.TABLE_NAME + " (" +
 					DatabaseContract.Task._ID + " INTEGER PRIMARY KEY," +
-					COLUMN_NAME_TEXT + " " + DatabaseContract.Task.COLUMN_TYPE_TEXT + "," +
-					COLUMN_NAME_DESCRIPTION + " " + DatabaseContract.Task.COLUMN_TYPE_DESCRIPTION + "," +
-					COLUMN_NAME_FREQUENCY + " " + DatabaseContract.Task.COLUMN_TYPE_FREQUENCY + "," +
-					COLUMN_NAME_PRIORITY + " " + DatabaseContract.Task.COLUMN_TYPE_PRIORITY + "," +
-					COLUMN_NAME_STATUS + " " + DatabaseContract.Task.COLUMN_TYPE_STATUS + "," +
-					COLUMN_NAME_REMINDER + " " + DatabaseContract.Task.COLUMN_TYPE_REMINDER +
+					COLUMN_NAME_TEXT + " " + COLUMN_TYPE_TEXT + "," +
+					COLUMN_NAME_DESCRIPTION + " " + COLUMN_TYPE_DESCRIPTION + "," +
+					COLUMN_NAME_FREQUENCY + " " + COLUMN_TYPE_FREQUENCY + "," +
+					COLUMN_NAME_PRIORITY + " " + COLUMN_TYPE_PRIORITY + "," +
+					COLUMN_NAME_STATUS + " " + COLUMN_TYPE_STATUS + "," +
+					COLUMN_NAME_REMINDER + " " + COLUMN_TYPE_REMINDER + "," +
+					COLUMN_NAME_TIME + " " + COLUMN_TYPE_TIME +
 			")";
 
 	private static final String SQL_CREATE_AVATAR_TABLE =
 			"CREATE TABLE " + DatabaseContract.Avatar.TABLE_NAME + " (" +
 					DatabaseContract.Avatar._ID + " INTEGER PRIMARY KEY," +
-					DatabaseContract.Avatar.COLUMN_NAME_BASEIMAGE + " " + DatabaseContract.Avatar.COLUMN_TYPE_BASEIMAGE +
+					COLUMN_NAME_BASEIMAGE + " " + COLUMN_TYPE_BASEIMAGE +
 			")";
 
 	private static final String SQL_CREATE_USER_TABLE =
 			"CREATE TABLE " + DatabaseContract.User.TABLE_NAME + " (" +
 					DatabaseContract.User._ID + " INTEGER PRIMARY KEY," +
-					DatabaseContract.User.COLUMN_NAME_NAME + " " + DatabaseContract.User.COLUMN_TYPE_NAME +
-					")";
+					COLUMN_NAME_NAME + " " + COLUMN_TYPE_NAME +
+			")";
 
 	private static final String SQL_DELETE_TASK_TABLE =
 			"DROP TABLE IF EXISTS " + DatabaseContract.Task.TABLE_NAME;
@@ -191,7 +188,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	 * @param selectionArgs Replcase "?" with what? (e.g. Task text)
 	 * @return arraylist of tasks
 	 */
-	public ArrayList<Task> getTasksFromDatabase(SQLiteDatabase db, String selection, String[] selectionArgs) {
+	public static ArrayList<Task> getTasksFromDatabase(SQLiteDatabase db, String selection, String[] selectionArgs) {
 		//String selection = DatabaseContract.Task.COLUMN_NAME_TEXT + " = ?"; //can use multiple "?" as placeholders
 		//String[] selectionArgs = { "Task text" }; //use comma separated list here
 
@@ -233,8 +230,51 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			tasks.add(thisTask);
 		}
 
+		if(tasks.size() == 0) tasks = generateDummyData();
+
 		cursor.close();
 		return tasks;
+	}
+
+	private static ArrayList<Task> generateDummyData() {
+		ArrayList<Task> taskList = new ArrayList<>();
+		Task task;
+
+		task = new Task("Get up", "Out of bed", "7:00 am");
+		taskList.add(task);
+
+		task = new Task("Have breakfast", "Choose something yummy", "7:30 am");
+		taskList.add(task);
+
+		task = new Task("Get dressed", "Check weather first", "8:00 am");
+		taskList.add(task);
+
+		task = new Task("Have medication", "1 big pill, 1 small pill", "8:30 am");
+		taskList.add(task);
+
+		task = new Task("Do homework", "Check spelling", "3:30 pm");
+		taskList.add(task);
+
+		task = new Task("Take rubbish out", "Recycling goes in yellow bin", "4:00 pm");
+		taskList.add(task);
+
+		task = new Task("Put lunch box out", "Put on bench", "4:30 pm");
+		taskList.add(task);
+
+		task = new Task("Do dishes", "Wash or dry", "6:00 pm");
+		taskList.add(task);
+
+		task = new Task("Put PJs on", "Put old clothes in hamper", "7:00 pm");
+		taskList.add(task);
+
+		task = new Task("Brush teeth", "Put toothbrush away", "8:00 pm");
+		taskList.add(task);
+
+		task = new Task("Go to bed", "Sleep tight", "9:00 pm");
+		taskList.add(task);
+
+		return taskList;
+
 	}
 
 }

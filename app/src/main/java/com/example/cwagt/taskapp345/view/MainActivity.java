@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         });
         if(!getAvatar(db)) sout("Error getting avatar");
 
+		taskList = DatabaseHelper.getTasksFromDatabase(db, DatabaseContract.Task.COLUMN_NAME_TEXT + " = ?", new String[]{"TaskOld text"});
 		recyclerView = findViewById(R.id.taskList);
 		mAdapter = new TaskAdapter(taskList);
 		RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 		recyclerView.setItemAnimator(new DefaultItemAnimator());
 		recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 		recyclerView.setAdapter(mAdapter);
-		prepareTaskData();
+		//prepareTaskData();
 
 		/*
 		taskOlds.add(new TaskOld(
@@ -79,48 +80,9 @@ public class MainActivity extends AppCompatActivity {
 				Frequency.DAILY
 		));
 		*/
-		if(!getTasks(db)) sout("Error getting taskOlds");
-		//TODO: show taskOlds in the recyclerview
 
-	}
+		//if(!getTasks(db)) sout("Error getting tasks");
 
-	private void prepareTaskData() {
-		Task task;
-
-		task = new Task("Get up", "Out of bed", "7:00 am");
-		taskList.add(task);
-
-		task = new Task("Have breakfast", "Choose something yummy", "7:30 am");
-		taskList.add(task);
-
-		task = new Task("Get dressed", "Check weather first", "8:00 am");
-		taskList.add(task);
-
-		task = new Task("Have medication", "1 big pill, 1 small pill", "8:30 am");
-		taskList.add(task);
-
-		task = new Task("Do homework", "Check spelling", "3:30 pm");
-		taskList.add(task);
-
-		task = new Task("Take rubbish out", "Recycling goes in yellow bin", "4:00 pm");
-		taskList.add(task);
-
-		task = new Task("Put lunch box out", "Put on bench", "4:30 pm");
-		taskList.add(task);
-
-		task = new Task("Do dishes", "Wash or dry", "6:00 pm");
-		taskList.add(task);
-
-		task = new Task("Put PJs on", "Put old clothes in hamper", "7:00 pm");
-		taskList.add(task);
-
-		task = new Task("Brush teeth", "Put toothbrush away", "8:00 pm");
-		taskList.add(task);
-
-		task = new Task("Go to bed", "Sleep tight", "9:00 pm");
-		taskList.add(task);
-
-		mAdapter.notifyDataSetChanged();
 	}
 
 	private boolean getAvatar(SQLiteDatabase db) {
@@ -162,6 +124,8 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	private boolean getTasks(SQLiteDatabase db) {
+
+    	taskList = DatabaseHelper.getTasksFromDatabase(db, DatabaseContract.Task.COLUMN_NAME_TEXT + " = ?", new String[]{"TaskOld text"});
 
 		// Define a projection that specifies which columns from the database
 		// you will actually use after this query.

@@ -33,14 +33,14 @@ public class Task {
     @Override
     public String toString() {
         return "Task{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", time='" + time + '\'' +
-                ", frequency=" + frequency +
-                ", reminder=" + reminder +
-                ", status=" + status +
-                ", priority=" + priority +
-                '}';
+                "name='" + name + "', " +
+                "description='" + description + "', " +
+                "time='" + time + "', " +
+                "frequency=" + frequency + ", " +
+                "reminder=" + reminder + ", " +
+                "status=" + status + ", " +
+                "priority=" + priority +
+            '}';
     }
 
     public String getName() {

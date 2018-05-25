@@ -96,25 +96,25 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String SQL_CREATE_TASK_TABLE =
 			"CREATE TABLE " + DatabaseContract.Task.TABLE_NAME + " (" +
 					DatabaseContract.Task._ID + " INTEGER PRIMARY KEY," +
-					COLUMN_NAME_TEXT + " " + COLUMN_TYPE_TEXT + "," +
-					COLUMN_NAME_DESCRIPTION + " " + COLUMN_TYPE_DESCRIPTION + "," +
-					COLUMN_NAME_FREQUENCY + " " + COLUMN_TYPE_FREQUENCY + "," +
-					COLUMN_NAME_PRIORITY + " " + COLUMN_TYPE_PRIORITY + "," +
-					COLUMN_NAME_STATUS + " " + COLUMN_TYPE_STATUS + "," +
-					COLUMN_NAME_REMINDER + " " + COLUMN_TYPE_REMINDER + "," +
-					COLUMN_NAME_TIME + " " + COLUMN_TYPE_TIME +
+					TASK_NAME_TEXT + " " + TASK_TYPE_TEXT + "," +
+					TASK_NAME_DESCRIPTION + " " + TASK_TYPE_DESCRIPTION + "," +
+					TASK_NAME_FREQUENCY + " " + TASK_TYPE_FREQUENCY + "," +
+					TASK_NAME_PRIORITY + " " + TASK_TYPE_PRIORITY + "," +
+					TASK_NAME_STATUS + " " + TASK_TYPE_STATUS + "," +
+					TASK_NAME_REMINDER + " " + TASK_TYPE_REMINDER + "," +
+					TASK_NAME_TIME + " " + TASK_TYPE_TIME +
 			")";
 
 	private static final String SQL_CREATE_AVATAR_TABLE =
 			"CREATE TABLE " + DatabaseContract.Avatar.TABLE_NAME + " (" +
 					DatabaseContract.Avatar._ID + " INTEGER PRIMARY KEY," +
-					COLUMN_NAME_BASEIMAGE + " " + COLUMN_TYPE_BASEIMAGE +
+					AVATAR_NAME_BASEIMAGE + " " + AVATAR_TYPE_BASEIMAGE +
 			")";
 
 	private static final String SQL_CREATE_USER_TABLE =
 			"CREATE TABLE " + DatabaseContract.User.TABLE_NAME + " (" +
 					DatabaseContract.User._ID + " INTEGER PRIMARY KEY," +
-					COLUMN_NAME_NAME + " " + COLUMN_TYPE_NAME +
+					USER_NAME_NAME + " " + USER_TYPE_NAME +
 			")";
 
 	private static final String SQL_DELETE_TASK_TABLE =
@@ -164,13 +164,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		String time = task.getTime();
 
 		ContentValues values = new ContentValues();
-		values.put(COLUMN_NAME_TEXT, name);
-		values.put(COLUMN_NAME_DESCRIPTION, description);
-		values.put(COLUMN_NAME_REMINDER, reminder);
-		values.put(COLUMN_NAME_PRIORITY, priority);
-		values.put(COLUMN_NAME_FREQUENCY, frequency.name());
-		values.put(COLUMN_NAME_STATUS, status.name());
-		values.put(COLUMN_NAME_TIME, time);
+		values.put(TASK_NAME_TEXT, name);
+		values.put(TASK_NAME_DESCRIPTION, description);
+		values.put(TASK_NAME_REMINDER, reminder);
+		values.put(TASK_NAME_PRIORITY, priority);
+		values.put(TASK_NAME_FREQUENCY, frequency.name());
+		values.put(TASK_NAME_STATUS, status.name());
+		values.put(TASK_NAME_TIME, time);
 
 		// Insert the new row, returning the primary key value of the new row
 		long newRowId = -1; //allows cheating e.g. `if(writeTaskToDatabase(){...}`
@@ -195,18 +195,18 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		//String[] selectionArgs = { "Task text" }; //use comma separated list here
 
 		String[] projection = {
-				COLUMN_NAME_TEXT,
-				COLUMN_NAME_DESCRIPTION,
-				COLUMN_NAME_REMINDER,
-				COLUMN_NAME_PRIORITY,
-				COLUMN_NAME_FREQUENCY,
-				COLUMN_NAME_STATUS,
-				COLUMN_NAME_TIME
+				TASK_NAME_TEXT,
+				TASK_NAME_DESCRIPTION,
+				TASK_NAME_REMINDER,
+				TASK_NAME_PRIORITY,
+				TASK_NAME_FREQUENCY,
+				TASK_NAME_STATUS,
+				TASK_NAME_TIME
 		};
 
 		// How you want the results sorted in the resulting Cursor
 		String sortOrder =
-				COLUMN_NAME_TEXT + " DESC";
+				TASK_NAME_TEXT + " DESC";
 
 		Cursor cursor = db.query(
 				DatabaseContract.Task.TABLE_NAME,   // The table to query
@@ -221,13 +221,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		ArrayList<Task> tasks = new ArrayList<>();
 		while(cursor.moveToNext()) {
 			Task thisTask = new Task(
-				cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_TEXT)),
-				cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_DESCRIPTION)),
-				cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_TIME)),
-				Enums.Frequency.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_FREQUENCY))),
-				cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_NAME_REMINDER)) > 0,
-				Enums.Status.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_STATUS))),
-				cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_NAME_PRIORITY))
+				cursor.getString(cursor.getColumnIndexOrThrow(TASK_NAME_TEXT)),
+				cursor.getString(cursor.getColumnIndexOrThrow(TASK_NAME_DESCRIPTION)),
+				cursor.getString(cursor.getColumnIndexOrThrow(TASK_NAME_TIME)),
+				Enums.Frequency.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(TASK_NAME_FREQUENCY))),
+				cursor.getInt(cursor.getColumnIndexOrThrow(TASK_NAME_REMINDER)) > 0,
+				Enums.Status.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(TASK_NAME_STATUS))),
+				cursor.getInt(cursor.getColumnIndexOrThrow(TASK_NAME_PRIORITY))
 			);
 			tasks.add(thisTask);
 		}

@@ -9,14 +9,16 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.example.cwagt.taskapp345.helper.DatabaseContract;
+import android.view.View;
+
+import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.helper.DatabaseHelper;
 import com.example.cwagt.taskapp345.helper.TaskAdapter;
-import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.object.Task;
+import static com.example.cwagt.taskapp345.helper.DatabaseContract.Task.*;
+
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     View avatarImage;
     RecyclerView recyclerView;
 
-    private Context context = this;
+    private Context context = MainActivity.this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         });
         //if(!getAvatar(db)) sout("Error getting avatar");
 
-		List<Task> taskList = DatabaseHelper.getTasksFromDatabase(context, DatabaseContract.Task.COLUMN_NAME_TEXT + " = ?", new String[]{"TaskOld text"});
+		List<Task> taskList = DatabaseHelper.getTasksFromDatabase(context, TASK_NAME_TEXT + " = ?", new String[]{"Task text"});
 		recyclerView = findViewById(R.id.taskList);
 		TaskAdapter mAdapter = new TaskAdapter(taskList);
 		RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());

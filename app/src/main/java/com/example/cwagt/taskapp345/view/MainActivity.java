@@ -17,7 +17,7 @@ import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.helper.DatabaseHelper;
 import com.example.cwagt.taskapp345.helper.TaskAdapter;
 import com.example.cwagt.taskapp345.object.Task;
-import static com.example.cwagt.taskapp345.helper.DatabaseContract.Task.*;
+import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.Task.*;
 
 import java.util.List;
 

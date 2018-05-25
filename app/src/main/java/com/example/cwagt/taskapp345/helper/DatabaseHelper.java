@@ -8,9 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.example.cwagt.taskapp345.object.Enums;
 import com.example.cwagt.taskapp345.object.Task;
 import java.util.ArrayList;
-import static com.example.cwagt.taskapp345.helper.DatabaseContract.Task.*;
-import static com.example.cwagt.taskapp345.helper.DatabaseContract.Avatar.*;
-import static com.example.cwagt.taskapp345.helper.DatabaseContract.User.*;
+import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.Task.*;
+import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.Avatar.*;
+import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.User.*;
 
 public class DatabaseHelper extends SQLiteOpenHelper{
 
@@ -23,12 +23,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 	// Create a new map of values, where column names are the keys
 	ContentValues values = new ContentValues();
-	values.put(Task.COLUMN_NAME_TEXT, text);
-	values.put(Task.COLUMN_NAME_DESCRIPTION, description);
-	values.put(Task.COLUMN_NAME_REMINDER, reminder);
-	values.put(Task.COLUMN_NAME_PRIORITY, importance);
-	values.put(Task.COLUMN_NAME_FREQUENCY, frequency);
-	values.put(Task.COLUMN_NAME_STATUS, status);
+	values.put(TASK_NAME_TEXT, text);
+	values.put(TASK_NAME_DESCRIPTION, description);
+	values.put(TASK_NAME_REMINDER, reminder);
+	values.put(TASK_NAME_PRIORITY, importance);
+	values.put(TASK_NAME_FREQUENCY, frequency);
+	values.put(TASK_NAME_STATUS, status);
+	values.put(TASK_NAME_TIME, time);
 
 	// Insert the new row, returning the primary key value of the new row
 	long newRowId = db.insert(Task.TABLE_NAME, null, values);
@@ -42,25 +43,25 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	// you will actually use after this query.
 	String[] projection = {
 			BaseColumns._ID,
-			DatabaseContract.Task.COLUMN_NAME_TEXT,
-			DatabaseContract.Task.COLUMN_NAME_DESCRIPTION,
-			DatabaseContract.Task.COLUMN_NAME_REMINDER,
-			DatabaseContract.Task.COLUMN_NAME_PRIORITY,
-			DatabaseContract.Task.COLUMN_NAME_FREQUENCY,
-			DatabaseContract.Task.COLUMN_NAME_STATUS,
-			DatabaseContract.Task.COLUMN_NAME_TIME
+			TASK_NAME_TEXT,
+			TASK_NAME_DESCRIPTION,
+			TASK_NAME_REMINDER,
+			TASK_NAME_PRIORITY,
+			TASK_NAME_FREQUENCY,
+			TASK_NAME_STATUS,
+			TASK_NAME_TIME
 	};
 
 	// Filter results WHERE "text" = 'Task text'
-	String selection = DatabaseContract.Task.COLUMN_NAME_TEXT + " = ?"; //can use multiple "?" as placeholders
+	String selection = TASK_NAME_TEXT + " = ?"; //can use multiple "?" as placeholders
 	String[] selectionArgs = { "Task text" }; //use comma separated list here
 
 	// How you want the results sorted in the resulting Cursor
 	String sortOrder =
-			DatabaseContract.Task.COLUMN_NAME_TEXT + " DESC";
+			TASK_NAME_TEXT + " DESC";
 
 	Cursor cursor = db.query(
-			DatabaseContract.Task.TABLE_NAME,   // The table to query
+			DatabaseColumnNames.Task.TABLE_NAME,   // The table to query
 			projection,             // The array of columns to return (pass null to get all)
 			selection,              // The columns for the WHERE clause
 			selectionArgs,          // The values for the WHERE clause
@@ -72,7 +73,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	//now put data into an arraylist
 	List itemIds = new ArrayList<>();
 	while(cursor.moveToNext()) {
-	  long itemId = cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseContract.Task._ID));
+	  long itemId = cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseColumnNames.Task._ID));
 	  itemIds.add(itemId);
 	}
 	//can now access all item IDs
@@ -80,9 +81,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	//maybe something like...
 	Task thisTask = new Task();
 	while(cursor.moveToNext()) {
-		thisTask.setText(cursor.getText(cursor.getColumnIndexOrThrow(Task.COLUMN_NAME_TEXT)));
-		thisTask.setDescription(cursor.getText(cursor.getColumnIndexOrThrow(Task.COLUMN_NAME_DESCRIPTION)));
-		thisTask.setFrequency(cursor.getText(cursor.getColumnIndexOrThrow(Task.COLUMN_NAME_FREQUENCY)));
+		thisTask.setText(cursor.getText(cursor.getColumnIndexOrThrow(TASK_NAME_TEXT)));
+		thisTask.setDescription(cursor.getText(cursor.getColumnIndexOrThrow(TASK_NAME_DESCRIPTION)));
+		thisTask.setFrequency(cursor.getText(cursor.getColumnIndexOrThrow(TASK_NAME_FREQUENCY)));
 		//...
 	}
 	//and now thisTask is an object that can be interacted with?
@@ -94,8 +95,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String DATABASE_NAME = "Taskvatar.db";
 
 	private static final String SQL_CREATE_TASK_TABLE =
-			"CREATE TABLE " + DatabaseContract.Task.TABLE_NAME + " (" +
-					DatabaseContract.Task._ID + " INTEGER PRIMARY KEY," +
+			"CREATE TABLE " + DatabaseColumnNames.Task.TABLE_NAME + " (" +
+					DatabaseColumnNames.Task._ID + " INTEGER PRIMARY KEY," +
 					TASK_NAME_TEXT + " " + TASK_TYPE_TEXT + "," +
 					TASK_NAME_DESCRIPTION + " " + TASK_TYPE_DESCRIPTION + "," +
 					TASK_NAME_FREQUENCY + " " + TASK_TYPE_FREQUENCY + "," +
@@ -106,25 +107,25 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			")";
 
 	private static final String SQL_CREATE_AVATAR_TABLE =
-			"CREATE TABLE " + DatabaseContract.Avatar.TABLE_NAME + " (" +
-					DatabaseContract.Avatar._ID + " INTEGER PRIMARY KEY," +
+			"CREATE TABLE " + DatabaseColumnNames.Avatar.TABLE_NAME + " (" +
+					DatabaseColumnNames.Avatar._ID + " INTEGER PRIMARY KEY," +
 					AVATAR_NAME_BASEIMAGE + " " + AVATAR_TYPE_BASEIMAGE +
 			")";
 
 	private static final String SQL_CREATE_USER_TABLE =
-			"CREATE TABLE " + DatabaseContract.User.TABLE_NAME + " (" +
-					DatabaseContract.User._ID + " INTEGER PRIMARY KEY," +
+			"CREATE TABLE " + DatabaseColumnNames.User.TABLE_NAME + " (" +
+					DatabaseColumnNames.User._ID + " INTEGER PRIMARY KEY," +
 					USER_NAME_NAME + " " + USER_TYPE_NAME +
 			")";
 
 	private static final String SQL_DELETE_TASK_TABLE =
-			"DROP TABLE IF EXISTS " + DatabaseContract.Task.TABLE_NAME;
+			"DROP TABLE IF EXISTS " + DatabaseColumnNames.Task.TABLE_NAME;
 
 	private static final String SQL_DELETE_AVATAR_TABLE =
-			"DROP TABLE IF EXISTS " + DatabaseContract.Avatar.TABLE_NAME;
+			"DROP TABLE IF EXISTS " + DatabaseColumnNames.Avatar.TABLE_NAME;
 
 	private static final String SQL_DELETE_USER_TABLE =
-			"DROP TABLE IF EXISTS " + DatabaseContract.User.TABLE_NAME;
+			"DROP TABLE IF EXISTS " + DatabaseColumnNames.User.TABLE_NAME;
 
 	private DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -175,7 +176,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		// Insert the new row, returning the primary key value of the new row
 		long newRowId = -1; //allows cheating e.g. `if(writeTaskToDatabase(){...}`
 		try {
-			newRowId = db.insert(DatabaseContract.Task.TABLE_NAME, null, values);
+			newRowId = db.insert(DatabaseColumnNames.Task.TABLE_NAME, null, values);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -191,7 +192,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	public static ArrayList<Task> getTasksFromDatabase(Context context, String selection, String[] selectionArgs) {
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getReadableDatabase();
-		//String selection = DatabaseContract.Task.COLUMN_NAME_TEXT + " = ?"; //can use multiple "?" as placeholders
+		//String selection = DatabaseColumnNames.Task.COLUMN_NAME_TEXT + " = ?"; //can use multiple "?" as placeholders
 		//String[] selectionArgs = { "Task text" }; //use comma separated list here
 
 		String[] projection = {
@@ -209,7 +210,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 				TASK_NAME_TEXT + " DESC";
 
 		Cursor cursor = db.query(
-				DatabaseContract.Task.TABLE_NAME,   // The table to query
+				DatabaseColumnNames.Task.TABLE_NAME,   // The table to query
 				projection,             // The array of columns to return (pass null to get all)
 				selection,              // The columns for the WHERE clause
 				selectionArgs,          // The values for the WHERE clause

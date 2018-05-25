@@ -5,9 +5,9 @@ import android.provider.BaseColumns;
 /**
  * Database helper. This has all of the column names and data types for Task, Avatar, and User
  */
-public final class DatabaseContract {
+public final class DatabaseColumnNames {
 
-	private DatabaseContract() {}
+	private DatabaseColumnNames() {}
 
 	/* Inner classes that defines the table contents */
 	public static class Task implements BaseColumns {

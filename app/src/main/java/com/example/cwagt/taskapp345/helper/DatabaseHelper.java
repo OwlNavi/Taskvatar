@@ -225,16 +225,11 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			);
 			tasks.add(thisTask);
 		}
-/*
+
 		if(tasks.size() == 0){
-			//tasks = generateDummyData();
-			Task newTask = new Task("new task", "new desc", "12:00");
-			long newID = writeTaskToDatabase(context, newTask);
-			if(newID > 0) sout("New task created with ID: " + newID);
-			else sout("New task could not be created");
-			tasks.add(newTask);
+			tasks = generateDummyData();
 		}
-*/
+
 		cursor.close();
 		return tasks;
 	}
@@ -247,38 +242,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		ArrayList<Task> taskList = new ArrayList<>();
 		Task task;
 
-		task = new Task("Get up", "Out of bed", "7:00 am");
-		taskList.add(task);
-
-		task = new Task("Have breakfast", "Choose something yummy", "7:30 am");
-		taskList.add(task);
-
-		task = new Task("Get dressed", "Check weather first", "8:00 am");
-		taskList.add(task);
-
-		task = new Task("Have medication", "1 big pill, 1 small pill", "8:30 am");
-		taskList.add(task);
-
-		task = new Task("Do homework", "Check spelling", "3:30 pm");
-		taskList.add(task);
-
-		task = new Task("Take rubbish out", "Recycling goes in yellow bin", "4:00 pm");
-		taskList.add(task);
-
-		task = new Task("Put lunch box out", "Put on bench", "4:30 pm");
-		taskList.add(task);
-
-		task = new Task("Do dishes", "Wash or dry", "6:00 pm");
-		taskList.add(task);
-
-		task = new Task("Put PJs on", "Put old clothes in hamper", "7:00 pm");
-		taskList.add(task);
-
-		task = new Task("Brush teeth", "Put toothbrush away", "8:00 pm");
-		taskList.add(task);
-
-		task = new Task("Go to bed", "Sleep tight", "9:00 pm");
-		taskList.add(task);
+		for(int i=0; i<10; i++){
+			task = new Task("Example task", "Description", "12:00 am");
+			taskList.add(task);
+		}
 
 		return taskList;
 

@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.object.Avatar;
+import com.example.cwagt.taskapp345.object.Task;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         });
         //if(!getAvatar(db)) sout("Error getting avatar");
 
-		List<Task> taskList = DatabaseHelper.getTasksFromDatabase(context, TASK_NAME_TEXT + " = ?", new String[]{"Task text"});
+		List<Task> taskList = DatabaseHelper.getTasksFromDatabase(context, "", new String[]{});
 		recyclerView = findViewById(R.id.taskList);
 		TaskAdapter mAdapter = new TaskAdapter(taskList);
 		RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());

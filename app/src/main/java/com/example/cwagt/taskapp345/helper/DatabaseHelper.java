@@ -149,29 +149,22 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	}
 
 	/** Creates a new row in the database from a task
-	 * @param db the database
+	 * @param context the context of the activity (use 'this')
 	 * @param task the task to write
 	 * @return long the ID of the newly inserted row, or -1 on failure
 	 */
-	public long writeTaskToDatabase(SQLiteDatabase db, Task task){
-		//Writing to database
-
-		String name = task.getName();
-		String description = task.getDescription();
-		Boolean reminder = task.getReminder();
-		Integer priority = task.getPriority();
-		Enums.Frequency frequency = task.getFrequency();
-		Enums.Status status = task.getStatus();
-		String time = task.getTime();
+	public static long writeTaskToDatabase(Context context, Task task){
+		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
+		SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
-		values.put(TASK_NAME_TEXT, name);
-		values.put(TASK_NAME_DESCRIPTION, description);
-		values.put(TASK_NAME_REMINDER, reminder);
-		values.put(TASK_NAME_PRIORITY, priority);
-		values.put(TASK_NAME_FREQUENCY, frequency.name());
-		values.put(TASK_NAME_STATUS, status.name());
-		values.put(TASK_NAME_TIME, time);
+		values.put(TASK_NAME_TEXT, task.getName());
+		values.put(TASK_NAME_DESCRIPTION, task.getDescription());
+		values.put(TASK_NAME_REMINDER, task.getReminder());
+		values.put(TASK_NAME_PRIORITY, task.getPriority());
+		values.put(TASK_NAME_FREQUENCY, task.getFrequency().name());
+		values.put(TASK_NAME_STATUS, task.getStatus().name());
+		values.put(TASK_NAME_TIME, task.getTime());
 
 		// Insert the new row, returning the primary key value of the new row
 		long newRowId = -1; //allows cheating e.g. `if(writeTaskToDatabase(){...}`
@@ -192,7 +185,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	public static ArrayList<Task> getTasksFromDatabase(Context context, String selection, String[] selectionArgs) {
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getReadableDatabase();
-		//String selection = DatabaseColumnNames.Task.COLUMN_NAME_TEXT + " = ?"; //can use multiple "?" as placeholders
+		//String selection = TASK_NAME_TEXT + " = ?"; //can use multiple "?" as placeholders
 		//String[] selectionArgs = { "Task text" }; //use comma separated list here
 
 		String[] projection = {
@@ -232,11 +225,22 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			);
 			tasks.add(thisTask);
 		}
-
-		if(tasks.size() == 0) tasks = generateDummyData();
-
+/*
+		if(tasks.size() == 0){
+			//tasks = generateDummyData();
+			Task newTask = new Task("new task", "new desc", "12:00");
+			long newID = writeTaskToDatabase(context, newTask);
+			if(newID > 0) sout("New task created with ID: " + newID);
+			else sout("New task could not be created");
+			tasks.add(newTask);
+		}
+*/
 		cursor.close();
 		return tasks;
+	}
+
+	private static void sout(String string) {
+		System.out.println(string);
 	}
 
 	private static ArrayList<Task> generateDummyData() {

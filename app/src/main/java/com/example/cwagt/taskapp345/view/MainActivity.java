@@ -32,20 +32,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Toolbar
         Toolbar toolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(getColor(android.R.color.white));
-        //toolbar.inflateMenu(R.menu.menu_main);
+        //Avatar fragment
 
-        avatarImage = findViewById(R.id.avatar);
-        avatarImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AvatarHome.class);
-                startActivity(intent);
-            }
 
-        });
+
+
         //if(!getAvatar(db)) sout("Error getting avatar");
 
 		List<Task> taskList = DatabaseHelper.getTasksFromDatabase(context, "", new String[]{});
@@ -72,16 +67,8 @@ public class MainActivity extends AppCompatActivity {
 
 			// Check if user triggered a refresh:
 			case R.id.menu_refresh:
-				// Signal SwipeRefreshLayout to start the progress indicator
 				finish();
 				startActivity(getIntent());
-
-
-				// Start the refresh background task.
-				// This method calls setRefreshing(false) when it's finished.
-
-
-				return true;
 		}
 
         return super.onOptionsItemSelected(item);

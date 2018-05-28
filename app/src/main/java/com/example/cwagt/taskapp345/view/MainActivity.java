@@ -1,8 +1,10 @@
 package com.example.cwagt.taskapp345.view;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -12,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.helper.DatabaseHelper;
@@ -21,14 +24,16 @@ import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.Task.*;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Avatar_Fragment.clickedBase {
 
     View avatarImage;
     RecyclerView recyclerView;
 
     private Context context = MainActivity.this;
 
-    @Override
+
+
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -36,13 +41,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(getColor(android.R.color.white));
-        //Avatar fragment
-
-
-
-
         //if(!getAvatar(db)) sout("Error getting avatar");
-
 		List<Task> taskList = DatabaseHelper.getTasksFromDatabase(context, "", new String[]{});
 		recyclerView = findViewById(R.id.taskList);
 		TaskAdapter mAdapter = new TaskAdapter(taskList);
@@ -53,7 +52,11 @@ public class MainActivity extends AppCompatActivity {
 		recyclerView.setAdapter(mAdapter);
 
 	}
-
+    @Override
+    public void clicked() {
+        Intent intent = new Intent(this, AvatarHome.class);
+        startActivity(intent);
+    }
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

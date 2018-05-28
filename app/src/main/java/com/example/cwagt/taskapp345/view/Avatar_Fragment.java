@@ -1,4 +1,7 @@
+package com.example.cwagt.taskapp345.view;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,7 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 
 import com.example.cwagt.taskapp345.R;
@@ -28,10 +33,23 @@ public class Avatar_Fragment extends Fragment  {
     Avatar avatar = new Avatar();
     final int DELAY = 1; //how fast the avatar should move
     private boolean moveAvatar = false;
+    clickedBase callBack;
 
-    @Nullable
+    //interface that MainActivity implements for clickEvent
+    public interface clickedBase {
+        public void clicked();
+    }
+    // TODO add in else statement if fragment attached to different activity, currently will crash
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof clickedBase) {
+                callBack = (clickedBase) context;
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater,  ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.avatar_fragment,container,false);
 
         base = view.findViewById(R.id.base);
@@ -79,33 +97,32 @@ public class Avatar_Fragment extends Fragment  {
                 timerHandler.postDelayed(this, DELAY);
             }
         };
-        //move avatar
-        base.setOnClickListener(new View.OnClickListener() {
+
+
+        //Doesn't work well, imageViews are blocking the user from using this
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callBack.clicked();
+            }
+        });
+
+
+        //move avatar, requires two clicks instead of just one
+        base.setOnLongClickListener(new View.OnLongClickListener() {
 
             @Override
-            public void onClick(View v) {
+            public boolean onLongClick(View v) {
                 if (!moveAvatar) {
                     timerHandler.removeCallbacks(timerRunnable);
                     moveAvatar = true;
                 } else {
                     timerHandler.postDelayed(timerRunnable, DELAY);
                 }
+                return true;
             }
-        });
-
-        ConstraintLayout avatarImage = view.findViewById(R.id.avatar);
-        avatarImage.setOnClickListener(new View.OnClickListener() {
-         @Override
-        public void onClick(View v) {
-
-                 Intent intent = new Intent(getActivity(), AvatarHome.class);
-                 startActivity(intent);
-
-         }
 
         });
-
-
 
 
         return view;

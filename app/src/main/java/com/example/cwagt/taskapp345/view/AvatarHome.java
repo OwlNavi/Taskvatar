@@ -3,6 +3,7 @@ package com.example.cwagt.taskapp345.view;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -25,4 +26,5 @@ public class AvatarHome extends AppCompatActivity {
     }
 
 }
+
 

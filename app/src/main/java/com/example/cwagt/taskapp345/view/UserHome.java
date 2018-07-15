@@ -35,8 +35,8 @@ public class UserHome extends AppCompatActivity {
         List<User> userList = defaultUserlist();
         userRecyclerView = findViewById(R.id.userList);
         UserAdapter userAdapter = new UserAdapter(userList);
-        RecyclerView.LayoutManager usermLayoutManager = new LinearLayoutManager(getApplicationContext());
-        userRecyclerView.setLayoutManager(usermLayoutManager);
+        RecyclerView.LayoutManager userLayoutManager = new LinearLayoutManager(getApplicationContext());
+        userRecyclerView.setLayoutManager(userLayoutManager);
         userRecyclerView.setItemAnimator(new DefaultItemAnimator());
         userRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         userRecyclerView.setAdapter(userAdapter);

@@ -66,13 +66,20 @@ public class UserHome extends AppCompatActivity {
 
             // Check if user triggered a refresh:
             case R.id.menu_refresh:
+                Intent refreshIntent = new Intent(this, MainActivity.class);
                 finish();
-                startActivity(getIntent());
+                startActivity(refreshIntent);
+                break;
 
             case R.id.menu_user:
-                Intent intent = new Intent(this, UserHome.class);
-                startActivity(intent);
+                Intent userIntent = new Intent(this, UserHome.class);
+                startActivity(userIntent);
+                break;
 
+            case R.id.menu_avatar:
+                Intent avatarIntent = new Intent(this, AvatarHome.class);
+                startActivity(avatarIntent);
+                break;
         }
 
         return super.onOptionsItemSelected(item);

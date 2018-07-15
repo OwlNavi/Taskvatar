@@ -13,4 +13,14 @@
         android:title="Refresh"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/menu_avatar"
+        android:title="Avatar"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_user"
+        android:title="Users"
+        app:showAsAction="always" />
+
 </menu>

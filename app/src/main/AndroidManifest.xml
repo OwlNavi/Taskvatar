@@ -25,6 +25,10 @@
             android:name=".view.AvatarHome"
             android:label="AvatarHome">
         </activity>
+        <activity
+            android:name=".view.UserHome"
+            android:label="UserHome">
+        </activity>
     </application>
 
 </manifest>

@@ -1,11 +1,14 @@
 package com.example.cwagt.taskapp345.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.helper.UserAdapter;
@@ -48,5 +51,30 @@ public class UserHome extends AppCompatActivity {
         User user4 = new User("Dave", 1, "David Standard");
 
         return userList;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            // Check if user triggered a refresh:
+            case R.id.menu_refresh:
+                finish();
+                startActivity(getIntent());
+
+            case R.id.menu_user:
+                Intent intent = new Intent(this, UserHome.class);
+                startActivity(intent);
+
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

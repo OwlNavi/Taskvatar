@@ -16,11 +16,8 @@ import android.view.View;
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.helper.DatabaseHelper;
 import com.example.cwagt.taskapp345.helper.TaskAdapter;
-import com.example.cwagt.taskapp345.helper.UserAdapter;
 import com.example.cwagt.taskapp345.object.Task;
-import com.example.cwagt.taskapp345.object.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements Avatar_Fragment.clickedBase {
@@ -38,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements Avatar_Fragment.c
         Toolbar toolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(getColor(android.R.color.white));
+
         //if(!getAvatar(db)) sout("Error getting avatar");
 		List<Task> taskList = DatabaseHelper.getTasksFromDatabase(context, "", new String[]{});
 

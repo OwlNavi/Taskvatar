@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.cwagt.taskapp345.R;
-import com.example.cwagt.taskapp345.object.Task;
 import com.example.cwagt.taskapp345.object.User;
 
 import java.util.List;

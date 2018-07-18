@@ -156,24 +156,61 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	public static long writeTaskToDatabase(Context context, Task task){
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
+		if(checkDatabase(db)) {
 
-		ContentValues values = new ContentValues();
-		values.put(TASK_NAME_TEXT, task.getName());
-		values.put(TASK_NAME_DESCRIPTION, task.getDescription());
-		values.put(TASK_NAME_REMINDER, task.getReminder());
-		values.put(TASK_NAME_PRIORITY, task.getPriority());
-		values.put(TASK_NAME_FREQUENCY, task.getFrequency().name());
-		values.put(TASK_NAME_STATUS, task.getStatus().name());
-		values.put(TASK_NAME_TIME, task.getTime());
+			ContentValues values = new ContentValues();
+			values.put(TASK_NAME_TEXT, task.getName());
+			values.put(TASK_NAME_DESCRIPTION, task.getDescription());
+			values.put(TASK_NAME_REMINDER, task.getReminder());
+			values.put(TASK_NAME_PRIORITY, task.getPriority());
+			values.put(TASK_NAME_FREQUENCY, task.getFrequency().name());
+			values.put(TASK_NAME_STATUS, task.getStatus().name());
+			values.put(TASK_NAME_TIME, task.getTime());
 
-		// Insert the new row, returning the primary key value of the new row
-		long newRowId = -1; //allows cheating e.g. `if(writeTaskToDatabase(){...}`
-		try {
-			newRowId = db.insert(DatabaseColumnNames.Task.TABLE_NAME, null, values);
-		}catch(Exception e){
-			e.printStackTrace();
+			// Insert the new row, returning the primary key value of the new row
+			long newRowId = -1; //allows cheating e.g. `if(writeTaskToDatabase(){...}`
+			try {
+				newRowId = db.insert(DatabaseColumnNames.Task.TABLE_NAME, null, values);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return newRowId;
+		}else{
+			sout("Error: could not open database for writing");
+			return -1;
 		}
-		return newRowId;
+	}
+
+	public static int deleteTaskFromDatabase(Context context, Task task){
+		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
+		SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+		if(checkDatabase(db)) {
+
+			String whereClause = TASK_NAME_TEXT + " = ?" +
+					" AND " + TASK_NAME_DESCRIPTION + " = ?" +
+					" AND " + TASK_NAME_TIME + " = ?";
+
+			String[] values = new String[3];
+			values[0] = task.getName();
+			values[1] = task.getDescription();
+			values[2] = task.getTime();
+
+			int success = -1;
+			try {
+				success = db.delete(
+						DatabaseColumnNames.Task.TABLE_NAME,
+						whereClause,
+						values
+				);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return success;
+		}else{
+			sout("Error: could not open database for deleting");
+			return -1;
+		}
 	}
 
 	/** gets an arraylist of tasks
@@ -185,57 +222,68 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	public static ArrayList<Task> getTasksFromDatabase(Context context, String selection, String[] selectionArgs) {
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getReadableDatabase();
-		//String selection = TASK_NAME_TEXT + " = ?"; //can use multiple "?" as placeholders
-		//String[] selectionArgs = { "Task text" }; //use comma separated list here
+		if(checkDatabase(db)) {
 
-		String[] projection = {
-				TASK_NAME_TEXT,
-				TASK_NAME_DESCRIPTION,
-				TASK_NAME_REMINDER,
-				TASK_NAME_PRIORITY,
-				TASK_NAME_FREQUENCY,
-				TASK_NAME_STATUS,
-				TASK_NAME_TIME
-		};
+			//String selection = TASK_NAME_TEXT + " = ?"; //can use multiple "?" as placeholders
+			//String[] selectionArgs = { "Task text" }; //use comma separated list here
 
-		// How you want the results sorted in the resulting Cursor
-		String sortOrder =
-				TASK_NAME_TEXT + " DESC";
+			String[] projection = {
+					TASK_NAME_TEXT,
+					TASK_NAME_DESCRIPTION,
+					TASK_NAME_REMINDER,
+					TASK_NAME_PRIORITY,
+					TASK_NAME_FREQUENCY,
+					TASK_NAME_STATUS,
+					TASK_NAME_TIME
+			};
 
-		Cursor cursor = db.query(
-				DatabaseColumnNames.Task.TABLE_NAME,   // The table to query
-				projection,             // The array of columns to return (pass null to get all)
-				selection,              // The columns for the WHERE clause
-				selectionArgs,          // The values for the WHERE clause
-				null,                   // don't group the rows
-				null,                   // don't filter by row groups
-				sortOrder               // The sort order
-		);
+			// How you want the results sorted in the resulting Cursor
+			String sortOrder =
+					TASK_NAME_TEXT + " DESC";
 
-		ArrayList<Task> tasks = new ArrayList<>();
-		while(cursor.moveToNext()) {
-			Task thisTask = new Task(
-				cursor.getString(cursor.getColumnIndexOrThrow(TASK_NAME_TEXT)),
-				cursor.getString(cursor.getColumnIndexOrThrow(TASK_NAME_DESCRIPTION)),
-				cursor.getString(cursor.getColumnIndexOrThrow(TASK_NAME_TIME)),
-				Enums.Frequency.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(TASK_NAME_FREQUENCY))),
-				cursor.getInt(cursor.getColumnIndexOrThrow(TASK_NAME_REMINDER)) > 0,
-				Enums.Status.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(TASK_NAME_STATUS))),
-				cursor.getInt(cursor.getColumnIndexOrThrow(TASK_NAME_PRIORITY))
+			Cursor cursor = db.query(
+					DatabaseColumnNames.Task.TABLE_NAME,   // The table to query
+					projection,             // The array of columns to return (pass null to get all)
+					selection,              // The columns for the WHERE clause
+					selectionArgs,          // The values for the WHERE clause
+					null,                   // don't group the rows
+					null,                   // don't filter by row groups
+					sortOrder               // The sort order
 			);
-			tasks.add(thisTask);
-		}
 
-		if(tasks.size() == 0){
-			tasks = generateDummyData();
-		}
+			ArrayList<Task> tasks = new ArrayList<>();
+			while (cursor.moveToNext()) {
+				Task thisTask = new Task(
+						cursor.getString(cursor.getColumnIndexOrThrow(TASK_NAME_TEXT)),
+						cursor.getString(cursor.getColumnIndexOrThrow(TASK_NAME_DESCRIPTION)),
+						cursor.getString(cursor.getColumnIndexOrThrow(TASK_NAME_TIME)),
+						Enums.Frequency.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(TASK_NAME_FREQUENCY))),
+						cursor.getInt(cursor.getColumnIndexOrThrow(TASK_NAME_REMINDER)) > 0,
+						Enums.Status.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(TASK_NAME_STATUS))),
+						cursor.getInt(cursor.getColumnIndexOrThrow(TASK_NAME_PRIORITY))
+				);
+				tasks.add(thisTask);
+			}
 
-		cursor.close();
-		return tasks;
+			if (tasks.size() == 0) {
+				tasks = generateDummyData();
+			}
+
+			cursor.close();
+			return tasks;
+		}else{
+			sout("Error: could not open database for reading");
+			return new ArrayList<>();
+		}
 	}
 
-	private static void sout(String string) {
-		System.out.println(string);
+	private static boolean checkDatabase(SQLiteDatabase db) {
+		if(db == null){
+			sout("Error: could not open database");
+			return false;
+		}else {
+			return true;
+		}
 	}
 
 	private static ArrayList<Task> generateDummyData() {
@@ -255,4 +303,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		DatabaseHelper mDbHelper = new DatabaseHelper(context);
 		mDbHelper.close(); //close database connection
 	}
+
+	private static void sout(String s) {
+		System.out.println(s);
+	}
+
 }

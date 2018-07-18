@@ -45,51 +45,22 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
         final View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.user_list_layout, parent, false);
 
-        itemView.setBackgroundColor(Color.RED);
 
         final RecyclerView recyclerView = parent.findViewById(R.id.userList);
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(recyclerView.getContext(), recyclerView, new RecyclerItemClickListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                //Log.d("debug", "click");
+                //do nothing
+                User user = userList.get(position);
+                int userID = user.getUserID();
 
-                //change background colour
-                //see https://stackoverflow.com/questions/36352945/how-to-get-color-of-a-button-with-ripple-drawable
-                Drawable background = view.getBackground();
-
-                int backgroundColor = 0;
-
-                if (background instanceof ColorDrawable)
-                    backgroundColor = ((ColorDrawable) background).getColor();
-
-                //Log.d("debug", "Background color: " + backgroundColor);
-
-                //change color
-                switch (backgroundColor){
-                    case Color.WHITE:
-                        view.setBackgroundColor(Color.RED);
-                        break;
-                    case Color.RED:
-                        view.setBackgroundColor(Color.YELLOW);
-                        break;
-                    case Color.YELLOW:
-                        view.setBackgroundColor(Color.GREEN);
-                        break;
-                    case Color.GREEN:
-                        view.setBackgroundColor(Color.RED);
-                        break;
-                    default:
-                        view.setBackgroundColor(Color.WHITE);
-                        break;
-                }
-
+                Log.d("UserAdapter", "userid: " + userID);
             }
 
             @Override
             public void onLongClick(View view, int position) {
                 Log.d("debug", "long click");
 
-                view.setBackgroundColor(Color.RED);
             }
         }));
 

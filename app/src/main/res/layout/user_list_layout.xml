@@ -18,19 +18,22 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:textSize="16dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:text=""/>
 
     <TextView
         android:id="@+id/userDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/username" />
+        android:layout_below="@id/username"
+        android:text=""/>
 
     <TextView
         android:id="@+id/userID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:text=""
         />
 
 </RelativeLayout>

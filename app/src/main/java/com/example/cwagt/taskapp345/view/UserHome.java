@@ -7,6 +7,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -33,12 +34,19 @@ public class UserHome extends AppCompatActivity {
         //TODO implement users pull from database
         //List<User> userList = DatabaseHelper.getUsersFromDatabase(context, "", new String[]{});
         List<User> userList = defaultUserlist();
+        Log.d("UserHome", "onCreate: userList size: " + userList.size());
         userRecyclerView = findViewById(R.id.userList);
-        UserAdapter userAdapter = new UserAdapter(userList);
-        RecyclerView.LayoutManager userLayoutManager = new LinearLayoutManager(getApplicationContext());
+        userRecyclerView.setHasFixedSize(true);
+
+
+        LinearLayoutManager userLayoutManager = new LinearLayoutManager(this);
+        userLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         userRecyclerView.setLayoutManager(userLayoutManager);
-        userRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        userRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+
+        UserAdapter userAdapter = new UserAdapter(userList);
+
+        //userRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        //userRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         userRecyclerView.setAdapter(userAdapter);
     }
 
@@ -49,7 +57,10 @@ public class UserHome extends AppCompatActivity {
         User user2 = new User("Ben", 1, "Benjamen Default");
         User user3 = new User("Chris", 1, "Christopher Template");
         User user4 = new User("Dave", 1, "David Standard");
-
+        userList.add(user1);
+        userList.add(user2);
+        userList.add(user3);
+        userList.add(user4);
         return userList;
     }
 

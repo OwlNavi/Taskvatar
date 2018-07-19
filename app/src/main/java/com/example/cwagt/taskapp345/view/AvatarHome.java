@@ -1,3 +1,10 @@
+/**
+* User interacts with the avatar here.
+* Activities include switching cosmetics and starting animations.
+*
+* Authors: Josh April, Shaun Henderson, Craig Thomas
+*/
+
 package com.example.cwagt.taskapp345.view;
 
 import android.os.Bundle;

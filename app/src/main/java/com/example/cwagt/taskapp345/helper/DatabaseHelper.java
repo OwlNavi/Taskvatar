@@ -105,6 +105,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 					TASK_NAME_REMINDER + " " + TASK_TYPE_REMINDER + "," +
 					TASK_NAME_TIME + " " + TASK_TYPE_TIME +
 			")";
+	//If you want to add a field, dont forget to change the field names and types in DatabaseColumnNames.java
 
 	private static final String SQL_CREATE_AVATAR_TABLE =
 			"CREATE TABLE " + DatabaseColumnNames.Avatar.TABLE_NAME + " (" +
@@ -222,6 +223,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	public static ArrayList<Task> getTasksFromDatabase(Context context, String selection, String[] selectionArgs) {
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getReadableDatabase();
+		ArrayList<Task> tasks = new ArrayList<>();
 		if(checkDatabase(db)) {
 
 			//String selection = TASK_NAME_TEXT + " = ?"; //can use multiple "?" as placeholders
@@ -251,7 +253,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 					sortOrder               // The sort order
 			);
 
-			ArrayList<Task> tasks = new ArrayList<>();
 			while (cursor.moveToNext()) {
 				Task thisTask = new Task(
 						cursor.getString(cursor.getColumnIndexOrThrow(TASK_NAME_TEXT)),
@@ -270,11 +271,71 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			}
 
 			cursor.close();
-			return tasks;
+
 		}else{
 			sout("Error: could not open database for reading");
-			return new ArrayList<>();
 		}
+		return tasks;
+	}
+
+	public static ArrayList<Task> getTasksFromDatabase(Context context) {
+		String selection = "";
+		String[] selectionArgs = new String[]{};
+		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
+		SQLiteDatabase db = mDbHelper.getReadableDatabase();
+		ArrayList<Task> tasks = new ArrayList<>();
+		if(checkDatabase(db)) {
+
+			//String selection = TASK_NAME_TEXT + " = ?"; //can use multiple "?" as placeholders
+			//String[] selectionArgs = { "Task text" }; //use comma separated list here
+
+			String[] projection = {
+					TASK_NAME_TEXT,
+					TASK_NAME_DESCRIPTION,
+					TASK_NAME_REMINDER,
+					TASK_NAME_PRIORITY,
+					TASK_NAME_FREQUENCY,
+					TASK_NAME_STATUS,
+					TASK_NAME_TIME
+			};
+
+			// How you want the results sorted in the resulting Cursor
+			String sortOrder =
+					TASK_NAME_TEXT + " DESC";
+
+			Cursor cursor = db.query(
+					DatabaseColumnNames.Task.TABLE_NAME,   // The table to query
+					projection,             // The array of columns to return (pass null to get all)
+					selection,              // The columns for the WHERE clause
+					selectionArgs,          // The values for the WHERE clause
+					null,                   // don't group the rows
+					null,                   // don't filter by row groups
+					sortOrder               // The sort order
+			);
+
+			while (cursor.moveToNext()) {
+				Task thisTask = new Task(
+						cursor.getString(cursor.getColumnIndexOrThrow(TASK_NAME_TEXT)),
+						cursor.getString(cursor.getColumnIndexOrThrow(TASK_NAME_DESCRIPTION)),
+						cursor.getString(cursor.getColumnIndexOrThrow(TASK_NAME_TIME)),
+						Enums.Frequency.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(TASK_NAME_FREQUENCY))),
+						cursor.getInt(cursor.getColumnIndexOrThrow(TASK_NAME_REMINDER)) > 0,
+						Enums.Status.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(TASK_NAME_STATUS))),
+						cursor.getInt(cursor.getColumnIndexOrThrow(TASK_NAME_PRIORITY))
+				);
+				tasks.add(thisTask);
+			}
+
+			if (tasks.size() == 0) {
+				tasks = generateDummyData();
+			}
+
+			cursor.close();
+
+		}else{
+			sout("Error: could not open database for reading");
+		}
+		return tasks;
 	}
 
 	private static boolean checkDatabase(SQLiteDatabase db) {

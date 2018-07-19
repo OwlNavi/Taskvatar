@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements Avatar_Fragment.c
         toolbar.setTitleTextColor(getColor(android.R.color.white));
 
         //if(!getAvatar(db)) sout("Error getting avatar");
-		List<Task> taskList = DatabaseHelper.getTasksFromDatabase(context, "", new String[]{});
+		List<Task> taskList = DatabaseHelper.getTasksFromDatabase(context);
 
 		taskRecyclerView = findViewById(R.id.taskList);
 		TaskAdapter mAdapter = new TaskAdapter(taskList);

@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.helper.DatabaseHelper;
@@ -22,7 +21,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements Avatar_Fragment.clickedBase {
 
-    View avatarImage;
     RecyclerView taskRecyclerView;
 
     private Context context = MainActivity.this;
@@ -91,12 +89,5 @@ public class MainActivity extends AppCompatActivity implements Avatar_Fragment.c
 		DatabaseHelper.closeDatabase(this);
 		super.onDestroy();
 	}
-
-	private void sout(String s) {
-		System.out.println(s);
-	}
-
-
-
 
 }

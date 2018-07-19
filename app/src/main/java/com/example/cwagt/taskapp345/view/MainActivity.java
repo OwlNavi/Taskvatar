@@ -19,6 +19,12 @@ import com.example.cwagt.taskapp345.object.Task;
 
 import java.util.List;
 
+/**
+ * Creates an avatar with a given rotation for each of the components.
+ * Each avatar consists of two arms, two legs and a base.
+ * Rotations are stored in the database
+ * Authors: Josh April, Shaun Henderson, Craig Thomas
+ */
 public class MainActivity extends AppCompatActivity implements Avatar_Fragment.clickedBase {
 
     RecyclerView taskRecyclerView;

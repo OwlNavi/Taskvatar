@@ -1,3 +1,9 @@
+/**
+* Creates an avatar with a given rotation for each of the components.
+* Each avatar consists of two arms, two legs and a base. 
+* Rotations are stored in the database.
+* Auothers: Josh April, Shaun Henderson, Craig Thomas
+*/
 package com.example.cwagt.taskapp345.object;
 
 public class Avatar {

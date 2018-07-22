@@ -25,7 +25,7 @@ import java.util.List;
  * Rotations are stored in the database
  * Authors: Josh April, Shaun Henderson, Craig Thomas
  */
-public class MainActivity extends AppCompatActivity implements Avatar_Fragment.clickedBase {
+public class MainActivity extends AppCompatActivity  {
 
     RecyclerView taskRecyclerView;
 
@@ -52,11 +52,7 @@ public class MainActivity extends AppCompatActivity implements Avatar_Fragment.c
 		taskRecyclerView.setAdapter(mAdapter);
 
 	}
-    @Override
-    public void clicked() {
-        Intent intent = new Intent(this, AvatarHome.class);
-        startActivity(intent);
-    }
+
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

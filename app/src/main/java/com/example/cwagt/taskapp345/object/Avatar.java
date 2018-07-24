@@ -22,6 +22,8 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.object.Avatar;
 import com.example.cwagt.taskapp345.view.AvatarHome;
@@ -41,18 +43,22 @@ public class Avatar {
 
 
 
-	public Avatar(){
+	public Avatar(View view,Context context){
 		this.leftArmRotation = 0;
 		this.rightArmRotation = 0;
 		this.leftLegRotation = 0;
 		this.rightLegRotation = 0;
+		avatarCreation(view,context);
+
+
 	}
 
-	public Avatar(float leftArmRotation, float rightArmRotation, float leftLegRotation, float rightLegRotation) {
+	public Avatar(View view,Context context,float leftArmRotation, float rightArmRotation, float leftLegRotation, float rightLegRotation) {
 		this.leftArmRotation = leftArmRotation;
 		this.rightArmRotation = rightArmRotation;
 		this.leftLegRotation = leftLegRotation;
 		this.rightLegRotation = rightLegRotation;
+		avatarCreation(view,context);
 	}
 
 	public float getLeftArmRotation() {
@@ -93,25 +99,30 @@ public class Avatar {
 		this.rightLegRotation = rightLegRotation;
 	}
 
-	public View avatarCreation(View view) {
+	public View avatarCreation(View view,Context context) {
 
-		base = view.findViewById(R.id.base);
-		leftArm = view.findViewById(R.id.left_arm);
-		rightArm = view.findViewById(R.id.right_arm);
-		leftLeg = view.findViewById(R.id.left_leg);
-		rightLeg = view.findViewById(R.id.right_leg);
 
-		body.add(base);
-		body.add(leftArm);
-		body.add(rightArm);
-		body.add(leftLeg);
-		body.add(rightLeg);
 
+
+
+
+
+
+
+		//base = view.findViewById(R.id.base);
+
+
+
+
+		// Add body parts to body array
+		//body.add(base);
+
+		/**Set rotation of body parts
 		leftArm.setRotation(getRightArmRotation());
 		rightArm.setRotation(getRightArmRotation());
 		leftLeg.setRotation(getLeftLegRotation());
 		rightLeg.setRotation(getRightLegRotation());
-
+	*/
 
 
 		return view;

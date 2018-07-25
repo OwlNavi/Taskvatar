@@ -5,11 +5,16 @@ public class User {
 	private String userName;
 	private int userID;
 	private String userDescription;
+	private Avatar avatar;
 
 	public User(String userName, int userID, String userDescription) {
+		//get from database
 		this.userName = userName;
 		this.userID = userID;
 		this.userDescription = userDescription;
+
+		//make avatar from db info
+		//avatar = new Avatar();
 	}
 
 	public int getUserID() {
@@ -27,10 +32,6 @@ public class User {
 
 	public void setUserDescription(String userDescription) {
 		this.userDescription = userDescription;
-	}
-
-	public User(String userName){
-		this.userName = userName;
 	}
 
 	public String getUserName() {

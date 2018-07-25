@@ -30,7 +30,8 @@ import com.example.cwagt.taskapp345.view.AvatarHome;
 import com.example.cwagt.taskapp345.view.MainActivity;
 
 public class Avatar {
-
+	private User user;
+	private int avatarID;
 	private float leftArmRotation;
 	private float rightArmRotation;
 	private float leftLegRotation;
@@ -53,12 +54,14 @@ public class Avatar {
 
 	}
 
-	public Avatar(View view,Context context,float leftArmRotation, float rightArmRotation, float leftLegRotation, float rightLegRotation) {
+	public Avatar(View view,Context context,float leftArmRotation, float rightArmRotation, float leftLegRotation, float rightLegRotation, User user) {
 		this.leftArmRotation = leftArmRotation;
 		this.rightArmRotation = rightArmRotation;
 		this.leftLegRotation = leftLegRotation;
 		this.rightLegRotation = rightLegRotation;
 		avatarCreation(view,context);
+		this.user = user;
+
 	}
 
 	public float getLeftArmRotation() {
@@ -100,19 +103,7 @@ public class Avatar {
 	}
 
 	public View avatarCreation(View view,Context context) {
-
-
-
-
-
-
-
-
-
 		//base = view.findViewById(R.id.base);
-
-
-
 
 		// Add body parts to body array
 		//body.add(base);
@@ -123,8 +114,6 @@ public class Avatar {
 		leftLeg.setRotation(getLeftLegRotation());
 		rightLeg.setRotation(getRightLegRotation());
 	*/
-
-
 		return view;
 	}
 

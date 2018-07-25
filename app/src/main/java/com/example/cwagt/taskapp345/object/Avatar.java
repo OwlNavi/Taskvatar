@@ -44,24 +44,21 @@ public class Avatar {
 
 
 
-	public Avatar(View view,Context context){
+	public Avatar(){
 		this.leftArmRotation = 0;
 		this.rightArmRotation = 0;
 		this.leftLegRotation = 0;
 		this.rightLegRotation = 0;
-		avatarCreation(view,context);
 
 
 	}
 
-	public Avatar(View view,Context context,float leftArmRotation, float rightArmRotation, float leftLegRotation, float rightLegRotation, User user) {
+	public Avatar(float leftArmRotation, float rightArmRotation, float leftLegRotation, float rightLegRotation, User user) {
 		this.leftArmRotation = leftArmRotation;
 		this.rightArmRotation = rightArmRotation;
 		this.leftLegRotation = leftLegRotation;
 		this.rightLegRotation = rightLegRotation;
-		avatarCreation(view,context);
 		this.user = user;
-
 	}
 
 	public float getLeftArmRotation() {
@@ -100,21 +97,6 @@ public class Avatar {
 
 	public void setRightLegRotation(float rightLegRotation) {
 		this.rightLegRotation = rightLegRotation;
-	}
-
-	public View avatarCreation(View view,Context context) {
-		//base = view.findViewById(R.id.base);
-
-		// Add body parts to body array
-		//body.add(base);
-
-		/**Set rotation of body parts
-		leftArm.setRotation(getRightArmRotation());
-		rightArm.setRotation(getRightArmRotation());
-		leftLeg.setRotation(getLeftLegRotation());
-		rightLeg.setRotation(getRightLegRotation());
-	*/
-		return view;
 	}
 
 

@@ -30,7 +30,7 @@ public class ExampleUnitTest {
 	@Test
 	public void avatarGetRotationExplicit() {
 		//tests the getter
-		Avatar testAvatar2 = new Avatar(1,2,3,4);
+		Avatar testAvatar2 = new Avatar(1,2,3,4, null);
 		assertEquals(Float.valueOf(1), (Float)testAvatar2.getLeftArmRotation());
 		assertEquals(Float.valueOf(2), (Float)testAvatar2.getRightArmRotation());
 		assertEquals(Float.valueOf(3), (Float)testAvatar2.getLeftLegRotation());
@@ -48,7 +48,7 @@ public class ExampleUnitTest {
 	@Test
 	public void avatarSetLeftArmRotationExplicit() {
 		//tests the setter (and the getter)
-		Avatar testAvatar4 = new Avatar(1,2,3,4);
+		Avatar testAvatar4 = new Avatar(1,2,3,4,null);
 		testAvatar4.setLeftArmRotation(5);
 		assertEquals(Float.valueOf(5), (Float)testAvatar4.getLeftArmRotation());
 	}

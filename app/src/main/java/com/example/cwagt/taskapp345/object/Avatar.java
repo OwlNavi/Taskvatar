@@ -100,7 +100,7 @@ public class Avatar {
 	}
 
 
-
-
-
+	public int getID() {
+		return avatarID;
+	}
 }

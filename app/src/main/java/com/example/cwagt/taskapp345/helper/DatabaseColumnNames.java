@@ -30,8 +30,19 @@ public final class DatabaseColumnNames {
 
 	public static class Avatar implements BaseColumns {
 		public static final String TABLE_NAME = "avatar";
-		public static final String AVATAR_NAME_BASEIMAGE = "base_image";
-		public static final String AVATAR_TYPE_BASEIMAGE = "TEXT";
+		public static final String AVATAR_NAME_ID = "avatarID";
+		public static final String AVATAR_TYPE_ID = "INTEGER";
+		public static final String AVATAR_NAME_USER = "userID";
+		public static final String AVATAR_TYPE_USER = "INTEGER";
+		public static final String AVATAR_NAME_LEFT_ARM_ROTATION = "leftArmRotation";
+		public static final String AVATAR_TYPE_LEFT_ARM_ROTATION = "INTEGER";
+		public static final String AVATAR_NAME_RIGHT_ARM_ROTATION = "rightArmRotation";
+		public static final String AVATAR_TYPE_RIGHT_ARM_ROTATION = "INTEGER";
+		public static final String AVATAR_NAME_LEFT_LEG_ROTATION = "leftLegRotation";
+		public static final String AVATAR_TYPE_LEFT_LEG_ROTATION = "INTEGER";
+		public static final String AVATAR_NAME_RIGHT_LEG_ROTATION = "rightLegRotation";
+		public static final String AVATAR_TYPE_RIGHT_LEG_ROTATION = "INTEGER";
+
 	}
 
 	public static class User implements BaseColumns {

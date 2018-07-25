@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.example.cwagt.taskapp345.object.Avatar;
 import com.example.cwagt.taskapp345.object.Enums;
 import com.example.cwagt.taskapp345.object.Task;
 import com.example.cwagt.taskapp345.object.User;
@@ -112,8 +114,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String SQL_CREATE_AVATAR_TABLE =
 			"CREATE TABLE " + DatabaseColumnNames.Avatar.TABLE_NAME + " (" +
 					DatabaseColumnNames.Avatar._ID + " INTEGER PRIMARY KEY" +
-					", " + AVATAR_NAME_BASEIMAGE + " " + AVATAR_TYPE_BASEIMAGE +
-			")";
+					", " + AVATAR_NAME_ID + " " + AVATAR_TYPE_ID +
+					", " + AVATAR_NAME_LEFT_ARM_ROTATION + " " + AVATAR_TYPE_LEFT_ARM_ROTATION +
+					", " + AVATAR_NAME_RIGHT_ARM_ROTATION + " " + AVATAR_TYPE_RIGHT_ARM_ROTATION +
+					", " + AVATAR_NAME_LEFT_LEG_ROTATION + " " + AVATAR_TYPE_LEFT_LEG_ROTATION +
+					", " + AVATAR_NAME_RIGHT_LEG_ROTATION + " " + AVATAR_TYPE_RIGHT_LEG_ROTATION +
+					")";
 
 	private static final String SQL_CREATE_USER_TABLE =
 			"CREATE TABLE " + DatabaseColumnNames.User.TABLE_NAME + " (" +
@@ -329,7 +335,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			String[] projection = {
 					USER_NAME_NAME,
 					USER_NAME_ID,
-					TASK_NAME_DESCRIPTION
+					USER_NAME_DESCRIPTION
 			};
 
 			// How you want the results sorted in the resulting Cursor
@@ -381,6 +387,122 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			values[0] = user.getUserName();
 			values[1] = "" + user.getUserID();
 			values[2] = user.getUserDescription();
+
+			try {
+				success = db.delete(
+						DatabaseColumnNames.User.TABLE_NAME,
+						whereClause,
+						values
+				);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}else{
+			sout("Error: could not open database for deleting");
+		}
+		return success;
+	}
+
+
+
+	public static long writeAvatarToDatabase(Context context, Avatar avatar){
+		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
+		SQLiteDatabase db = mDbHelper.getWritableDatabase();
+		if(checkDatabase(db)) {
+
+			ContentValues values = new ContentValues();
+			values.put(AVATAR_NAME_ID, avatar.getID());
+			values.put(AVATAR_NAME_LEFT_ARM_ROTATION, avatar.getLeftArmRotation());
+			values.put(AVATAR_NAME_RIGHT_ARM_ROTATION, avatar.getRightArmRotation());
+			values.put(AVATAR_NAME_LEFT_LEG_ROTATION, avatar.getLeftLegRotation());
+			values.put(AVATAR_NAME_RIGHT_LEG_ROTATION, avatar.getRightLegRotation());
+
+			// Insert the new row, returning the primary key value of the new row
+			long newRowId = -1; //allows cheating e.g. `if(writeTaskToDatabase(){...}`
+			try {
+				newRowId = db.insert(DatabaseColumnNames.Avatar.TABLE_NAME, null, values);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return newRowId;
+		}else{
+			sout("Error: could not open database for writing");
+			return -1;
+		}
+	}
+
+	public static ArrayList<Avatar> getAvatarsFromDatabase(Context context, User user) {
+		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
+		SQLiteDatabase db = mDbHelper.getReadableDatabase();
+		ArrayList<Avatar> avatars = new ArrayList<>();
+		String selection = AVATAR_NAME_USER + " = ?";
+		String[] selectionArgs = new String[]{String.valueOf(user.getUserID())};
+		if(checkDatabase(db)) {
+
+			//String selection = TASK_NAME_TEXT + " = ?"; //can use multiple "?" as placeholders
+			//String[] selectionArgs = { "Task text" }; //use comma separated list here
+
+			String[] projection = {
+					AVATAR_NAME_ID,
+					AVATAR_NAME_LEFT_ARM_ROTATION,
+					AVATAR_NAME_RIGHT_ARM_ROTATION,
+					AVATAR_NAME_LEFT_LEG_ROTATION,
+					AVATAR_NAME_RIGHT_LEG_ROTATION
+			};
+
+			// How you want the results sorted in the resulting Cursor
+			String sortOrder =
+					AVATAR_NAME_LEFT_ARM_ROTATION;
+
+			Cursor cursor = db.query(
+					DatabaseColumnNames.User.TABLE_NAME,   // The table to query
+					projection,             // The array of columns to return (pass null to get all)
+					selection,              // The columns for the WHERE clause
+					selectionArgs,          // The values for the WHERE clause
+					null,                   // don't group the rows
+					null,                   // don't filter by row groups
+					sortOrder               // The sort order
+			);
+
+			while (cursor.moveToNext()) {
+				Avatar thisAvatar = new Avatar(
+						cursor.getFloat(cursor.getColumnIndexOrThrow(AVATAR_NAME_LEFT_ARM_ROTATION)),
+						cursor.getFloat(cursor.getColumnIndexOrThrow(AVATAR_NAME_RIGHT_ARM_ROTATION)),
+						cursor.getFloat(cursor.getColumnIndexOrThrow(AVATAR_NAME_LEFT_LEG_ROTATION)),
+						cursor.getFloat(cursor.getColumnIndexOrThrow(AVATAR_NAME_RIGHT_LEG_ROTATION)),
+						user
+				);
+				avatars.add(thisAvatar);
+			}
+			cursor.close();
+
+		}else{
+			sout("Error: could not open database for reading");
+		}
+		return avatars;
+	}
+
+	public static int deleteAvatarFromDatabase(Context context, Avatar avatar){
+		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
+		SQLiteDatabase db = mDbHelper.getWritableDatabase();
+		int success = -1;
+
+		if(checkDatabase(db)) {
+
+			String whereClause = AVATAR_NAME_ID + " = ?" +
+					" AND " + AVATAR_NAME_LEFT_ARM_ROTATION + " = ?" +
+					" AND " + AVATAR_NAME_RIGHT_ARM_ROTATION + " = ?" +
+					" AND " + AVATAR_NAME_LEFT_LEG_ROTATION + " = ?" +
+					" AND " + AVATAR_NAME_RIGHT_LEG_ROTATION + " = ?"
+			;
+
+			String[] values = new String[5];
+			values[0] = "" + avatar.getID();
+			values[1] = "" + avatar.getLeftArmRotation();
+			values[2] = "" + avatar.getRightArmRotation();
+			values[3] = "" + avatar.getLeftLegRotation();
+			values[4] = "" + avatar.getRightLegRotation();
 
 			try {
 				success = db.delete(

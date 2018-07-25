@@ -62,17 +62,14 @@ public class Avatar {
 	}
 
 	public float getLeftArmRotation() {
-
 		return leftArmRotation;
 	}
 
 	public void setLeftArmRotation(float leftArmRotation) {
-
 		this.leftArmRotation = leftArmRotation;
 	}
 
 	public float getRightArmRotation() {
-
 		return rightArmRotation;
 	}
 
@@ -81,17 +78,14 @@ public class Avatar {
 	}
 
 	public float getLeftLegRotation() {
-
 		return leftLegRotation;
 	}
 
 	public void setLeftLegRotation(float leftLegRotation) {
-
 		this.leftLegRotation = leftLegRotation;
 	}
 
 	public float getRightLegRotation() {
-
 		return rightLegRotation;
 	}
 

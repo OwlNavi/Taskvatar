@@ -40,10 +40,7 @@ public class Avatar_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.avatar_fragment, container, false);
 
-        Avatar avatar = new Avatar(view,context);
-
-
-
+        Avatar avatar = new Avatar();
 
     return view;
     }

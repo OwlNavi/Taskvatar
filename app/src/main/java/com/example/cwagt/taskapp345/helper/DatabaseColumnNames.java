@@ -38,5 +38,9 @@ public final class DatabaseColumnNames {
 		public static final String TABLE_NAME = "user";
 		public static final String USER_NAME_NAME = "name";
 		public static final String USER_TYPE_NAME = "TEXT";
+		public static final String USER_NAME_ID = "id";
+		public static final String USER_TYPE_ID = "INTEGER";
+		public static final String USER_NAME_DESCRIPTION = "description";
+		public static final String USER_TYPE_DESCRIPTION = "TEXT";
 	}
 }

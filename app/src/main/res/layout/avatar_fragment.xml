@@ -15,7 +15,7 @@
         android:layout_height="153dp"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
-        app:srcCompat="@drawable/arm"
+        app:srcCompat="@drawable/left_arm"
 
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="153dp" />
@@ -39,7 +39,7 @@
         app:layout_constraintStart_toEndOf="@+id/base"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/arm" />
+        app:srcCompat="@drawable/left_arm" />
 
     <ImageView
         android:id="@+id/base"
@@ -50,7 +50,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/tosro" />
+        app:srcCompat="@drawable/base" />
 
     <ImageView
         android:id="@+id/left_leg"
@@ -58,7 +58,7 @@
         android:layout_height="181dp"
         android:layout_marginStart="132dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/leg"
+        app:srcCompat="@drawable/left_leg"
         tools:layout_editor_absoluteY="243dp" />
 
     <ImageView
@@ -67,7 +67,7 @@
         android:layout_height="181dp"
         android:layout_marginStart="24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/leg"
+        app:srcCompat="@drawable/left_leg"
         tools:layout_editor_absoluteY="243dp" />
 
 

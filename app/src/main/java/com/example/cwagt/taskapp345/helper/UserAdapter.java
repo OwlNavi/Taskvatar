@@ -1,7 +1,9 @@
 package com.example.cwagt.taskapp345.helper;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -18,6 +20,8 @@ import com.example.cwagt.taskapp345.view.MainActivity;
 import com.example.cwagt.taskapp345.view.UserHome;
 
 import java.util.List;
+
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 /**
  * Created by cwagt on 15/07/2018.
@@ -62,6 +66,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
                 User user = userList.get(position);
                 int userID = user.getUserID();
 
+                SharedPreferences preferences = getDefaultSharedPreferences(context);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putInt("currentUser", userID);
+                editor.commit();
                 //setUser(userID);
                 Intent mainMenuIntent = new Intent(context, MainActivity.class);
                 context.startActivity(mainMenuIntent);

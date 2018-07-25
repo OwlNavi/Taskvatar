@@ -93,7 +93,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	cursor.close();
 	*/
 
-	private static final int DATABASE_VERSION = 3;
+	private static final int DATABASE_VERSION = 4;
 	private static final String DATABASE_NAME = "Taskvatar.db";
 
 	private static final String SQL_CREATE_TASK_TABLE =
@@ -312,6 +312,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			sout("Error: could not open database for writing");
 			return -1;
 		}
+	}
+
+	public static ArrayList<User> getUsersFromDatabase(Context context){
+		return getUsersFromDatabase(context, "", new String[]{});
 	}
 
 	public static ArrayList<User> getUsersFromDatabase(Context context, String selection, String[] selectionArgs) {

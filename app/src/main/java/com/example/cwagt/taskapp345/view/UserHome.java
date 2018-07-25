@@ -18,6 +18,8 @@ import com.example.cwagt.taskapp345.object.User;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.app.PendingIntent.getActivity;
+
 /**
  * Created by cwagt on 15/07/2018.
  */

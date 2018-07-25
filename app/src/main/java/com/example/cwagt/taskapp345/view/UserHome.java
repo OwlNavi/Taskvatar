@@ -1,5 +1,6 @@
 package com.example.cwagt.taskapp345.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.cwagt.taskapp345.R;
+import com.example.cwagt.taskapp345.helper.DatabaseHelper;
 import com.example.cwagt.taskapp345.helper.UserAdapter;
 import com.example.cwagt.taskapp345.object.User;
 
@@ -26,17 +28,25 @@ import static android.app.PendingIntent.getActivity;
 
 public class UserHome extends AppCompatActivity {
     private RecyclerView userRecyclerView;
+    private Context context;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_layout);
-
+        context = getApplicationContext();
         //Create the user activity
         //TODO implement users pull from database
         //List<User> userList = DatabaseHelper.getUsersFromDatabase(context, "", new String[]{});
-        List<User> userList = defaultUserlist();
-        Log.d("UserHome", "onCreate: userList size: " + userList.size());
+        ArrayList<User> userList = DatabaseHelper.getAllUsersFromDatabase(context);
+        if(userList.size() == 0){
+            for(User user: defaultUserlist()){
+                DatabaseHelper.writeUserToDatabase(context, user);
+            }
+            userList = defaultUserlist();
+            Log.d("UserHome", "No users found, wrote default list to database");
+        }
+
         userRecyclerView = findViewById(R.id.userList);
         userRecyclerView.setHasFixedSize(true);
 
@@ -53,8 +63,8 @@ public class UserHome extends AppCompatActivity {
     }
 
     //creates a userlist separate from the database
-    private List<User> defaultUserlist(){
-        List<User> userList = new ArrayList<>();
+    private ArrayList<User> defaultUserlist(){
+        ArrayList<User> userList = new ArrayList<>();
         User user1 = new User("Alex", 1, "Alexander Example");
         User user2 = new User("Ben", 2, "Benjamen Default");
         User user3 = new User("Chris", 3, "Christopher Template");

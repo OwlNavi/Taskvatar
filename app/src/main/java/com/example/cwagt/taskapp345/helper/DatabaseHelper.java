@@ -335,7 +335,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 			// How you want the results sorted in the resulting Cursor
 			String sortOrder =
-					USER_NAME_NAME + " DESC";
+					USER_NAME_NAME;
 
 			Cursor cursor = db.query(
 					DatabaseColumnNames.User.TABLE_NAME,   // The table to query

@@ -6,10 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/holo_purple"
+    android:focusable="true"
     android:clickable="true">
 
 
     <ImageView
+        android:contentDescription="@string/right_arm"
         android:id="@+id/right_arm"
         android:layout_width="127dp"
         android:layout_height="153dp"
@@ -26,6 +28,7 @@
         tools:layout_editor_absoluteY="153dp" />
 
     <ImageView
+        android:contentDescription="@string/left_arm"
         android:id="@+id/left_arm"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -47,6 +50,7 @@
         app:srcCompat="@drawable/left_arm" />
 
     <ImageView
+        android:contentDescription="@string/base"
         android:id="@+id/base"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
@@ -58,6 +62,7 @@
         app:srcCompat="@drawable/base" />
 
     <ImageView
+        android:contentDescription="@string/left_leg"
         android:id="@+id/left_leg"
         android:layout_width="118dp"
         android:layout_height="181dp"
@@ -73,6 +78,7 @@
         tools:layout_editor_absoluteY="243dp" />
 
     <ImageView
+        android:contentDescription="@string/right_leg"
         android:id="@+id/right_leg"
         android:layout_width="118dp"
         android:layout_height="181dp"

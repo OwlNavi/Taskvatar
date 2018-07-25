@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity  {
 		//if the preference is not set go back to user page
 		SharedPreferences preferences = getDefaultSharedPreferences(context);
 		int userID = preferences.getInt("currentUser", 0);
+		Log.d("Current User", Integer.toString(userID));
 
 		//if the userID is not set go back to user page
 		if (userID == 0) {

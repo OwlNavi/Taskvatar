@@ -235,7 +235,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 			// How you want the results sorted in the resulting Cursor
 			String sortOrder =
-					TASK_NAME_TEXT + " DESC";
+					TASK_NAME_PRIORITY +
+					"," + TASK_NAME_TIME +
+					"," + TASK_NAME_TEXT
+			;
 
 			Cursor cursor = db.query(
 					DatabaseColumnNames.Task.TABLE_NAME,   // The table to query
@@ -312,10 +315,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			sout("Error: could not open database for writing");
 			return -1;
 		}
-	}
-
-	public static ArrayList<User> getUsersFromDatabase(Context context){
-		return getUsersFromDatabase(context, "", new String[]{});
 	}
 
 	public static ArrayList<User> getUsersFromDatabase(Context context, String selection, String[] selectionArgs) {

@@ -29,10 +29,6 @@ public class User {
 		this.userDescription = userDescription;
 	}
 
-	public User(String userName){
-		this.userName = userName;
-	}
-
 	public String getUserName() {
 		return userName;
 	}

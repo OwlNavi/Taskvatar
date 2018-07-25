@@ -43,7 +43,7 @@ public class UserHome extends AppCompatActivity {
         userLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         userRecyclerView.setLayoutManager(userLayoutManager);
 
-        UserAdapter userAdapter = new UserAdapter(userList);
+        UserAdapter userAdapter = new UserAdapter(userList, UserHome.this);
 
         //userRecyclerView.setItemAnimator(new DefaultItemAnimator());
         //userRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));

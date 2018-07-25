@@ -1,5 +1,7 @@
 package com.example.cwagt.taskapp345.helper;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -12,6 +14,8 @@ import android.widget.TextView;
 
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.object.User;
+import com.example.cwagt.taskapp345.view.MainActivity;
+import com.example.cwagt.taskapp345.view.UserHome;
 
 import java.util.List;
 
@@ -24,6 +28,8 @@ import java.util.List;
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> {
 
     private List<User> userList;
+    private Context context;
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView username, userDescription, userID;
@@ -36,8 +42,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
         }
     }
 
-    public UserAdapter(List<User> userList) {
+    public UserAdapter(List<User> userList, Context context) {
+
         this.userList = userList;
+        this.context = context;
     }
 
     @Override
@@ -54,7 +62,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
                 User user = userList.get(position);
                 int userID = user.getUserID();
 
-                Log.d("UserAdapter", "userid: " + userID);
+                //setUser(userID);
+                Intent mainMenuIntent = new Intent(context, MainActivity.class);
+                context.startActivity(mainMenuIntent);
             }
 
             @Override

@@ -185,6 +185,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	public static int deleteTaskFromDatabase(Context context, Task task){
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
+		int success = -1;
 
 		if(checkDatabase(db)) {
 
@@ -197,7 +198,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			values[1] = task.getDescription();
 			values[2] = task.getTime();
 
-			int success = -1;
 			try {
 				success = db.delete(
 						DatabaseColumnNames.Task.TABLE_NAME,
@@ -207,11 +207,11 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			return success;
+
 		}else{
 			sout("Error: could not open database for deleting");
-			return -1;
 		}
+		return success;
 	}
 
 	public static ArrayList<Task> getTasksFromDatabase(Context context, String selection, String[] selectionArgs) {
@@ -357,6 +357,42 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			sout("Error: could not open database for reading");
 		}
 		return users;
+	}
+
+	public static ArrayList<User> getAllUsersFromDatabase(Context context) {
+		return getUsersFromDatabase(context, "", new String[]{});
+	}
+
+	public static int deleteUserFromDatabase(Context context, User user){
+		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
+		SQLiteDatabase db = mDbHelper.getWritableDatabase();
+		int success = -1;
+
+		if(checkDatabase(db)) {
+
+			String whereClause = USER_NAME_NAME + " = ?" +
+					" AND " + USER_NAME_ID + " = ?" +
+					" AND " + USER_NAME_DESCRIPTION + " = ?";
+
+			String[] values = new String[3];
+			values[0] = user.getUserName();
+			values[1] = "" + user.getUserID();
+			values[2] = user.getUserDescription();
+
+			try {
+				success = db.delete(
+						DatabaseColumnNames.User.TABLE_NAME,
+						whereClause,
+						values
+				);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}else{
+			sout("Error: could not open database for deleting");
+		}
+		return success;
 	}
 
 

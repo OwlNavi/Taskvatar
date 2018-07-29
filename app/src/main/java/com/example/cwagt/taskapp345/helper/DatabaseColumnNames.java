@@ -4,6 +4,7 @@ import android.provider.BaseColumns;
 
 /**
  * Database helper. This has all of the column names and data types for Task, Avatar, and User
+ * The format is: [Object (TASK | AVATAR | USER)]_[(NAME | TYPE)]_[Field name]
  */
 public final class DatabaseColumnNames {
 

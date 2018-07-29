@@ -16,84 +16,14 @@ import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.Task.*;
 import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.Avatar.*;
 import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.User.*;
 
+/**
+ * This is the database helper, which abstracts the database. You just call the methods and the DatabaseHelper class will do it for you. Be sure to use return types sensibly
+ * The writeX methods return the rowID
+ * If you add/delete/change fields, don't forget to increment the database version
+ */
 public class DatabaseHelper extends SQLiteOpenHelper{
 
 	//https://developer.android.com/training/data-storage/sqlite
-
-	/*
-	//Writing to database
-	// Gets the data repository in write mode
-	SQLiteDatabase db = mDbHelper.getWritableDatabase();
-
-	// Create a new map of values, where column names are the keys
-	ContentValues values = new ContentValues();
-	values.put(TASK_NAME_TEXT, text);
-	values.put(TASK_NAME_DESCRIPTION, description);
-	values.put(TASK_NAME_REMINDER, reminder);
-	values.put(TASK_NAME_PRIORITY, importance);
-	values.put(TASK_NAME_FREQUENCY, frequency);
-	values.put(TASK_NAME_STATUS, status);
-	values.put(TASK_NAME_TIME, time);
-
-	// Insert the new row, returning the primary key value of the new row
-	long newRowId = db.insert(Task.TABLE_NAME, null, values);
-	*/
-
-	/*
-	//Reading from database
-	SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
-	// Define a projection that specifies which columns from the database
-	// you will actually use after this query.
-	String[] projection = {
-			BaseColumns._ID,
-			TASK_NAME_TEXT,
-			TASK_NAME_DESCRIPTION,
-			TASK_NAME_REMINDER,
-			TASK_NAME_PRIORITY,
-			TASK_NAME_FREQUENCY,
-			TASK_NAME_STATUS,
-			TASK_NAME_TIME
-	};
-
-	// Filter results WHERE "text" = 'Task text'
-	String selection = TASK_NAME_TEXT + " = ?"; //can use multiple "?" as placeholders
-	String[] selectionArgs = { "Task text" }; //use comma separated list here
-
-	// How you want the results sorted in the resulting Cursor
-	String sortOrder =
-			TASK_NAME_TEXT + " DESC";
-
-	Cursor cursor = db.query(
-			DatabaseColumnNames.Task.TABLE_NAME,   // The table to query
-			projection,             // The array of columns to return (pass null to get all)
-			selection,              // The columns for the WHERE clause
-			selectionArgs,          // The values for the WHERE clause
-			null,                   // don't group the rows
-			null,                   // don't filter by row groups
-			sortOrder               // The sort order
-	);
-
-	//now put data into an arraylist
-	List itemIds = new ArrayList<>();
-	while(cursor.moveToNext()) {
-	  long itemId = cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseColumnNames.Task._ID));
-	  itemIds.add(itemId);
-	}
-	//can now access all item IDs
-
-	//maybe something like...
-	Task thisTask = new Task();
-	while(cursor.moveToNext()) {
-		thisTask.setText(cursor.getText(cursor.getColumnIndexOrThrow(TASK_NAME_TEXT)));
-		thisTask.setDescription(cursor.getText(cursor.getColumnIndexOrThrow(TASK_NAME_DESCRIPTION)));
-		thisTask.setFrequency(cursor.getText(cursor.getColumnIndexOrThrow(TASK_NAME_FREQUENCY)));
-		//...
-	}
-	//and now thisTask is an object that can be interacted with?
-
-	cursor.close();
-	*/
 
 	private static final int DATABASE_VERSION = 4;
 	private static final String DATABASE_NAME = "Taskvatar.db";
@@ -119,7 +49,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 					", " + AVATAR_NAME_RIGHT_ARM_ROTATION + " " + AVATAR_TYPE_RIGHT_ARM_ROTATION +
 					", " + AVATAR_NAME_LEFT_LEG_ROTATION + " " + AVATAR_TYPE_LEFT_LEG_ROTATION +
 					", " + AVATAR_NAME_RIGHT_LEG_ROTATION + " " + AVATAR_TYPE_RIGHT_LEG_ROTATION +
-					")";
+			")";
 
 	private static final String SQL_CREATE_USER_TABLE =
 			"CREATE TABLE " + DatabaseColumnNames.User.TABLE_NAME + " (" +
@@ -159,6 +89,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		onCreate(db);
 	}
 
+	/* Tasks */
 
 	public static long writeTaskToDatabase(Context context, Task task){
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
@@ -298,6 +229,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 	}
 
+	/* Users */
 
 	public static long writeUserToDatabase(Context context, User user){
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
@@ -338,10 +270,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 					USER_NAME_DESCRIPTION
 			};
 
-			// How you want the results sorted in the resulting Cursor
-			String sortOrder =
-					USER_NAME_NAME;
-
 			Cursor cursor = db.query(
 					DatabaseColumnNames.User.TABLE_NAME,   // The table to query
 					projection,             // The array of columns to return (pass null to get all)
@@ -349,7 +277,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 					selectionArgs,          // The values for the WHERE clause
 					null,                   // don't group the rows
 					null,                   // don't filter by row groups
-					sortOrder               // The sort order
+					USER_NAME_NAME               // The sort order
 			);
 
 			while (cursor.moveToNext()) {
@@ -404,7 +332,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return success;
 	}
 
-
+	/* Avatars */
 
 	public static long writeAvatarToDatabase(Context context, Avatar avatar){
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
@@ -451,10 +379,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 					AVATAR_NAME_RIGHT_LEG_ROTATION
 			};
 
-			// How you want the results sorted in the resulting Cursor
-			String sortOrder =
-					AVATAR_NAME_LEFT_ARM_ROTATION;
-
 			Cursor cursor = db.query(
 					DatabaseColumnNames.User.TABLE_NAME,   // The table to query
 					projection,             // The array of columns to return (pass null to get all)
@@ -462,7 +386,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 					selectionArgs,          // The values for the WHERE clause
 					null,                   // don't group the rows
 					null,                   // don't filter by row groups
-					sortOrder               // The sort order
+					AVATAR_NAME_ID               // The sort order
 			);
 
 			while (cursor.moveToNext()) {
@@ -520,6 +444,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return success;
 	}
 
+	/* Auxiliary */
 
 	private static boolean checkDatabase(SQLiteDatabase db) {
 		if(db == null){

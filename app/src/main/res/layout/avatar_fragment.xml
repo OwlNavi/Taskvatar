@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/avatar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,89 +8,88 @@
     android:focusable="true"
     android:clickable="true">
 
-
     <ImageView
-        android:contentDescription="@string/right_arm"
-        android:id="@+id/right_arm"
-        android:layout_width="127dp"
-        android:layout_height="153dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitXY"
-        app:srcCompat="@drawable/left_arm"
-
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="153dp" />
-
-    <ImageView
-        android:contentDescription="@string/left_arm"
-        android:id="@+id/left_arm"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="7dp"
-
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="46dp"
-
-        android:adjustViewBounds="true"
-        android:rotation="180"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toTopOf="@+id/base"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/base"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/left_arm" />
-
-    <ImageView
-        android:contentDescription="@string/base"
         android:id="@+id/base"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginBottom="22dp"
-        app:layout_constraintBottom_toTopOf="@+id/right_arm"
-        app:layout_constraintStart_toStartOf="parent"
+        android:contentDescription="@string/base"
+        app:srcCompat="@drawable/base_red"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/base" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+    />
 
     <ImageView
-        android:contentDescription="@string/left_leg"
+        android:id="@+id/right_arm"
+        android:contentDescription="@string/right_arm"
+        app:srcCompat="@drawable/right_arm_robot"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+    />
+
+    <ImageView
+        android:id="@+id/left_arm"
+        android:contentDescription="@string/left_arm"
+        app:srcCompat="@drawable/left_arm_muscly"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+    />
+
+    <ImageView
         android:id="@+id/left_leg"
-        android:layout_width="118dp"
-        android:layout_height="181dp"
-        android:layout_marginStart="132dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/left_leg"
+        android:contentDescription="@string/left_leg"
+        app:srcCompat="@drawable/left_leg_robot"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
 
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-
-        tools:layout_editor_absoluteY="243dp" />
+    />
 
     <ImageView
-        android:contentDescription="@string/right_leg"
         android:id="@+id/right_leg"
-        android:layout_width="118dp"
-        android:layout_height="181dp"
-        android:layout_marginStart="24dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/left_leg"
+        android:contentDescription="@string/right_leg"
+        app:srcCompat="@drawable/right_leg_muscly"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
 
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+    />
 
-        tools:layout_editor_absoluteY="243dp" />
+    <ImageView
+            android:id="@+id/hat"
+            android:contentDescription="@string/hat"
+            app:srcCompat="@drawable/hat_crown"
 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+    />
 
 </android.support.constraint.ConstraintLayout>

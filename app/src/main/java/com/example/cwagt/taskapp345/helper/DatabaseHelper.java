@@ -221,7 +221,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		Task task;
 
 		for(int i=0; i<10; i++){
-			task = new Task("Example task", "Description", "12:00 am");
+			task = new Task("Example task " + i, "Description", "12:00 am");
 			taskList.add(task);
 		}
 

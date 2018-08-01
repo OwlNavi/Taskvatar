@@ -11,6 +11,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.helper.DatabaseHelper;
@@ -35,8 +37,7 @@ public class UserHome extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_layout);
         context = getApplicationContext();
-        //Create the user activity
-        //TODO implement users pull from database
+
         //List<User> userList = DatabaseHelper.getUsersFromDatabase(context, "", new String[]{});
         ArrayList<User> userList = DatabaseHelper.getAllUsersFromDatabase(context);
         if(userList.size() == 0){
@@ -60,6 +61,16 @@ public class UserHome extends AppCompatActivity {
         //userRecyclerView.setItemAnimator(new DefaultItemAnimator());
         //userRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         userRecyclerView.setAdapter(userAdapter);
+
+        //Button code
+        final Button button = findViewById(R.id.buttonAddUser);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Code here executes on main thread after user presses button
+                Intent addUserIntent = new Intent(context, AddUser.class);
+                startActivity(addUserIntent);
+            }
+        });
     }
 
     //creates a userlist separate from the database

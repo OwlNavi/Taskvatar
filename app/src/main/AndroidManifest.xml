@@ -23,6 +23,10 @@
             android:label="AvatarHome">
         </activity>
         <activity
+            android:name=".view.AddUser"
+            android:label="AddUser">
+        </activity>
+        <activity
             android:name=".view.UserHome"
             android:label="UserHome">
             <intent-filter>

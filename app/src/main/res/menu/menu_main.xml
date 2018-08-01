@@ -20,7 +20,11 @@
 
     <item
         android:id="@+id/menu_user"
-        android:title="Users"
-        app:showAsAction="always" />
+        android:title="Change User"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_tasks"
+        android:title="Edit Tasks"
+        app:showAsAction="never" />
 
 </menu>

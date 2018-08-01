@@ -164,13 +164,21 @@ public class ExampleInstrumentedTest {
 
 	private Avatar createRandomAvatar(User user){
 		Random rand = new Random();
-		
-		float leftArm = rand.nextInt(360) + 1;
-		float rightArm = rand.nextInt(360) + 1;
-		float leftLeg = rand.nextInt(360) + 1;
-		float rightLeg = rand.nextInt(360) + 1;
-		
-		return new Avatar(leftArm, rightArm, leftLeg, rightLeg, user);
+
+		Integer avatarID = rand.nextInt(360) + 1;
+
+    	String base = "base_red";
+		String leftArm = "left_arm";
+		String rightArm = "right_arm";
+		String leftLeg = "left_leg";
+		String rightLeg = "right_leg";
+
+		float leftArmRotation = rand.nextInt(360) + 1;
+		float rightArmRotation = rand.nextInt(360) + 1;
+		float leftLegRotation = rand.nextInt(360) + 1;
+		float rightLegRotation = rand.nextInt(360) + 1;
+
+		return new Avatar(avatarID, base, leftArm, rightArm, leftLeg, rightLeg, user, leftArmRotation, rightArmRotation, leftLegRotation, rightLegRotation);
 	}
 	
 	@Test
@@ -193,25 +201,28 @@ public class ExampleInstrumentedTest {
 		assertNotEquals(-1, isDeleted);
 	}
 
-	private Avatar createAvatar(float leftArm, float rightArm, float leftLeg, float rightLeg, User user){
-    	return new Avatar(leftArm, rightArm, leftLeg, rightLeg, user);
-	}
-	
 	@Test
 	public void readAvatarFromDB(){
 		Context context = InstrumentationRegistry.getTargetContext();
 
 		Random rand = new Random();
-		float leftArm = rand.nextInt(360) + 1;
-		float rightArm = rand.nextInt(360) + 1;
-		float leftLeg = rand.nextInt(360) + 1;
-		float rightLeg = rand.nextInt(360) + 1;
+		int avatarID = rand.nextInt(360) + 1;
 
-		//create user
+		String base = "base_red";
+		String leftArm = "left_arm";
+		String rightArm = "right_arm";
+		String leftLeg = "left_leg";
+		String rightLeg = "right_leg";
+
 		User user = createRandomUser();
 
+		float leftArmRotation = rand.nextInt(360) + 1;
+		float rightArmRotation = rand.nextInt(360) + 1;
+		float leftLegRotation = rand.nextInt(360) + 1;
+		float rightLegRotation = rand.nextInt(360) + 1;
+
 		//create avatar
-		Avatar avatar = createAvatar(leftArm, rightArm, leftLeg, rightLeg, user);
+		Avatar avatar = new Avatar(avatarID, base, leftArm, rightArm, leftLeg, rightLeg, user, leftArmRotation, rightArmRotation, leftLegRotation, rightLegRotation);
 		long rowID = writeAvatarToDatabase(context, avatar);
 		assertNotEquals(-1, rowID);
 
@@ -220,10 +231,18 @@ public class ExampleInstrumentedTest {
 		assertEquals(1, allAvatars.size());
 		Avatar avatarFromDb = allAvatars.get(0);
 		//assertArrayEquals(avatar, avatarFromDb);
-		assertEquals(leftArm, avatarFromDb.getLeftArmRotation(), 0.1);
-		assertEquals(rightArm, avatarFromDb.getRightArmRotation(), 0.1);
-		assertEquals(leftLeg, avatarFromDb.getLeftLegRotation(), 0.1);
-		assertEquals(rightLeg, avatarFromDb.getRightLegRotation(), 0.1);
+		assertEquals(avatarID, avatarFromDb.getAvatarID());
+		assertEquals(base, avatarFromDb.getBase());
+
+		assertEquals(leftArm, avatarFromDb.getLeftArm());
+		assertEquals(rightArm, avatarFromDb.getRightArm());
+		assertEquals(leftLeg, avatarFromDb.getLeftLeg());
+		assertEquals(rightLeg, avatarFromDb.getRightLeg());
+
+		assertEquals(leftArmRotation, avatarFromDb.getLeftArmRotation(), 0.1);
+		assertEquals(rightArmRotation, avatarFromDb.getRightArmRotation(), 0.1);
+		assertEquals(leftLegRotation, avatarFromDb.getLeftLegRotation(), 0.1);
+		assertEquals(rightLegRotation, avatarFromDb.getRightLegRotation(), 0.1);
 
 		//delete user
 		int delUser = deleteUserFromDatabase(context, user);

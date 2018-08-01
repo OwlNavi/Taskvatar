@@ -30,35 +30,54 @@ import com.example.cwagt.taskapp345.view.AvatarHome;
 import com.example.cwagt.taskapp345.view.MainActivity;
 
 public class Avatar {
-	private User user;
+
 	private int avatarID;
-	private float leftArmRotation;
-	private float rightArmRotation;
-	private float leftLegRotation;
-	private float rightLegRotation;
+	private float leftArmRotation, rightArmRotation, leftLegRotation, rightLegRotation;
+	private User user;
+	private String base, leftArm, rightArm, leftLeg, rightLeg;
 
-
-	ImageView base, leftArm, rightArm, leftLeg, rightLeg;
 	List<ImageView> body = new ArrayList<>();
 
-
-
-
 	public Avatar(){
+		this.avatarID = 0;
+
+		this.base = "base_red";
+		this.leftArm = "left_arm";
+		this.rightArm = "right_arm";
+		this.leftLeg = "left_leg";
+		this.rightLeg = "right_leg";
+
+		//this.user = ??
+
 		this.leftArmRotation = 0;
 		this.rightArmRotation = 0;
 		this.leftLegRotation = 0;
 		this.rightLegRotation = 0;
-
-
 	}
 
-	public Avatar(float leftArmRotation, float rightArmRotation, float leftLegRotation, float rightLegRotation, User user) {
+	public Avatar(Integer avatarID, String base, String leftArm, String rightArm, String leftLeg, String rightLeg, User user, float leftArmRotation, float rightArmRotation, float leftLegRotation, float rightLegRotation) {
+		this.avatarID = avatarID;
+
+		this.base = base;
+		this.leftArm = leftArm;
+		this.rightArm = rightArm;
+		this.leftLeg = leftLeg;
+		this.rightLeg = rightLeg;
+
+		this.user = user;
+
 		this.leftArmRotation = leftArmRotation;
 		this.rightArmRotation = rightArmRotation;
 		this.leftLegRotation = leftLegRotation;
 		this.rightLegRotation = rightLegRotation;
-		this.user = user;
+	}
+
+	public int getAvatarID() {
+		return avatarID;
+	}
+
+	public void setAvatarID(int avatarID) {
+		this.avatarID = avatarID;
 	}
 
 	public float getLeftArmRotation() {
@@ -93,6 +112,65 @@ public class Avatar {
 		this.rightLegRotation = rightLegRotation;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public String getBase() {
+		return base;
+	}
+
+	public void setBase(String base) {
+		this.base = base;
+	}
+
+	public String getLeftArm() {
+		return leftArm;
+	}
+
+	public void setLeftArm(String leftArm) {
+		this.leftArm = leftArm;
+	}
+
+	public String getRightArm() {
+		return rightArm;
+	}
+
+	public void setRightArm(String rightArm) {
+		this.rightArm = rightArm;
+	}
+
+	public String getLeftLeg() {
+		return leftLeg;
+	}
+
+	public void setLeftLeg(String leftLeg) {
+		this.leftLeg = leftLeg;
+	}
+
+	public String getRightLeg() {
+		return rightLeg;
+	}
+
+	public void setRightLeg(String rightLeg) {
+		this.rightLeg = rightLeg;
+	}
+
+	public List<ImageView> getBody() {
+		return body;
+	}
+
+	public void setBody(List<ImageView> body) {
+		this.body = body;
+	}
+
+	public int getUserID(){
+		return user.getUserID();
+	}
 
 	public int getID() {
 		return avatarID;

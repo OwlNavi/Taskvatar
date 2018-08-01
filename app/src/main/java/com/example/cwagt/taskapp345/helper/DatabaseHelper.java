@@ -19,13 +19,13 @@ import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.User.*;
 /**
  * This is the database helper, which abstracts the database. You just call the methods and the DatabaseHelper class will do it for you. Be sure to use return types sensibly
  * The writeX methods return the rowID
- * If you add/delete/change fields, don't forget to increment the database version
+ * If you add/delete/change ANYTHING, don't forget to increment the database version
  */
 public class DatabaseHelper extends SQLiteOpenHelper{
 
 	//https://developer.android.com/training/data-storage/sqlite
 
-	private static final int DATABASE_VERSION = 4;
+	private static final int DATABASE_VERSION = 5;
 	private static final String DATABASE_NAME = "Taskvatar.db";
 
 	private static final String SQL_CREATE_TASK_TABLE =
@@ -45,6 +45,15 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			"CREATE TABLE " + DatabaseColumnNames.Avatar.TABLE_NAME + " (" +
 					DatabaseColumnNames.Avatar._ID + " INTEGER PRIMARY KEY" +
 					", " + AVATAR_NAME_ID + " " + AVATAR_TYPE_ID +
+
+					", " + AVATAR_NAME_BASE + " " + AVATAR_TYPE_BASE +
+					", " + AVATAR_NAME_LEFT_ARM + " " + AVATAR_TYPE_LEFT_ARM +
+					", " + AVATAR_NAME_RIGHT_ARM + " " + AVATAR_TYPE_RIGHT_ARM +
+					", " + AVATAR_NAME_LEFT_LEG + " " + AVATAR_TYPE_LEFT_LEG +
+					", " + AVATAR_NAME_RIGHT_LEG + " " + AVATAR_TYPE_RIGHT_LEG +
+
+					", " + AVATAR_NAME_USER + " " + AVATAR_TYPE_USER +
+
 					", " + AVATAR_NAME_LEFT_ARM_ROTATION + " " + AVATAR_TYPE_LEFT_ARM_ROTATION +
 					", " + AVATAR_NAME_RIGHT_ARM_ROTATION + " " + AVATAR_TYPE_RIGHT_ARM_ROTATION +
 					", " + AVATAR_NAME_LEFT_LEG_ROTATION + " " + AVATAR_TYPE_LEFT_LEG_ROTATION +
@@ -341,6 +350,15 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 			ContentValues values = new ContentValues();
 			values.put(AVATAR_NAME_ID, avatar.getID());
+
+			values.put(AVATAR_NAME_BASE, avatar.getBase());
+			values.put(AVATAR_NAME_LEFT_ARM, avatar.getLeftArm());
+			values.put(AVATAR_NAME_RIGHT_ARM, avatar.getRightArm());
+			values.put(AVATAR_NAME_LEFT_LEG, avatar.getLeftLeg());
+			values.put(AVATAR_NAME_RIGHT_LEG, avatar.getRightLeg());
+
+			values.put(AVATAR_NAME_USER, avatar.getUserID());
+
 			values.put(AVATAR_NAME_LEFT_ARM_ROTATION, avatar.getLeftArmRotation());
 			values.put(AVATAR_NAME_RIGHT_ARM_ROTATION, avatar.getRightArmRotation());
 			values.put(AVATAR_NAME_LEFT_LEG_ROTATION, avatar.getLeftLegRotation());
@@ -368,20 +386,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		String[] selectionArgs = new String[]{String.valueOf(user.getUserID())};
 		if(checkDatabase(db)) {
 
-			//String selection = TASK_NAME_TEXT + " = ?"; //can use multiple "?" as placeholders
-			//String[] selectionArgs = { "Task text" }; //use comma separated list here
-
-			String[] projection = {
-					AVATAR_NAME_ID,
-					AVATAR_NAME_LEFT_ARM_ROTATION,
-					AVATAR_NAME_RIGHT_ARM_ROTATION,
-					AVATAR_NAME_LEFT_LEG_ROTATION,
-					AVATAR_NAME_RIGHT_LEG_ROTATION
-			};
-
 			Cursor cursor = db.query(
-					DatabaseColumnNames.User.TABLE_NAME,   // The table to query
-					projection,             // The array of columns to return (pass null to get all)
+					DatabaseColumnNames.Avatar.TABLE_NAME,   // The table to query
+					null,             // The array of columns to return (pass null to get all)
 					selection,              // The columns for the WHERE clause
 					selectionArgs,          // The values for the WHERE clause
 					null,                   // don't group the rows
@@ -391,11 +398,20 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 			while (cursor.moveToNext()) {
 				Avatar thisAvatar = new Avatar(
+						cursor.getInt(cursor.getColumnIndexOrThrow(AVATAR_NAME_ID)),
+
+						cursor.getString(cursor.getColumnIndexOrThrow(AVATAR_NAME_BASE)),
+						cursor.getString(cursor.getColumnIndexOrThrow(AVATAR_NAME_LEFT_ARM)),
+						cursor.getString(cursor.getColumnIndexOrThrow(AVATAR_NAME_RIGHT_ARM)),
+						cursor.getString(cursor.getColumnIndexOrThrow(AVATAR_NAME_LEFT_LEG)),
+						cursor.getString(cursor.getColumnIndexOrThrow(AVATAR_NAME_RIGHT_LEG)),
+
+						user,
+
 						cursor.getFloat(cursor.getColumnIndexOrThrow(AVATAR_NAME_LEFT_ARM_ROTATION)),
 						cursor.getFloat(cursor.getColumnIndexOrThrow(AVATAR_NAME_RIGHT_ARM_ROTATION)),
 						cursor.getFloat(cursor.getColumnIndexOrThrow(AVATAR_NAME_LEFT_LEG_ROTATION)),
-						cursor.getFloat(cursor.getColumnIndexOrThrow(AVATAR_NAME_RIGHT_LEG_ROTATION)),
-						user
+						cursor.getFloat(cursor.getColumnIndexOrThrow(AVATAR_NAME_RIGHT_LEG_ROTATION))
 				);
 				avatars.add(thisAvatar);
 			}
@@ -415,22 +431,41 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		if(checkDatabase(db)) {
 
 			String whereClause = AVATAR_NAME_ID + " = ?" +
+
+					" AND " + AVATAR_NAME_BASE + " = ?" +
+					" AND " + AVATAR_NAME_LEFT_ARM + " = ?" +
+					" AND " + AVATAR_NAME_RIGHT_ARM + " = ?" +
+					" AND " + AVATAR_NAME_LEFT_LEG + " = ?" +
+					" AND " + AVATAR_NAME_RIGHT_LEG + " = ?" +
+
+					" AND " + AVATAR_NAME_USER + " = ?" +
+
 					" AND " + AVATAR_NAME_LEFT_ARM_ROTATION + " = ?" +
 					" AND " + AVATAR_NAME_RIGHT_ARM_ROTATION + " = ?" +
 					" AND " + AVATAR_NAME_LEFT_LEG_ROTATION + " = ?" +
 					" AND " + AVATAR_NAME_RIGHT_LEG_ROTATION + " = ?"
 			;
 
-			String[] values = new String[5];
-			values[0] = "" + avatar.getID();
-			values[1] = "" + avatar.getLeftArmRotation();
-			values[2] = "" + avatar.getRightArmRotation();
-			values[3] = "" + avatar.getLeftLegRotation();
-			values[4] = "" + avatar.getRightLegRotation();
+			String[] values = new String[11];
+			int i = 0;
+			values[i++] = "" + avatar.getID();
+
+			values[i++] = "" + avatar.getBase();
+			values[i++] = "" + avatar.getLeftArm();
+			values[i++] = "" + avatar.getRightArm();
+			values[i++] = "" + avatar.getLeftLeg();
+			values[i++] = "" + avatar.getRightLeg();
+
+			values[i++] = "" + avatar.getUserID();
+
+			values[i++] = "" + avatar.getLeftArmRotation();
+			values[i++] = "" + avatar.getRightArmRotation();
+			values[i++] = "" + avatar.getLeftLegRotation();
+			values[i++] = "" + avatar.getRightLegRotation();
 
 			try {
 				success = db.delete(
-						DatabaseColumnNames.User.TABLE_NAME,
+						DatabaseColumnNames.Avatar.TABLE_NAME,
 						whereClause,
 						values
 				);

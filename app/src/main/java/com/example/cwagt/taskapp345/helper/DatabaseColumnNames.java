@@ -33,8 +33,22 @@ public final class DatabaseColumnNames {
 		public static final String TABLE_NAME = "avatar";
 		public static final String AVATAR_NAME_ID = "avatarID";
 		public static final String AVATAR_TYPE_ID = "INTEGER";
+
+		public static final String AVATAR_NAME_BASE = "base";
+		public static final String AVATAR_TYPE_BASE = "INTEGER";
+
+		public static final String AVATAR_NAME_LEFT_ARM = "leftArm";
+		public static final String AVATAR_TYPE_LEFT_ARM = "TEXT";
+		public static final String AVATAR_NAME_RIGHT_ARM = "rightArm";
+		public static final String AVATAR_TYPE_RIGHT_ARM = "TEXT";
+		public static final String AVATAR_NAME_LEFT_LEG = "leftLeg";
+		public static final String AVATAR_TYPE_LEFT_LEG = "TEXT";
+		public static final String AVATAR_NAME_RIGHT_LEG = "rightLeg";
+		public static final String AVATAR_TYPE_RIGHT_LEG = "TEXT";
+
 		public static final String AVATAR_NAME_USER = "userID";
 		public static final String AVATAR_TYPE_USER = "INTEGER";
+
 		public static final String AVATAR_NAME_LEFT_ARM_ROTATION = "leftArmRotation";
 		public static final String AVATAR_TYPE_LEFT_ARM_ROTATION = "INTEGER";
 		public static final String AVATAR_NAME_RIGHT_ARM_ROTATION = "rightArmRotation";

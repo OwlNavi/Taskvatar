@@ -77,8 +77,17 @@ public class EditTask extends AppCompatActivity {
         taskRecyclerView.setAdapter(mAdapter);
 
         //Button code
-        final Button button = findViewById(R.id.submitTaskButton);
-        button.setOnClickListener(new View.OnClickListener() {
+        final Button taskButton = findViewById(R.id.buttonAddTask);
+        taskButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Code here executes on main thread after user presses button
+
+                //return to main menu
+                startActivity(new Intent(context, AddTask.class));
+            }
+        });
+        final Button submitButton = findViewById(R.id.submitTaskButton);
+        submitButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
 

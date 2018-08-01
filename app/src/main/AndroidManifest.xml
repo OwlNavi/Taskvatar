@@ -23,6 +23,10 @@
             android:label="AvatarHome">
         </activity>
         <activity
+            android:name=".view.EditTask"
+            android:label="EditTask">
+        </activity>
+        <activity
             android:name=".view.AddUser"
             android:label="AddUser">
         </activity>

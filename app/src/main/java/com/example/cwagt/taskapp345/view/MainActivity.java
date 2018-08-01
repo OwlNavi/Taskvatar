@@ -116,6 +116,11 @@ public class MainActivity extends AppCompatActivity  {
 				Intent avatarIntent = new Intent(this, AvatarHome.class);
 				startActivity(avatarIntent);
 				break;
+
+			case R.id.menu_tasks:
+				Intent editTaskIntent = new Intent(this, EditTask.class);
+				startActivity(editTaskIntent);
+				break;
 		}
 
         return super.onOptionsItemSelected(item);

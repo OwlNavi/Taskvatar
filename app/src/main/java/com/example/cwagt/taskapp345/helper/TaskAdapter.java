@@ -39,17 +39,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 		final View itemView = LayoutInflater.from(parent.getContext())
 				.inflate(R.layout.task_list_row, parent, false);
 
-		itemView.setBackgroundColor(Color.RED);
+		itemView.setBackgroundColor(Color.WHITE);
 
 		final RecyclerView recyclerView = parent.findViewById(R.id.taskList);
 		recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(recyclerView.getContext(), recyclerView, new RecyclerItemClickListener.ClickListener() {
 			@Override
 			public void onClick(View view, int position) {
 				//Log.d("debug", "click");
-
-
-
-
                 //change background colour
                 //see https://stackoverflow.com/questions/36352945/how-to-get-color-of-a-button-with-ripple-drawable
                 Drawable background = view.getBackground();
@@ -64,16 +60,16 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
                 //change color
                 switch (backgroundColor){
                     case Color.WHITE:
-                        view.setBackgroundColor(Color.RED);
+                        view.setBackgroundColor(Color.GREEN);
                         break;
                     case Color.RED:
-                        view.setBackgroundColor(Color.YELLOW);
+                        view.setBackgroundColor(Color.GREEN);
                         break;
                     case Color.YELLOW:
                         view.setBackgroundColor(Color.GREEN);
                         break;
                     case Color.GREEN:
-                        view.setBackgroundColor(Color.RED);
+                        view.setBackgroundColor(Color.WHITE);
                         break;
                     default:
                         view.setBackgroundColor(Color.WHITE);

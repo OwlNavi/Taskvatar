@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity  {
 		List<Task> taskList = DatabaseHelper.getAllTasksFromDatabase(context);
 
 		taskRecyclerView = findViewById(R.id.taskList);
-		TaskAdapter mAdapter = new TaskAdapter(taskList);
+		TaskAdapter mAdapter = new TaskAdapter(context, taskList);
 		RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
 		taskRecyclerView.setLayoutManager(mLayoutManager);
 		taskRecyclerView.setItemAnimator(new DefaultItemAnimator());

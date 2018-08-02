@@ -13,13 +13,20 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.helper.DatabaseColumnNames;
 import com.example.cwagt.taskapp345.helper.DatabaseHelper;
 import com.example.cwagt.taskapp345.helper.TaskAdapter;
+import com.example.cwagt.taskapp345.object.Enums;
 import com.example.cwagt.taskapp345.object.Task;
 import com.example.cwagt.taskapp345.object.User;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +45,7 @@ public class MainActivity extends AppCompatActivity  {
     RecyclerView taskRecyclerView;
 
     private User currentUser;
+    private List<Task> taskList;
 
     private Context context = MainActivity.this;
 
@@ -77,17 +85,18 @@ public class MainActivity extends AppCompatActivity  {
 
 
         //if(!getAvatar(db)) sout("Error getting avatar");
-		List<Task> taskList = DatabaseHelper.getAllTasksFromDatabase(context);
+		taskList = DatabaseHelper.getAllTasksFromDatabase(context);
 
 		taskRecyclerView = findViewById(R.id.taskList);
 		TaskAdapter mAdapter = new TaskAdapter(context, taskList);
+		mAdapter.setTextCompletedView((TextView) findViewById(R.id.textTasksCompleted));
 		RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
 		taskRecyclerView.setLayoutManager(mLayoutManager);
 		taskRecyclerView.setItemAnimator(new DefaultItemAnimator());
 		taskRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 		taskRecyclerView.setAdapter(mAdapter);
-
-	}
+        ;
+    }
 
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {

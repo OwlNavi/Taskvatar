@@ -21,6 +21,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 
 	private List<Task> taskList;
 	private Context context;
+	private TextView textTasksCompleted;
+
 
 	public class MyViewHolder extends RecyclerView.ViewHolder {
 		private TextView title, time, description;
@@ -38,6 +40,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 	public TaskAdapter(Context context, List<Task> taskList) {
 		this.taskList = taskList;
 		this.context = context;
+	}
+
+	public void setTextCompletedView(TextView view){
+		textTasksCompleted = view;
 	}
 
 	@Override
@@ -74,6 +80,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 				DatabaseHelper.deleteTaskFromDatabase(context, task);
 				DatabaseHelper.writeTaskToDatabase(context, task);
 
+				//update display of tasks completed
+				int completed = 0;
+				for(Task local_task: taskList){
+					if(local_task.getStatus() == Enums.Status.COMPLETED) completed++;
+				}
+				textTasksCompleted.setText(Integer.toString(completed));
 
 			}
 

@@ -1,5 +1,6 @@
 package com.example.cwagt.taskapp345.helper;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.cwagt.taskapp345.R;
+import com.example.cwagt.taskapp345.object.Enums;
 import com.example.cwagt.taskapp345.object.Task;
 
 import java.util.List;
@@ -18,20 +20,30 @@ import java.util.List;
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> {
 
 	private List<Task> taskList;
+	private Context context;
+	private TextView textTasksCompleted;
+
 
 	public class MyViewHolder extends RecyclerView.ViewHolder {
 		private TextView title, time, description;
+		private View view;
 
 		private MyViewHolder(View view) {
 			super(view);
 			title = view.findViewById(R.id.title);
 			description = view.findViewById(R.id.description);
 			time = view.findViewById(R.id.time);
+			this.view = view;
 		}
 	}
 
-	public TaskAdapter(List<Task> taskList) {
+	public TaskAdapter(Context context, List<Task> taskList) {
 		this.taskList = taskList;
+		this.context = context;
+	}
+
+	public void setTextCompletedView(TextView view){
+		textTasksCompleted = view;
 	}
 
 	@Override
@@ -46,35 +58,34 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 			@Override
 			public void onClick(View view, int position) {
 				//Log.d("debug", "click");
-                //change background colour
-                //see https://stackoverflow.com/questions/36352945/how-to-get-color-of-a-button-with-ripple-drawable
                 Drawable background = view.getBackground();
-
-                int backgroundColor = 0;
-
-                if (background instanceof ColorDrawable)
-                    backgroundColor = ((ColorDrawable) background).getColor();
 
                 //Log.d("debug", "Background color: " + backgroundColor);
 
                 //change color
-                switch (backgroundColor){
-                    case Color.WHITE:
-                        view.setBackgroundColor(Color.GREEN);
-                        break;
-                    case Color.RED:
-                        view.setBackgroundColor(Color.GREEN);
-                        break;
-                    case Color.YELLOW:
-                        view.setBackgroundColor(Color.GREEN);
-                        break;
-                    case Color.GREEN:
-                        view.setBackgroundColor(Color.WHITE);
-                        break;
-                    default:
-                        view.setBackgroundColor(Color.WHITE);
-                        break;
-                }
+                Task task = taskList.get(position);
+                Enums.Status status = task.getStatus();
+
+                if(status == Enums.Status.COMPLETED){
+                	//clicked on a completed task -> set uncomplete
+					task.setStatus(Enums.Status.INCOMPLETE);
+					view.setBackgroundColor(Color.WHITE);
+				} else if (status == Enums.Status.INCOMPLETE){
+                	//clicked on an incomplete task -> set complete
+					task.setStatus(Enums.Status.COMPLETED);
+					view.setBackgroundColor(Color.GREEN);
+				}
+
+				//Update task in a dirty way
+				DatabaseHelper.deleteTaskFromDatabase(context, task);
+				DatabaseHelper.writeTaskToDatabase(context, task);
+
+				//update display of tasks completed
+				int completed = 0;
+				for(Task local_task: taskList){
+					if(local_task.getStatus() == Enums.Status.COMPLETED) completed++;
+				}
+				textTasksCompleted.setText(Integer.toString(completed));
 
 			}
 
@@ -95,6 +106,16 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 		holder.title.setText(task.getName());
 		holder.description.setText(task.getDescription());
 		holder.time.setText(task.getTime());
+
+		//Set the color of the view based on the status of the task
+		int color = Color.WHITE;
+		Enums.Status status = task.getStatus();
+		if(status == Enums.Status.INCOMPLETE){
+			color = Color.WHITE;
+		} else if (status == Enums.Status.COMPLETED){
+			color = Color.GREEN;
+		}
+		holder.view.setBackgroundColor(color);
 	}
 
 	@Override

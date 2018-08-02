@@ -18,13 +18,13 @@ import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.helper.DatabaseColumnNames;
 import com.example.cwagt.taskapp345.helper.DatabaseHelper;
 import com.example.cwagt.taskapp345.helper.TaskAdapter;
+
 import com.example.cwagt.taskapp345.object.Task;
 import com.example.cwagt.taskapp345.object.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.app.PendingIntent.getActivity;
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 /**
@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity  {
     RecyclerView taskRecyclerView;
 
     private User currentUser;
+    private List<Task> taskList;
 
     private Context context = MainActivity.this;
 
@@ -77,10 +78,11 @@ public class MainActivity extends AppCompatActivity  {
 
 
         //if(!getAvatar(db)) sout("Error getting avatar");
-		List<Task> taskList = DatabaseHelper.readAllTasks(context);
+		taskList = DatabaseHelper.readAllTasks(context);
 
 		taskRecyclerView = findViewById(R.id.taskList);
 		TaskAdapter mAdapter = new TaskAdapter(taskList);
+		//mAdapter.setTextCompletedView((TextView) findViewById(R.id.textTasksCompleted));
 		RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
 		taskRecyclerView.setLayoutManager(mLayoutManager);
 		taskRecyclerView.setItemAnimator(new DefaultItemAnimator());

@@ -43,11 +43,11 @@ public class AddTask extends AppCompatActivity {
                 String taskDescription = taskDescriptionField.getText().toString();
                 String taskTime = taskTimeField.getText().toString();
 
-                ArrayList<Task> taskList = DatabaseHelper.getAllTasksFromDatabase(context);
+                ArrayList<Task> taskList = DatabaseHelper.readAllTasks(context);
 
                 Task newTask = new Task(taskName, taskDescription, taskTime);
 
-                DatabaseHelper.writeTaskToDatabase(context, newTask);
+                DatabaseHelper.createTask(context, newTask);
 
                 // Code here executes on main thread after user presses button
                 Intent addUserIntent = new Intent(context, EditTask.class);

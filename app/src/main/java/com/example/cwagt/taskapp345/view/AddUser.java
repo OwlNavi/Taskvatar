@@ -43,12 +43,12 @@ public class AddUser extends AppCompatActivity {
                 String lastName = lastNameField.getText().toString();
                 String fullName = firstName + " " + lastName;
 
-                ArrayList<User> users = DatabaseHelper.getAllUsersFromDatabase(context);
+                ArrayList<User> users = DatabaseHelper.readAllUsers(context);
 
                 int userID = users.size()+1;
                 User newUser = new User(username, userID, fullName);
 
-                DatabaseHelper.writeUserToDatabase(context, newUser);
+                DatabaseHelper.createUser(context, newUser);
 
                 // Code here executes on main thread after user presses button
                 Intent addUserIntent = new Intent(context, UserHome.class);

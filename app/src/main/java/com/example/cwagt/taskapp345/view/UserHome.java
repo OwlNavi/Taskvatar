@@ -39,10 +39,10 @@ public class UserHome extends AppCompatActivity {
         context = getApplicationContext();
 
         //List<User> userList = DatabaseHelper.getUsersFromDatabase(context, "", new String[]{});
-        ArrayList<User> userList = DatabaseHelper.getAllUsersFromDatabase(context);
+        ArrayList<User> userList = DatabaseHelper.readAllUsers(context);
         if(userList.size() == 0){
             for(User user: defaultUserlist()){
-                DatabaseHelper.writeUserToDatabase(context, user);
+                DatabaseHelper.createUser(context, user);
             }
             userList = defaultUserlist();
             Log.d("UserHome", "No users found, wrote default list to database");

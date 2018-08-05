@@ -7,37 +7,27 @@
 package com.example.cwagt.taskapp345.object;
 import java.util.ArrayList;
 import java.util.List;
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import com.example.cwagt.taskapp345.R;
-import com.example.cwagt.taskapp345.object.Avatar;
-import com.example.cwagt.taskapp345.view.AvatarHome;
-import com.example.cwagt.taskapp345.view.MainActivity;
-
+/**
+ * Class representation of the avatar
+ */
+@SuppressWarnings({"SameParameterValue", "unused"})
 public class Avatar {
-
+	//Avatar unique identifier
 	private int avatarID;
-	private float leftArmRotation, rightArmRotation, leftLegRotation, rightLegRotation;
+	//Reference to the user that owns this avatar
 	private User user;
+	//Stores the rotation amount of each limb
+	private float leftArmRotation, rightArmRotation, leftLegRotation, rightLegRotation;
+	//filename for each limb's image
 	private String base, leftArm, rightArm, leftLeg, rightLeg;
+	//A list to store the body parts
+	private List<ImageView> body = new ArrayList<>();
 
-	List<ImageView> body = new ArrayList<>();
-
+	/**
+	 * Avatar default constructor
+	 */
 	public Avatar(){
 		this.avatarID = 0;
 
@@ -55,6 +45,9 @@ public class Avatar {
 		this.rightLegRotation = 0;
 	}
 
+	/**
+	 * Avatar full constructor
+	 */
 	public Avatar(Integer avatarID, String base, String leftArm, String rightArm, String leftLeg, String rightLeg, User user, float leftArmRotation, float rightArmRotation, float leftLegRotation, float rightLegRotation) {
 		this.avatarID = avatarID;
 

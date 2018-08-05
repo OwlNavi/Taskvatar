@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,33 +11,37 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.helper.DatabaseHelper;
 import com.example.cwagt.taskapp345.helper.UserAdapter;
 import com.example.cwagt.taskapp345.object.User;
-
 import java.util.ArrayList;
-import java.util.List;
-
-import static android.app.PendingIntent.getActivity;
 
 /**
  * Created by cwagt on 15/07/2018.
+ *
+ * Class for managing the user activity where people can add users or change the current user
  */
-
 public class UserHome extends AppCompatActivity {
-    private RecyclerView userRecyclerView;
+   //The current context
     private Context context;
 
+    /**
+     * Code executed when the activity is loaded
+     * @param savedInstanceState the savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Set view based on xml layour file
         setContentView(R.layout.user_layout);
+        //Get the current context
         context = getApplicationContext();
 
-        //List<User> userList = DatabaseHelper.getUsersFromDatabase(context, "", new String[]{});
+        //Get the list of users so we can display them in the recycler view list
         ArrayList<User> userList = DatabaseHelper.getAllUsersFromDatabase(context);
+
+        //If there are no users in the database create a default dummy list
         if(userList.size() == 0){
             for(User user: defaultUserlist()){
                 DatabaseHelper.writeUserToDatabase(context, user);
@@ -48,32 +50,31 @@ public class UserHome extends AppCompatActivity {
             Log.d("UserHome", "No users found, wrote default list to database");
         }
 
-        userRecyclerView = findViewById(R.id.userList);
+        //Set up the recycler view to display the users
+        RecyclerView userRecyclerView = findViewById(R.id.userList);
         userRecyclerView.setHasFixedSize(true);
-
-
         LinearLayoutManager userLayoutManager = new LinearLayoutManager(this);
         userLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         userRecyclerView.setLayoutManager(userLayoutManager);
-
         UserAdapter userAdapter = new UserAdapter(userList, UserHome.this);
-
-        //userRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        //userRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         userRecyclerView.setAdapter(userAdapter);
 
-        //Button code
+        //Button code for add user button
         final Button button = findViewById(R.id.buttonAddUser);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Code here executes on main thread after user presses button
+                //Go to the add user activity
                 Intent addUserIntent = new Intent(context, AddUser.class);
                 startActivity(addUserIntent);
             }
         });
     }
 
-    //creates a userlist separate from the database
+    /**
+     * Creates a default userList if the database is found empty
+     * for testing purposes
+     * @return an ArrayList of users
+     */
     private ArrayList<User> defaultUserlist(){
         ArrayList<User> userList = new ArrayList<>();
         User user1 = new User("Alex", 1, "Alexander Example");
@@ -87,6 +88,11 @@ public class UserHome extends AppCompatActivity {
         return userList;
     }
 
+    /**
+     * Populate the options menu
+     * @param menu the options menu
+     * @return true
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -94,22 +100,29 @@ public class UserHome extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Same as MainActivity
+     * Handles code when the menu items are selected
+     * @param item menu item
+     * @return boolean
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-
-            // Check if user triggered a refresh:
+            //Check if user clicked refresh and go back to main activity
             case R.id.menu_refresh:
                 Intent refreshIntent = new Intent(this, MainActivity.class);
                 finish();
                 startActivity(refreshIntent);
                 break;
 
+            //Change user activity go to UserHome
             case R.id.menu_user:
                 Intent userIntent = new Intent(this, UserHome.class);
                 startActivity(userIntent);
                 break;
 
+            //Go to avatar activity
             case R.id.menu_avatar:
                 Intent avatarIntent = new Intent(this, AvatarHome.class);
                 startActivity(avatarIntent);

@@ -100,7 +100,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 	/* Tasks */
 
-	public static long writeTaskToDatabase(Context context, Task task){
+	public static long createTask(Context context, Task task){
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
 		if(checkDatabase(db)) {
@@ -128,39 +128,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		}
 	}
 
-	public static int deleteTaskFromDatabase(Context context, Task task){
-		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
-		SQLiteDatabase db = mDbHelper.getWritableDatabase();
-		int success = -1;
-
-		if(checkDatabase(db)) {
-
-			String whereClause = TASK_NAME_TEXT + " = ?" +
-					" AND " + TASK_NAME_DESCRIPTION + " = ?" +
-					" AND " + TASK_NAME_TIME + " = ?";
-
-			String[] values = new String[3];
-			values[0] = task.getName();
-			values[1] = task.getDescription();
-			values[2] = task.getTime();
-
-			try {
-				success = db.delete(
-						DatabaseColumnNames.Task.TABLE_NAME,
-						whereClause,
-						values
-				);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-		}else{
-			sout("Error: could not open database for deleting");
-		}
-		return success;
-	}
-
-	public static ArrayList<Task> getTasksFromDatabase(Context context, String selection, String[] selectionArgs) {
+	public static ArrayList<Task> readTasks(Context context, String selection, String[] selectionArgs) {
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getReadableDatabase();
 		ArrayList<Task> tasks = new ArrayList<>();
@@ -221,8 +189,74 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return tasks;
 	}
 
-	public static ArrayList<Task> getAllTasksFromDatabase(Context context) {
-		return getTasksFromDatabase(context, "", new String[]{});
+	public static ArrayList<Task> readAllTasks(Context context) {
+		return readTasks(context, "", new String[]{});
+	}
+
+	public static boolean updateTask(Context context, Integer Id, Task task){
+		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
+		SQLiteDatabase db = mDbHelper.getWritableDatabase();
+		Boolean success = false;
+		if(checkDatabase(db)) {
+
+			ContentValues values = new ContentValues();
+			values.put(TASK_NAME_TEXT, task.getName());
+			values.put(TASK_NAME_DESCRIPTION, task.getDescription());
+			values.put(TASK_NAME_REMINDER, task.getReminder());
+			values.put(TASK_NAME_PRIORITY, task.getPriority());
+			values.put(TASK_NAME_FREQUENCY, task.getFrequency().name());
+			values.put(TASK_NAME_STATUS, task.getStatus().name());
+			values.put(TASK_NAME_TIME, task.getTime());
+
+			try {
+				int count = db.update(DatabaseColumnNames.Task.TABLE_NAME, values, _ID + " = ?", new String[]{String.valueOf(Id)});
+				if(count == 1) success = true;
+				else{
+					//sout("[DatabaseHelper.updateTask] There were " + count + " rows affected");
+					throw new Exception("[DatabaseHelper.updateTask] There were " + count + " rows affected");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}else{
+			sout("Error: could not open database for writing");
+			//throw new Exception("Error: could not open database for writing");
+			success = false;
+		}
+		return success;
+	}
+
+	public static int deleteTask(Context context, Task task){
+		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
+		SQLiteDatabase db = mDbHelper.getWritableDatabase();
+		int success = -1;
+
+		if(checkDatabase(db)) {
+
+			String whereClause = TASK_NAME_TEXT + " = ?" +
+					" AND " + TASK_NAME_DESCRIPTION + " = ?" +
+					" AND " + TASK_NAME_TIME + " = ?";
+
+			String[] values = new String[3];
+			values[0] = task.getName();
+			values[1] = task.getDescription();
+			values[2] = task.getTime();
+
+			try {
+				success = db.delete(
+						DatabaseColumnNames.Task.TABLE_NAME,
+						whereClause,
+						values
+				);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}else{
+			sout("Error: could not open database for deleting");
+		}
+		return success;
 	}
 
 	private static ArrayList<Task> generateDummyData() {
@@ -240,7 +274,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 	/* Users */
 
-	public static long writeUserToDatabase(Context context, User user){
+	public static long createUser(Context context, User user){
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
 		if(checkDatabase(db)) {
@@ -264,7 +298,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		}
 	}
 
-	public static ArrayList<User> getUsersFromDatabase(Context context, String selection, String[] selectionArgs) {
+	public static ArrayList<User> readUsers(Context context, String selection, String[] selectionArgs) {
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getReadableDatabase();
 		ArrayList<User> users = new ArrayList<>();
@@ -305,11 +339,37 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return users;
 	}
 
-	public static ArrayList<User> getAllUsersFromDatabase(Context context) {
-		return getUsersFromDatabase(context, "", new String[]{});
+	public static ArrayList<User> readAllUsers(Context context) {
+		return readUsers(context, "", new String[]{});
 	}
 
-	public static int deleteUserFromDatabase(Context context, User user){
+	public static boolean updateUser(Context context, Integer Id, User user){
+		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
+		SQLiteDatabase db = mDbHelper.getWritableDatabase();
+		boolean success = false;
+		int count;
+		if(checkDatabase(db)) {
+
+			ContentValues values = new ContentValues();
+			values.put(USER_NAME_NAME, user.getUserName());
+			values.put(USER_NAME_ID, user.getUserID());
+			values.put(USER_NAME_DESCRIPTION, user.getUserDescription());
+
+			try {
+				count = db.update(DatabaseColumnNames.User.TABLE_NAME, values,_ID + " = ?", new String[]{String.valueOf(Id)});
+				if(count == 1) success = true;
+				else throw new Exception("[DatabaseHelper.updateUser] db.update method returned " + count + " rows");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}else{
+			sout("Error: could not open database for writing");
+		}
+		return success;
+	}
+
+	public static int deleteUser(Context context, User user){
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
 		int success = -1;
@@ -343,7 +403,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 	/* Avatars */
 
-	public static long writeAvatarToDatabase(Context context, Avatar avatar){
+	public static long createAvatar(Context context, Avatar avatar){
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
 		if(checkDatabase(db)) {
@@ -378,12 +438,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		}
 	}
 
-	public static ArrayList<Avatar> getAvatarsFromDatabase(Context context, User user) {
+	public static Avatar readAvatar(Context context, User user) {
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getReadableDatabase();
 		ArrayList<Avatar> avatars = new ArrayList<>();
 		String selection = AVATAR_NAME_USER + " = ?";
 		String[] selectionArgs = new String[]{String.valueOf(user.getUserID())};
+		Avatar thisAvatar = null;
 		if(checkDatabase(db)) {
 
 			Cursor cursor = db.query(
@@ -396,8 +457,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 					AVATAR_NAME_ID               // The sort order
 			);
 
+			//TODO: Check there is only one avatar. Currently returns the last avatar found
+
 			while (cursor.moveToNext()) {
-				Avatar thisAvatar = new Avatar(
+				thisAvatar = new Avatar(
 						cursor.getInt(cursor.getColumnIndexOrThrow(AVATAR_NAME_ID)),
 
 						cursor.getString(cursor.getColumnIndexOrThrow(AVATAR_NAME_BASE)),
@@ -413,17 +476,54 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 						cursor.getFloat(cursor.getColumnIndexOrThrow(AVATAR_NAME_LEFT_LEG_ROTATION)),
 						cursor.getFloat(cursor.getColumnIndexOrThrow(AVATAR_NAME_RIGHT_LEG_ROTATION))
 				);
-				avatars.add(thisAvatar);
+
 			}
 			cursor.close();
 
 		}else{
 			sout("Error: could not open database for reading");
 		}
-		return avatars;
+		return thisAvatar;
 	}
 
-	public static int deleteAvatarFromDatabase(Context context, Avatar avatar){
+	public static Boolean updateAvatar(Context context, Integer Id, Avatar avatar){
+		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
+		SQLiteDatabase db = mDbHelper.getWritableDatabase();
+		Boolean success = false;
+		Integer count;
+		if(checkDatabase(db)) {
+
+			ContentValues values = new ContentValues();
+			values.put(AVATAR_NAME_ID, avatar.getID());
+
+			values.put(AVATAR_NAME_BASE, avatar.getBase());
+			values.put(AVATAR_NAME_LEFT_ARM, avatar.getLeftArm());
+			values.put(AVATAR_NAME_RIGHT_ARM, avatar.getRightArm());
+			values.put(AVATAR_NAME_LEFT_LEG, avatar.getLeftLeg());
+			values.put(AVATAR_NAME_RIGHT_LEG, avatar.getRightLeg());
+
+			values.put(AVATAR_NAME_USER, avatar.getUserID());
+
+			values.put(AVATAR_NAME_LEFT_ARM_ROTATION, avatar.getLeftArmRotation());
+			values.put(AVATAR_NAME_RIGHT_ARM_ROTATION, avatar.getRightArmRotation());
+			values.put(AVATAR_NAME_LEFT_LEG_ROTATION, avatar.getLeftLegRotation());
+			values.put(AVATAR_NAME_RIGHT_LEG_ROTATION, avatar.getRightLegRotation());
+
+			try {
+				count = db.update(DatabaseColumnNames.Avatar.TABLE_NAME, values, _ID + " = ?", new String[]{String.valueOf(Id)});
+				if(count == 1) success = true;
+				else throw new Exception("[DatabaseHelper.updateAvatar] db.update returned " + count + " rows");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}else{
+			sout("Error: could not open database for writing");
+		}
+		return success;
+	}
+
+	public static int deleteAvatar(Context context, Avatar avatar){
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
 		int success = -1;
@@ -461,7 +561,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			values[i++] = "" + avatar.getLeftArmRotation();
 			values[i++] = "" + avatar.getRightArmRotation();
 			values[i++] = "" + avatar.getLeftLegRotation();
-			values[i++] = "" + avatar.getRightLegRotation();
+			values[i] = "" + avatar.getRightLegRotation();
 
 			try {
 				success = db.delete(

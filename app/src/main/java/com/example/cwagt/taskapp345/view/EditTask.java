@@ -12,35 +12,38 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.helper.DatabaseColumnNames;
 import com.example.cwagt.taskapp345.helper.DatabaseHelper;
 import com.example.cwagt.taskapp345.helper.TaskAdapter;
 import com.example.cwagt.taskapp345.object.Task;
 import com.example.cwagt.taskapp345.object.User;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 
 /**
  * Created by cwagt on 15/07/2018.
+ *
+ * This class manages the activity allowing users to edit tasks, letting them add new tasks
+ * to the tasklist
  */
-
 public class EditTask extends AppCompatActivity {
-
+    //the current context
     private Context context;
-    private User currentUser;
 
-
+    /**
+     * Code executed when the activity is loaded
+     * displays the list of tasks and adds buttons and on click effects for the activity
+     * @param savedInstanceState the savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //The current context
         context = getApplicationContext();
+        //Set the layout based on the xml file
         setContentView(R.layout.edit_task);
 
         //check current user if set in the shared preferences and load their info from database
@@ -50,14 +53,17 @@ public class EditTask extends AppCompatActivity {
         Log.d("Current User", Integer.toString(userID));
 
         //if the userID is not set go back to user page
-        if (userID == 0) {
+        if (userID == 0) { //not found
+            Log.d("EditTask", "Went back to user page, current userid not found:" + userID);
             Intent userHomeIntent = new Intent(context, UserHome.class);
             finish();
             startActivity(userHomeIntent);
         }
+
+        //Retrieve the list of tasks from the database to display on the recycler list
         List<Task> taskList = DatabaseHelper.getAllTasksFromDatabase(context);
 
-        //get the user from the database
+        //get the current user from the database
         String selection = DatabaseColumnNames.User.USER_NAME_ID + "=?";
         String[] selectionArgs = new String[]{Integer.toString(userID)};
         ArrayList<User> users = DatabaseHelper.getUsersFromDatabase(context, selection, selectionArgs);
@@ -65,9 +71,11 @@ public class EditTask extends AppCompatActivity {
             throw new RuntimeException(context + "There should only be one or zero users with the same id: " + userID);
         }
         if(users.size() != 0){
-            currentUser = users.get(0);
+            User currentUser = users.get(0);
             Log.d("Current User", currentUser.getUserName());
         }
+
+        //Populate the recycler view with the list of tasks we just retrieved for the user
         RecyclerView taskRecyclerView = findViewById(R.id.taskList);
         TaskAdapter mAdapter = new TaskAdapter(context, taskList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -77,21 +85,21 @@ public class EditTask extends AppCompatActivity {
         taskRecyclerView.setAdapter(mAdapter);
 
         //Button code
+
+        //Add task button
         final Button taskButton = findViewById(R.id.buttonAddTask);
         taskButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Code here executes on main thread after user presses button
-
-                //return to main menu
+                //Got to add task activity
                 startActivity(new Intent(context, AddTask.class));
             }
         });
+
+        //submit changes button
         final Button submitButton = findViewById(R.id.submitTaskButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Code here executes on main thread after user presses button
-
-                //return to main menu
+                //return to main activity
                 startActivity(new Intent(context, MainActivity.class));
             }
         });

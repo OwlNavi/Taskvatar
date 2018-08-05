@@ -18,24 +18,31 @@ import java.util.ArrayList;
 
 /**
  * Created by cwagt on 15/07/2018.
+ *
+ * This class manages the AddTask activity where users can add new tasks to the tasklist
  */
-
 public class AddTask extends AppCompatActivity {
-
+    //The current context of this activity
     private Context context;
 
-
+    /**
+     * This method is called when the activity is first opened
+     * @param savedInstanceState the savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Get the current context
         context = getApplicationContext();
+        //Set the layout based on the xml file
         setContentView(R.layout.add_task);
 
-        //Button code
+        //Button code once the user has finished editing the text fields
         final Button button = findViewById(R.id.submitButton);
+        //Set onclick listener
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //Create new user
+                //Retrieve what the user entered into the text fields
                 TextView taskNameField = findViewById(R.id.edittextTaskName);
                 TextView taskDescriptionField = findViewById(R.id.edittextTaskDescription);
                 TextView taskTimeField = findViewById(R.id.edittextTaskTime);
@@ -43,17 +50,16 @@ public class AddTask extends AppCompatActivity {
                 String taskDescription = taskDescriptionField.getText().toString();
                 String taskTime = taskTimeField.getText().toString();
 
-                ArrayList<Task> taskList = DatabaseHelper.getAllTasksFromDatabase(context);
-
+                //Create the new task based on what the user inputted
                 Task newTask = new Task(taskName, taskDescription, taskTime);
 
+                //write the next task to the database
                 DatabaseHelper.writeTaskToDatabase(context, newTask);
 
-                // Code here executes on main thread after user presses button
+                // Once the task has been added go back to the edit task activity
                 Intent addUserIntent = new Intent(context, EditTask.class);
                 startActivity(addUserIntent);
             }
         });
     }
-
 }

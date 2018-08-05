@@ -88,8 +88,8 @@ public class MainActivity extends AppCompatActivity  {
 		taskList = DatabaseHelper.getAllTasksFromDatabase(context);
 
 		taskRecyclerView = findViewById(R.id.taskList);
-		TaskAdapter mAdapter = new TaskAdapter(context, taskList);
-		mAdapter.setTextCompletedView((TextView) findViewById(R.id.textTasksCompleted));
+		TextView textTasksCompleted = (TextView) findViewById(R.id.textTasksCompleted);
+		TaskAdapter mAdapter = new TaskAdapter(context, taskList, textTasksCompleted);
 		RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
 		taskRecyclerView.setLayoutManager(mLayoutManager);
 		taskRecyclerView.setItemAnimator(new DefaultItemAnimator());

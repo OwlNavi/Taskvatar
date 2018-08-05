@@ -1,8 +1,8 @@
 package com.example.cwagt.taskapp345.helper;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,21 +10,43 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.object.Enums;
 import com.example.cwagt.taskapp345.object.Task;
-
 import java.util.List;
 
+/**
+ * This class manages the Task RecyclerView list.
+ * We use this class to populate and handle the list items.
+ */
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> {
 
+	//A list of tasks to display owned by the current user
 	private List<Task> taskList;
 	private Context context;
+
+	//Reference to the text field showing the number of tasks completed.
+	//We need to update this when we change tasks in this class
 	private TextView textTasksCompleted;
 
+	/**
+	 * Class constructor
+	 *
+	 * @param context the current context when this class is required
+	 * @param taskList the list of tasks to display in the RecyclerView
+	 * @param view the view where the number of tasks completed should be displayed
+	 */
+	public TaskAdapter(Context context, List<Task> taskList, TextView view) {
+		this.taskList = taskList;
+		this.context = context;
+		this.textTasksCompleted = view;
+	}
 
-	public class MyViewHolder extends RecyclerView.ViewHolder {
+	/**
+	 * This subclass contains references to the on-screen display elements for each Task
+	 * in the RecyclerView
+	 */
+	class MyViewHolder extends RecyclerView.ViewHolder {
 		private TextView title, time, description;
 		private View view;
 
@@ -37,37 +59,45 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 		}
 	}
 
-	public TaskAdapter(Context context, List<Task> taskList) {
-		this.taskList = taskList;
-		this.context = context;
-	}
-
-	public void setTextCompletedView(TextView view){
-		textTasksCompleted = view;
-	}
-
+	/**
+	 * This class is used to handle the list items dispalyed
+	 * @param parent the parent of this class
+	 * @param viewType the viewType of the class
+	 * @return returns the new ViewHolder
+	 */
 	@Override
 	public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		final View itemView = LayoutInflater.from(parent.getContext())
 				.inflate(R.layout.task_list_row, parent, false);
 
-		itemView.setBackgroundColor(Color.WHITE);
+		//default color of the tasks displayed is white
+		int DEFAULT_TASK_COLOUR = Color.WHITE;
+		itemView.setBackgroundColor(DEFAULT_TASK_COLOUR);
 
+		//find the view item that we display the tasks on
 		final RecyclerView recyclerView = parent.findViewById(R.id.taskList);
-		recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(recyclerView.getContext(), recyclerView, new RecyclerItemClickListener.ClickListener() {
+
+		//add onclick listeners to the task items so they can be clicked on
+		recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(recyclerView.getContext(),
+				recyclerView, new RecyclerItemClickListener.ClickListener() {
+
+			/**
+			 * When a task is clicked on
+			 * @param view the current task's view
+			 * @param position the position in the list identifying the task
+			 */
+			@SuppressLint("SetTextI18n")
 			@Override
 			public void onClick(View view, int position) {
-				//Log.d("debug", "click");
-                Drawable background = view.getBackground();
-
-                //Log.d("debug", "Background color: " + backgroundColor);
-
-                //change color
+                //The current task
                 Task task = taskList.get(position);
+                //The status of the task so we can check if it is already completed
                 Enums.Status status = task.getStatus();
 
+                //If the task is clicked on it should toggle the colour between:
+				//Green for completed and White for incomplete
                 if(status == Enums.Status.COMPLETED){
-                	//clicked on a completed task -> set uncomplete
+                	//clicked on a completed task -> set incomplete
 					task.setStatus(Enums.Status.INCOMPLETE);
 					view.setBackgroundColor(Color.WHITE);
 				} else if (status == Enums.Status.INCOMPLETE){
@@ -89,6 +119,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 
 			}
 
+			/**
+			 * Debug method
+			 */
 			@Override
 			public void onLongClick(View view, int position) {
 				Log.d("debug", "long click");
@@ -100,6 +133,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 		return new MyViewHolder(itemView);
 	}
 
+	/**
+	 * This method is where we change the display to reflect the changes made by this class
+	 * @param holder the current viewHolder we want to modify
+	 * @param position the index of the task we are currently creating
+	 */
 	@Override
 	public void onBindViewHolder(MyViewHolder holder, int position) {
 		Task task = taskList.get(position);
@@ -118,6 +156,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 		holder.view.setBackgroundColor(color);
 	}
 
+	/**
+	 * Implements required method by parent class
+	 * @return the number of tasks in the list
+	 */
 	@Override
 	public int getItemCount() {
 		return taskList.size();

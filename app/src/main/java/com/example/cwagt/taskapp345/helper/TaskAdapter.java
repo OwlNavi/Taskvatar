@@ -42,6 +42,19 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 		this.textTasksCompleted = view;
 	}
 
+    /**
+     * Class constructor without TextView for when you do not need to track the number of tasks
+     * completed
+     *
+     * @param context the current context when this class is required
+     * @param taskList the list of tasks to display in the RecyclerView
+     */
+    public TaskAdapter(Context context, List<Task> taskList) {
+        this.taskList = taskList;
+        this.context = context;
+        this.textTasksCompleted = null;
+    }
+
 	/**
 	 * This subclass contains references to the on-screen display elements for each Task
 	 * in the RecyclerView
@@ -111,12 +124,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 				DatabaseHelper.writeTaskToDatabase(context, task);
 
 				//update display of tasks completed
-				int completed = 0;
-				for(Task local_task: taskList){
-					if(local_task.getStatus() == Enums.Status.COMPLETED) completed++;
-				}
-				textTasksCompleted.setText(Integer.toString(completed));
-
+                if(textTasksCompleted != null){
+                    int completed = 0;
+                    for(Task local_task: taskList){
+                        if(local_task.getStatus() == Enums.Status.COMPLETED) completed++;
+                    }
+                    textTasksCompleted.setText(Integer.toString(completed));
+                }
 			}
 
 			/**

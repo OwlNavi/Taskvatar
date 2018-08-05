@@ -61,12 +61,12 @@ public class EditTask extends AppCompatActivity {
         }
 
         //Retrieve the list of tasks from the database to display on the recycler list
-        List<Task> taskList = DatabaseHelper.getAllTasksFromDatabase(context);
+        List<Task> taskList = DatabaseHelper.readAllTasks(context);
 
         //get the current user from the database
         String selection = DatabaseColumnNames.User.USER_NAME_ID + "=?";
         String[] selectionArgs = new String[]{Integer.toString(userID)};
-        ArrayList<User> users = DatabaseHelper.getUsersFromDatabase(context, selection, selectionArgs);
+        ArrayList<User> users = DatabaseHelper.readUsers(context, selection, selectionArgs);
         if(users.size() > 1){
             throw new RuntimeException(context + "There should only be one or zero users with the same id: " + userID);
         }

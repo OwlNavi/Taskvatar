@@ -50,7 +50,7 @@ public class AddTask extends AppCompatActivity {
                 Task newTask = new Task(taskName, taskDescription, taskTime);
 
                 //write the next task to the database
-                DatabaseHelper.writeTaskToDatabase(context, newTask);
+                DatabaseHelper.createTask(context, newTask);
 
                 // Once the task has been added go back to the edit task activity
                 Intent addUserIntent = new Intent(context, EditTask.class);

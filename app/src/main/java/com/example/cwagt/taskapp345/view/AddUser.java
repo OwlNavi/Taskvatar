@@ -48,7 +48,7 @@ public class AddUser extends AppCompatActivity {
                 String fullName = firstName + " " + lastName;
 
                 //Retrieve the list of users from the database so we can check the number of users
-                ArrayList<User> users = DatabaseHelper.getAllUsersFromDatabase(context);
+                ArrayList<User> users = DatabaseHelper.readAllUsers(context);
 
                 //The new user needs to have a uniqueID so we set it to the number of users plus
                 //one, this way all the users should have a unique id
@@ -57,7 +57,7 @@ public class AddUser extends AppCompatActivity {
                 //Create the new user
                 User newUser = new User(username, userID, fullName);
                 //Save them to the database
-                DatabaseHelper.writeUserToDatabase(context, newUser);
+                DatabaseHelper.createUser(context, newUser);
 
                 //Go back to the choose user page now the user has been saved
                 Intent addUserIntent = new Intent(context, UserHome.class);

@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity  {
 		//get the current user from the database
 		String selection = DatabaseColumnNames.User.USER_NAME_ID + "=?";
 		String[] selectionArgs = new String[]{Integer.toString(userID)};
-		ArrayList<User> users = DatabaseHelper.getUsersFromDatabase(context, selection, selectionArgs);
+		ArrayList<User> users = DatabaseHelper.readUsers(context, selection, selectionArgs);
 		if(users.size() > 1){
 			throw new RuntimeException(context + "There should only be one or zero users with the same id: " + userID);
 		}
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity  {
 		}
 
 		//Get a list of tasks for the current user
-		List<Task> taskList = DatabaseHelper.getAllTasksFromDatabase(context);
+		List<Task> taskList = DatabaseHelper.readAllTasks(context);
 
 		//display the task list in the recycler view
 		taskRecyclerView = findViewById(R.id.taskList);

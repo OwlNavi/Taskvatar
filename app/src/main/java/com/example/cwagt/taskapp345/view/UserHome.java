@@ -39,12 +39,12 @@ public class UserHome extends AppCompatActivity {
         context = getApplicationContext();
 
         //Get the list of users so we can display them in the recycler view list
-        ArrayList<User> userList = DatabaseHelper.getAllUsersFromDatabase(context);
+        ArrayList<User> userList = DatabaseHelper.readAllUsers(context);
 
         //If there are no users in the database create a default dummy list
         if(userList.size() == 0){
             for(User user: defaultUserlist()){
-                DatabaseHelper.writeUserToDatabase(context, user);
+                DatabaseHelper.createUser(context, user);
             }
             userList = defaultUserlist();
             Log.d("UserHome", "No users found, wrote default list to database");

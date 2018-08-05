@@ -120,9 +120,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 				}
 
 				//Update task in a dirty way
-				DatabaseHelper.deleteTaskFromDatabase(context, task);
-				DatabaseHelper.writeTaskToDatabase(context, task);
-
+                //DatabaseHelper.updateTask(context, task.getId() ????, task);
+				DatabaseHelper.deleteTask(context, task);
+				DatabaseHelper.createTask(context, task);
 				//update display of tasks completed
                 if(textTasksCompleted != null){
                     int completed = 0;

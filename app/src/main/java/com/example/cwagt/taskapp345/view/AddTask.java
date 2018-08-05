@@ -11,10 +11,6 @@ import android.widget.TextView;
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.helper.DatabaseHelper;
 import com.example.cwagt.taskapp345.object.Task;
-import com.example.cwagt.taskapp345.object.User;
-
-import java.util.ArrayList;
-
 
 /**
  * Created by cwagt on 15/07/2018.

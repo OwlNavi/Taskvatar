@@ -1,13 +1,26 @@
 package com.example.cwagt.taskapp345.object;
 
+/**
+ * Class representation of a Task
+ */
 public class Task {
+    //Tasks have a name, description of what is to be done and at what time
 	private String name, description, time;
-
+    //How often this task should repeat
 	private Enums.Frequency frequency;
+	//Should the user be reminded about this task when it is upcoming
 	private Boolean reminder;
+	//Either completed, in progress or incomplete
 	private Enums.Status status;
+	//how important is this task
 	private int priority;
 
+    /**
+     * Convenience constucter sets name, description and time
+     * @param name the name of the task
+     * @param description description of the task
+     * @param time the time the task should occur at
+     */
     public Task(String name, String description, String time) {
         this.name = name;
         this.description = description;
@@ -20,6 +33,9 @@ public class Task {
         this.priority = 1;
     }
 
+    /**
+     * Full constructor
+     */
     public Task(String name, String description, String time, Enums.Frequency frequency, Boolean reminder, Enums.Status status, int priority) {
         this.name = name;
         this.description = description;
@@ -28,19 +44,6 @@ public class Task {
         this.reminder = reminder;
         this.status = status;
         this.priority = priority;
-    }
-
-    @Override
-    public String toString() {
-        return "Task{" +
-                "name='" + name + "', " +
-                "description='" + description + "', " +
-                "time='" + time + "', " +
-                "frequency=" + frequency + ", " +
-                "reminder=" + reminder + ", " +
-                "status=" + status + ", " +
-                "priority=" + priority +
-            '}';
     }
 
     public String getName() {
@@ -55,10 +58,6 @@ public class Task {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getTime() {
         return time;
     }
@@ -71,16 +70,8 @@ public class Task {
         return frequency;
     }
 
-    public void setFrequency(Enums.Frequency frequency) {
-        this.frequency = frequency;
-    }
-
     public Boolean getReminder() {
         return reminder;
-    }
-
-    public void setReminder(Boolean reminder) {
-        this.reminder = reminder;
     }
 
     public Enums.Status getStatus() {
@@ -93,9 +84,5 @@ public class Task {
 
     public int getPriority() {
         return priority;
-    }
-
-    public void setPriority(int priority) {
-        this.priority = priority;
     }
 }

@@ -41,3 +41,6 @@ notifications:
     - cwagthomas@gmail.com
     - kurdtpage@gmail.com
     - miho19@hotmail.co.nz
+
+after_success:
+  cat /home/travis/build/OwlNavi/345_app/app/build/reports/lint-rsults.html

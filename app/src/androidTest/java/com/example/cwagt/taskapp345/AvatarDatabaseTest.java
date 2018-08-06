@@ -119,6 +119,12 @@ public class AvatarDatabaseTest {
 	}
 
 	//TODO: Add update
+	@Test
+	public void updateAvatarInDB(){
+
+		User user = createRandomUser();
+		Avatar avatar = createRandomAvatar(user);
+	}
 
 	//TODO: add delete
 }

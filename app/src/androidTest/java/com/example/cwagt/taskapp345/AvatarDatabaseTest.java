@@ -121,9 +121,14 @@ public class AvatarDatabaseTest {
 	//TODO: Add update
 	@Test
 	public void updateAvatarInDB(){
+		Context context = InstrumentationRegistry.getTargetContext();
 
 		User user = createRandomUser();
 		Avatar avatar = createRandomAvatar(user);
+
+		long rowID = DatabaseHelper.createAvatar(context, avatar);
+		assertNotEquals(-1, rowID);
+
 	}
 
 	//TODO: add delete

@@ -17,8 +17,14 @@ import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.Avatar.*;
 import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.User.*;
 
 /**
- * This is the database helper, which abstracts the database. You just call the methods and the DatabaseHelper class will do it for you. Be sure to use return types sensibly
- * The writeX methods return the rowID
+ * This is the database helper, which abstracts the database. You just call the methods and the DatabaseHelper class will do it for you
+ *
+ * Be sure to use return types sensibly:
+ *   The create* methods return the rowID of the newly created item, or -1
+ *   The read* methods return an ArrayList of objects
+ *   The update* methods return a boolean depending on the success or failure of the operation
+ *   The delete* methods return the number of rows affected
+ *
  * If you add/delete/change ANYTHING, don't forget to increment the database version
  */
 public class DatabaseHelper extends SQLiteOpenHelper{
@@ -103,6 +109,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	public static long createTask(Context context, Task task){
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
+		long newRowId = -1; //allows cheating e.g. `if(writeTaskToDatabase(){...}`
 		if(checkDatabase(db)) {
 
 			ContentValues values = new ContentValues();
@@ -114,18 +121,15 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			values.put(TASK_NAME_STATUS, task.getStatus().name());
 			values.put(TASK_NAME_TIME, task.getTime());
 
-			// Insert the new row, returning the primary key value of the new row
-			long newRowId = -1; //allows cheating e.g. `if(writeTaskToDatabase(){...}`
 			try {
 				newRowId = db.insert(DatabaseColumnNames.Task.TABLE_NAME, null, values);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			return newRowId;
 		}else{
 			sout("Error: could not open database for writing");
-			return -1;
 		}
+		return newRowId;
 	}
 
 	public static ArrayList<Task> readTasks(Context context, String selection, String[] selectionArgs) {
@@ -277,6 +281,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	public static long createUser(Context context, User user){
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
+		long newRowId = -1; //allows cheating e.g. `if(writeTaskToDatabase(){...}`
 		if(checkDatabase(db)) {
 
 			ContentValues values = new ContentValues();
@@ -284,18 +289,15 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			values.put(USER_NAME_ID, user.getUserID());
 			values.put(USER_NAME_DESCRIPTION, user.getUserDescription());
 
-			// Insert the new row, returning the primary key value of the new row
-			long newRowId = -1; //allows cheating e.g. `if(writeTaskToDatabase(){...}`
 			try {
 				newRowId = db.insert(DatabaseColumnNames.User.TABLE_NAME, null, values);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			return newRowId;
 		}else{
 			sout("Error: could not open database for writing");
-			return -1;
 		}
+		return newRowId;
 	}
 
 	public static ArrayList<User> readUsers(Context context, String selection, String[] selectionArgs) {
@@ -406,6 +408,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	public static long createAvatar(Context context, Avatar avatar){
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
+		long newRowId = -1; //allows cheating e.g. `if(writeTaskToDatabase(){...}`
 		if(checkDatabase(db)) {
 
 			ContentValues values = new ContentValues();
@@ -424,18 +427,15 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			values.put(AVATAR_NAME_LEFT_LEG_ROTATION, avatar.getLeftLegRotation());
 			values.put(AVATAR_NAME_RIGHT_LEG_ROTATION, avatar.getRightLegRotation());
 
-			// Insert the new row, returning the primary key value of the new row
-			long newRowId = -1; //allows cheating e.g. `if(writeTaskToDatabase(){...}`
 			try {
 				newRowId = db.insert(DatabaseColumnNames.Avatar.TABLE_NAME, null, values);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			return newRowId;
 		}else{
 			sout("Error: could not open database for writing");
-			return -1;
 		}
+		return newRowId;
 	}
 
 	public static Avatar readAvatar(Context context, User user) {

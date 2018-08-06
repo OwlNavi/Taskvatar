@@ -263,6 +263,34 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return success;
 	}
 
+	public static int deleteTask(Context context, Integer ID){
+		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
+		SQLiteDatabase db = mDbHelper.getWritableDatabase();
+		int success = -1;
+
+		if(checkDatabase(db)) {
+
+			String whereClause = _ID + " = ?";
+
+			String[] values = new String[1];
+			values[0] = String.valueOf(ID);
+
+			try {
+				success = db.delete(
+						DatabaseColumnNames.Task.TABLE_NAME,
+						whereClause,
+						values
+				);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}else{
+			sout("Error: could not open database for deleting");
+		}
+		return success;
+	}
+
 	private static ArrayList<Task> generateDummyData() {
 		ArrayList<Task> taskList = new ArrayList<>();
 		Task task;
@@ -386,6 +414,34 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			values[0] = user.getUserName();
 			values[1] = "" + user.getUserID();
 			values[2] = user.getUserDescription();
+
+			try {
+				success = db.delete(
+						DatabaseColumnNames.User.TABLE_NAME,
+						whereClause,
+						values
+				);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}else{
+			sout("Error: could not open database for deleting");
+		}
+		return success;
+	}
+
+	public static int deleteUser(Context context, Integer ID){
+		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
+		SQLiteDatabase db = mDbHelper.getWritableDatabase();
+		int success = -1;
+
+		if(checkDatabase(db)) {
+
+			String whereClause = _ID + " = ?";
+
+			String[] values = new String[1];
+			values[0] = String.valueOf(ID);
 
 			try {
 				success = db.delete(
@@ -562,6 +618,34 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			values[i++] = "" + avatar.getRightArmRotation();
 			values[i++] = "" + avatar.getLeftLegRotation();
 			values[i] = "" + avatar.getRightLegRotation();
+
+			try {
+				success = db.delete(
+						DatabaseColumnNames.Avatar.TABLE_NAME,
+						whereClause,
+						values
+				);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}else{
+			sout("Error: could not open database for deleting");
+		}
+		return success;
+	}
+
+	public static int deleteAvatar(Context context, Integer ID){
+		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
+		SQLiteDatabase db = mDbHelper.getWritableDatabase();
+		int success = -1;
+
+		if(checkDatabase(db)) {
+
+			String whereClause = _ID + " = ?";
+
+			String[] values = new String[1];
+			values[0] = String.valueOf(ID);
 
 			try {
 				success = db.delete(

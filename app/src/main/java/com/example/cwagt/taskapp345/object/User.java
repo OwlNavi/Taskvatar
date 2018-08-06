@@ -7,7 +7,7 @@ public class User {
 	//The chosen username for the user
 	private String userName;
 	//The unique identifier for the user
-	private int userID;
+	private Long userID;
 	//A description for the user, currently their full name
 	private String userDescription;
 	//Each user has their own avatar
@@ -19,7 +19,7 @@ public class User {
 	 * @param userID the User's unique identifier
 	 * @param userDescription the user's fullname
 	 */
-	public User(String userName, int userID, String userDescription) {
+	public User(String userName, Long userID, String userDescription) {
 		this.userName = userName;
 		this.userID = userID;
 		this.userDescription = userDescription;
@@ -28,11 +28,16 @@ public class User {
 		//avatar = new Avatar();
 	}
 
+	public User(String userName, String userDescription) {
+		this.userName = userName;
+		this.userDescription = userDescription;
+	}
+
 	/**
 	 * Returns the users unique identifier ID
 	 * @return the user's ID
 	 */
-	public int getUserID() { return userID;	}
+	public Long getUserID() { return userID;	}
 
 	public String getUserDescription() {
 		return userDescription;

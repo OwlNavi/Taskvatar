@@ -4,6 +4,7 @@ package com.example.cwagt.taskapp345.object;
  * Class representation of a Task
  */
 public class Task {
+    private Long id;
     //Tasks have a name, description of what is to be done and at what time
 	private String name, description, time;
     //How often this task should repeat
@@ -14,6 +15,7 @@ public class Task {
 	private Enums.Status status;
 	//how important is this task
 	private int priority;
+
 
     /**
      * Convenience constucter sets name, description and time
@@ -45,6 +47,15 @@ public class Task {
         this.status = status;
         this.priority = priority;
     }
+
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
     public String getName() {
         return name;
@@ -85,4 +96,5 @@ public class Task {
     public int getPriority() {
         return priority;
     }
+
 }

@@ -113,6 +113,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		if(checkDatabase(db)) {
 
 			ContentValues values = new ContentValues();
+			values.put(_ID, task.getId());
 			values.put(TASK_NAME_TEXT, task.getName());
 			values.put(TASK_NAME_DESCRIPTION, task.getDescription());
 			values.put(TASK_NAME_REMINDER, task.getReminder());
@@ -197,7 +198,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return readTasks(context, "", new String[]{});
 	}
 
-	public static boolean updateTask(Context context, Integer Id, Task task){
+	public static boolean updateTask(Context context, Long Id, Task task){
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
 		Boolean success = false;
@@ -313,8 +314,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		if(checkDatabase(db)) {
 
 			ContentValues values = new ContentValues();
+			values.put(_ID, user.getUserID());
 			values.put(USER_NAME_NAME, user.getUserName());
-			values.put(USER_NAME_ID, user.getUserID());
 			values.put(USER_NAME_DESCRIPTION, user.getUserDescription());
 
 			try {
@@ -356,7 +357,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			while (cursor.moveToNext()) {
 				User thisUser = new User(
 						cursor.getString(cursor.getColumnIndexOrThrow(USER_NAME_NAME)),
-						cursor.getInt(cursor.getColumnIndexOrThrow(USER_NAME_ID)),
+						cursor.getLong(cursor.getColumnIndexOrThrow(USER_NAME_ID)),
 						cursor.getString(cursor.getColumnIndexOrThrow(USER_NAME_DESCRIPTION))
 				);
 				users.add(thisUser);
@@ -373,7 +374,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return readUsers(context, "", new String[]{});
 	}
 
-	public static boolean updateUser(Context context, Integer Id, User user){
+	public static boolean updateUser(Context context, Long Id, User user){
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
 		boolean success = false;
@@ -468,7 +469,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		if(checkDatabase(db)) {
 
 			ContentValues values = new ContentValues();
-			values.put(AVATAR_NAME_ID, avatar.getID());
+			values.put(_ID, avatar.getID());
 
 			values.put(AVATAR_NAME_BASE, avatar.getBase());
 			values.put(AVATAR_NAME_LEFT_ARM, avatar.getLeftArm());
@@ -517,8 +518,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 			while (cursor.moveToNext()) {
 				thisAvatar = new Avatar(
-						cursor.getInt(cursor.getColumnIndexOrThrow(AVATAR_NAME_ID)),
-
 						cursor.getString(cursor.getColumnIndexOrThrow(AVATAR_NAME_BASE)),
 						cursor.getString(cursor.getColumnIndexOrThrow(AVATAR_NAME_LEFT_ARM)),
 						cursor.getString(cursor.getColumnIndexOrThrow(AVATAR_NAME_RIGHT_ARM)),
@@ -542,7 +541,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return thisAvatar;
 	}
 
-	public static Boolean updateAvatar(Context context, Integer Id, Avatar avatar){
+	public static Boolean updateAvatar(Context context, Long Id, Avatar avatar){
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
 		Boolean success = false;
@@ -635,7 +634,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return success;
 	}
 
-	public static int deleteAvatar(Context context, Integer ID){
+	public static int deleteAvatar(Context context, Long ID){
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
 		int success = -1;

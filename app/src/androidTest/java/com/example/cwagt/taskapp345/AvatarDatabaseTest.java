@@ -17,10 +17,12 @@ import static org.junit.Assert.assertNotEquals;
 @RunWith(AndroidJUnit4.class)
 public class AvatarDatabaseTest {
 
+	private long getRandomLong(long upperLimit) {
+		return (long) (Math.random() * upperLimit);
+	}
+
 	private Avatar createRandomAvatar(User user){
 		Random rand = new Random();
-
-		Integer avatarID = rand.nextInt(360) + 1;
 
 		String base = "base_red";
 		String leftArm = "left_arm";
@@ -33,12 +35,13 @@ public class AvatarDatabaseTest {
 		float leftLegRotation = rand.nextInt(360) + 1;
 		float rightLegRotation = rand.nextInt(360) + 1;
 
-		return new Avatar(avatarID, base, leftArm, rightArm, leftLeg, rightLeg, user, leftArmRotation, rightArmRotation, leftLegRotation, rightLegRotation);
+		Avatar avatar = new Avatar(base, leftArm, rightArm, leftLeg, rightLeg, user, leftArmRotation, rightArmRotation, leftLegRotation, rightLegRotation);
+		avatar.setAvatarID(getRandomLong(1000L));
+		return avatar;
 	}
 
 	private User createRandomUser(){
-		Random rand = new Random();
-		int n = rand.nextInt(1000) + 1;
+		Long n = getRandomLong(1000L);
 
 		String userName = "Dummy user " + n;
 		String userDescription = "Testing only";
@@ -71,7 +74,6 @@ public class AvatarDatabaseTest {
 		Context context = InstrumentationRegistry.getTargetContext();
 
 		Random rand = new Random();
-		int avatarID = rand.nextInt(360) + 1;
 
 		String base = "base_red";
 		String leftArm = "left_arm";
@@ -87,7 +89,7 @@ public class AvatarDatabaseTest {
 		float rightLegRotation = rand.nextInt(360) + 1;
 
 		//create avatar
-		Avatar avatar = new Avatar(avatarID, base, leftArm, rightArm, leftLeg, rightLeg, user, leftArmRotation, rightArmRotation, leftLegRotation, rightLegRotation);
+		Avatar avatar = new Avatar(base, leftArm, rightArm, leftLeg, rightLeg, user, leftArmRotation, rightArmRotation, leftLegRotation, rightLegRotation);
 		long rowID = DatabaseHelper.createAvatar(context, avatar);
 		assertNotEquals(-1, rowID);
 
@@ -96,7 +98,6 @@ public class AvatarDatabaseTest {
 		//assertEquals(1, allAvatars.size());
 		//Avatar avatarFromDb = allAvatars.get(0);
 		//assertArrayEquals(avatar, avatarFromDb);
-		assertEquals(avatarID, avatarFromDb.getAvatarID());
 		assertEquals(base, avatarFromDb.getBase());
 
 		assertEquals(leftArm, avatarFromDb.getLeftArm());
@@ -111,25 +112,45 @@ public class AvatarDatabaseTest {
 
 		//delete user
 		int delUser = DatabaseHelper.deleteUser(context, user);
-		assertNotEquals(-1, delUser);
+		assertEquals(1, delUser);
 
 		//delete avatar
 		int isDeleted = DatabaseHelper.deleteAvatar(context, avatar);
-		assertNotEquals(-1, isDeleted);
+		assertEquals(1, isDeleted);
 	}
 
-	//TODO: Add update
 	@Test
 	public void updateAvatarInDB(){
 		Context context = InstrumentationRegistry.getTargetContext();
 
 		User user = createRandomUser();
-		Avatar avatar = createRandomAvatar(user);
+		Avatar oldAvatar = createRandomAvatar(user);
+		Avatar newAvatar = createRandomAvatar(user);
 
-		long rowID = DatabaseHelper.createAvatar(context, avatar);
+		long rowID = DatabaseHelper.createAvatar(context, oldAvatar);
 		assertNotEquals(-1, rowID);
+		oldAvatar.setAvatarID(rowID);
 
+		Boolean success = DatabaseHelper.updateAvatar(context, rowID, newAvatar);
+		assertEquals(true, success);
+
+		int rowsDeleted = DatabaseHelper.deleteAvatar(context, rowID);
+		assertEquals(1, rowsDeleted);
 	}
 
-	//TODO: add delete
+	@Test
+	public void deleteAvatarFromDB(){
+		Context context = InstrumentationRegistry.getTargetContext();
+
+		User user = createRandomUser();
+		Avatar oldAvatar = createRandomAvatar(user);
+		Avatar newAvatar = createRandomAvatar(user);
+
+		long rowID = DatabaseHelper.createAvatar(context, oldAvatar);
+		assertNotEquals(-1, rowID);
+		oldAvatar.setAvatarID(rowID);
+
+		int rowsDeleted = DatabaseHelper.deleteAvatar(context, rowID);
+		assertEquals(1, rowsDeleted);
+	}
 }

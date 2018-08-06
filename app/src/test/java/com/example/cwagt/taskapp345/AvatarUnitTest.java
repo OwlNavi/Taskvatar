@@ -10,6 +10,10 @@ import static org.junit.Assert.assertEquals;
 
 public class AvatarUnitTest {
 
+	private long getRandomLong(long upperLimit) {
+		return (long) (Math.random() * upperLimit);
+	}
+
 	@Test
 	public void avatarGetRotationDefault() {
 		//tests the getter, default constructor
@@ -27,7 +31,7 @@ public class AvatarUnitTest {
 
 		Float degrees = (float)360;
 
-		Integer avatarID = rand.nextInt(100) + 1;
+		Long avatarID = getRandomLong(100L);
 		Float leftArmRotation = rand.nextFloat() * degrees;
 		Float rightArmRotation = rand.nextFloat() * degrees;
 		Float leftLegRotation = rand.nextFloat() * degrees;
@@ -35,7 +39,7 @@ public class AvatarUnitTest {
 
 		User user = new User("Dummy user " + avatarID, avatarID, "Desc");
 
-		Avatar testAvatar2 = new Avatar(avatarID, "base_red", "left_arm", "right_arm", "left_leg", "right_leg", user, leftArmRotation, rightArmRotation, leftLegRotation, rightLegRotation);
+		Avatar testAvatar2 = new Avatar("base_red", "left_arm", "right_arm", "left_leg", "right_leg", user, leftArmRotation, rightArmRotation, leftLegRotation, rightLegRotation);
 		assertEquals(leftArmRotation, testAvatar2.getLeftArmRotation(), 0.1);
 		assertEquals(rightArmRotation, testAvatar2.getRightArmRotation(), 0.1);
 		assertEquals(leftLegRotation, testAvatar2.getLeftLegRotation(), 0.1);
@@ -57,7 +61,7 @@ public class AvatarUnitTest {
 
 		Float degrees = (float)360;
 
-		Integer avatarID = rand.nextInt(100) + 1;
+		Long avatarID = getRandomLong(100L);
 		Float leftArmRotation = rand.nextFloat() * degrees + 10;
 		Float rightArmRotation = rand.nextFloat() * degrees + 10;
 		Float leftLegRotation = rand.nextFloat() * degrees + 10;
@@ -65,7 +69,7 @@ public class AvatarUnitTest {
 
 		User user = new User("Dummy user " + avatarID, avatarID, "Desc");
 
-		Avatar testAvatar4 = new Avatar(avatarID, "base_red", "left_arm", "right_arm", "left_leg", "right_leg", user, leftArmRotation, rightArmRotation, leftLegRotation, rightLegRotation);
+		Avatar testAvatar4 = new Avatar("base_red", "left_arm", "right_arm", "left_leg", "right_leg", user, leftArmRotation, rightArmRotation, leftLegRotation, rightLegRotation);
 
 		testAvatar4.setLeftArmRotation(2);
 		testAvatar4.setRightArmRotation(3);

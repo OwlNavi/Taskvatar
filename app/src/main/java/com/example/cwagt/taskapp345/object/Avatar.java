@@ -1,21 +1,21 @@
-/**
-* Creates an avatar with a given rotation for each of the components.
-* Each avatar consists of two arms, two legs and a base. 
-* Rotations are stored in the database.
-* Auothers: Josh April, Shaun Henderson, Craig Thomas
-*/
 package com.example.cwagt.taskapp345.object;
+
+
 import java.util.ArrayList;
 import java.util.List;
 import android.widget.ImageView;
 
 /**
  * Class representation of the avatar
+ * Creates an avatar with a given rotation for each of the components.
+ * Each avatar consists of two arms, two legs and a base.
+ * Rotations are stored in the database.
+ * Authors: Josh April, Shaun Henderson, Craig Thomas
  */
-@SuppressWarnings({"SameParameterValue", "unused"})
+
 public class Avatar {
 	//Avatar unique identifier
-	private int avatarID;
+	private Long avatarID;
 	//Reference to the user that owns this avatar
 	private User user;
 	//Stores the rotation amount of each limb
@@ -29,8 +29,6 @@ public class Avatar {
 	 * Avatar default constructor
 	 */
 	public Avatar(){
-		this.avatarID = 0;
-
 		this.base = "base_red";
 		this.leftArm = "left_arm";
 		this.rightArm = "right_arm";
@@ -48,9 +46,7 @@ public class Avatar {
 	/**
 	 * Avatar full constructor
 	 */
-	public Avatar(Integer avatarID, String base, String leftArm, String rightArm, String leftLeg, String rightLeg, User user, float leftArmRotation, float rightArmRotation, float leftLegRotation, float rightLegRotation) {
-		this.avatarID = avatarID;
-
+	public Avatar(String base, String leftArm, String rightArm, String leftLeg, String rightLeg, User user, float leftArmRotation, float rightArmRotation, float leftLegRotation, float rightLegRotation) {
 		this.base = base;
 		this.leftArm = leftArm;
 		this.rightArm = rightArm;
@@ -65,11 +61,11 @@ public class Avatar {
 		this.rightLegRotation = rightLegRotation;
 	}
 
-	public int getAvatarID() {
+	public Long getAvatarID() {
 		return avatarID;
 	}
 
-	public void setAvatarID(int avatarID) {
+	public void setAvatarID(long avatarID) {
 		this.avatarID = avatarID;
 	}
 
@@ -161,11 +157,11 @@ public class Avatar {
 		this.body = body;
 	}
 
-	public int getUserID(){
+	public Long getUserID(){
 		return user.getUserID();
 	}
 
-	public int getID() {
+	public Long getID() {
 		return avatarID;
 	}
 }

@@ -77,10 +77,10 @@ public class UserHome extends AppCompatActivity {
      */
     private ArrayList<User> defaultUserlist(){
         ArrayList<User> userList = new ArrayList<>();
-        User user1 = new User("Alex", 1L, "Alexander Example");
-        User user2 = new User("Ben", 2L, "Benjamen Default");
-        User user3 = new User("Chris", 3L, "Christopher Template");
-        User user4 = new User("Dave", 4L, "David Standard");
+        User user1 = new User(1L, "Alex", "Alexander Example");
+        User user2 = new User(2L, "Ben", "Benjamen Default");
+        User user3 = new User(3L, "Chris", "Christopher Template");
+        User user4 = new User(4L, "Dave", "David Standard");
         userList.add(user1);
         userList.add(user2);
         userList.add(user3);

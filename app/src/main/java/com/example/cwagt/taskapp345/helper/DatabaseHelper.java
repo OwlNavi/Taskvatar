@@ -50,7 +50,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String SQL_CREATE_AVATAR_TABLE =
 			"CREATE TABLE " + DatabaseColumnNames.Avatar.TABLE_NAME + " (" +
 					DatabaseColumnNames.Avatar._ID + " INTEGER PRIMARY KEY" +
-					", " + AVATAR_NAME_ID + " " + AVATAR_TYPE_ID +
 
 					", " + AVATAR_NAME_BASE + " " + AVATAR_TYPE_BASE +
 					", " + AVATAR_NAME_LEFT_ARM + " " + AVATAR_TYPE_LEFT_ARM +
@@ -70,7 +69,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			"CREATE TABLE " + DatabaseColumnNames.User.TABLE_NAME + " (" +
 					DatabaseColumnNames.User._ID + " INTEGER PRIMARY KEY" +
 					"," + USER_NAME_NAME + " " + USER_TYPE_NAME +
-					"," + USER_NAME_ID + " " + USER_TYPE_ID +
 					"," + USER_NAME_DESCRIPTION + " " + USER_TYPE_DESCRIPTION +
 			")";
 
@@ -339,8 +337,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			//String[] selectionArgs = { "Task text" }; //use comma separated list here
 
 			String[] projection = {
+					_ID,
 					USER_NAME_NAME,
-					USER_NAME_ID,
 					USER_NAME_DESCRIPTION
 			};
 
@@ -356,8 +354,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 			while (cursor.moveToNext()) {
 				User thisUser = new User(
+						cursor.getLong(cursor.getColumnIndexOrThrow(_ID)),
 						cursor.getString(cursor.getColumnIndexOrThrow(USER_NAME_NAME)),
-						cursor.getLong(cursor.getColumnIndexOrThrow(USER_NAME_ID)),
 						cursor.getString(cursor.getColumnIndexOrThrow(USER_NAME_DESCRIPTION))
 				);
 				users.add(thisUser);
@@ -382,8 +380,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		if(checkDatabase(db)) {
 
 			ContentValues values = new ContentValues();
+			values.put(_ID, user.getUserID());
 			values.put(USER_NAME_NAME, user.getUserName());
-			values.put(USER_NAME_ID, user.getUserID());
 			values.put(USER_NAME_DESCRIPTION, user.getUserDescription());
 
 			try {
@@ -407,13 +405,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 		if(checkDatabase(db)) {
 
-			String whereClause = USER_NAME_NAME + " = ?" +
-					" AND " + USER_NAME_ID + " = ?" +
+			String whereClause = _ID + " = ?" +
+					" AND " + USER_NAME_NAME + " = ?" +
 					" AND " + USER_NAME_DESCRIPTION + " = ?";
 
 			String[] values = new String[3];
-			values[0] = user.getUserName();
-			values[1] = "" + user.getUserID();
+			values[0] = "" + user.getUserID();
+			values[1] = user.getUserName();
 			values[2] = user.getUserDescription();
 
 			try {
@@ -498,7 +496,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	public static Avatar readAvatar(Context context, User user) {
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getReadableDatabase();
-		ArrayList<Avatar> avatars = new ArrayList<>();
 		String selection = AVATAR_NAME_USER + " = ?";
 		String[] selectionArgs = new String[]{String.valueOf(user.getUserID())};
 		Avatar thisAvatar = null;
@@ -511,7 +508,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 					selectionArgs,          // The values for the WHERE clause
 					null,                   // don't group the rows
 					null,                   // don't filter by row groups
-					AVATAR_NAME_ID               // The sort order
+					_ID               // The sort order
 			);
 
 			//TODO: Check there is only one avatar. Currently returns the last avatar found
@@ -549,7 +546,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		if(checkDatabase(db)) {
 
 			ContentValues values = new ContentValues();
-			values.put(AVATAR_NAME_ID, avatar.getID());
+			values.put(_ID, avatar.getID());
 
 			values.put(AVATAR_NAME_BASE, avatar.getBase());
 			values.put(AVATAR_NAME_LEFT_ARM, avatar.getLeftArm());
@@ -585,7 +582,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 		if(checkDatabase(db)) {
 
-			String whereClause = AVATAR_NAME_ID + " = ?" +
+			String whereClause = _ID + " = ?" +
 
 					" AND " + AVATAR_NAME_BASE + " = ?" +
 					" AND " + AVATAR_NAME_LEFT_ARM + " = ?" +

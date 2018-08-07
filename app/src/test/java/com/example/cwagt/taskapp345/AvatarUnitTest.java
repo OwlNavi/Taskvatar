@@ -37,7 +37,7 @@ public class AvatarUnitTest {
 		Float leftLegRotation = rand.nextFloat() * degrees;
 		Float rightLegRotation = rand.nextFloat() * degrees;
 
-		User user = new User("Dummy user " + avatarID, avatarID, "Desc");
+		User user = new User(avatarID, "Dummy user " + avatarID, "Desc");
 
 		Avatar testAvatar2 = new Avatar("base_red", "left_arm", "right_arm", "left_leg", "right_leg", user, leftArmRotation, rightArmRotation, leftLegRotation, rightLegRotation);
 		assertEquals(leftArmRotation, testAvatar2.getLeftArmRotation(), 0.1);
@@ -67,7 +67,7 @@ public class AvatarUnitTest {
 		Float leftLegRotation = rand.nextFloat() * degrees + 10;
 		Float rightLegRotation = rand.nextFloat() * degrees + 10;
 
-		User user = new User("Dummy user " + avatarID, avatarID, "Desc");
+		User user = new User(avatarID,"Dummy user " + avatarID, "Desc");
 
 		Avatar testAvatar4 = new Avatar("base_red", "left_arm", "right_arm", "left_leg", "right_leg", user, leftArmRotation, rightArmRotation, leftLegRotation, rightLegRotation);
 

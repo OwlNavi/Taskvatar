@@ -55,7 +55,7 @@ public class AddUser extends AppCompatActivity {
                 Long userID = (long) (users.size() + 1);
 
                 //Create the new user
-                User newUser = new User(username, userID, fullName);
+                User newUser = new User(userID, username, fullName);
                 //Save them to the database
                 DatabaseHelper.createUser(context, newUser);
 

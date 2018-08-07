@@ -36,8 +36,8 @@ public class AvatarHome extends AppCompatActivity {
         setContentView(R.layout.avatar_home);
 
         body_parts.add("HEAD");
-        body_parts.add("ARM");
-        body_parts.add("LEG");
+        body_parts.add("ARM"); // dont forget we have left arm, right arm
+        body_parts.add("LEG"); // left leg, right leg
         body_parts.add("TORSO");
 
 

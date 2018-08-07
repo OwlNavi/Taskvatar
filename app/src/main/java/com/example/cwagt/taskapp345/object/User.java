@@ -15,13 +15,13 @@ public class User {
 
 	/**
 	 * Constructor for Users
-	 * @param userName the username of the User
 	 * @param userID the User's unique identifier
+	 * @param userName the username of the User
 	 * @param userDescription the user's fullname
 	 */
-	public User(String userName, Long userID, String userDescription) {
-		this.userName = userName;
+	public User(Long userID, String userName, String userDescription) {
 		this.userID = userID;
+		this.userName = userName;
 		this.userDescription = userDescription;
 
 		//make avatar from db info from the userID

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.User.USER_NAME_DESCRIPTION;
-import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.User.USER_NAME_ID;
+import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.User._ID;
 import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.User.USER_NAME_NAME;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -30,7 +30,7 @@ public class UserDatabaseTest {
 		String userName = "Dummy user " + n;
 		String userDescription = "Testing only";
 
-		return new User(userName, n, userDescription);
+		return new User(n, userName, userDescription);
 	}
 
 	@Test
@@ -56,12 +56,12 @@ public class UserDatabaseTest {
 		String descr = "Dummy descr";
 
 		//create user
-		User user = new User(userName, userID, descr);
+		User user = new User(userID, userName, descr);
 		long rowID = DatabaseHelper.createUser(context, user);
 		assertNotEquals(-1, rowID);
 
 		//read user
-		ArrayList<User> allUsers = DatabaseHelper.readUsers(context, USER_NAME_NAME + " = ? AND " + USER_NAME_ID + " = ? AND " + USER_NAME_DESCRIPTION + " = ?", new String[]{userName, String.valueOf(userID), descr});
+		ArrayList<User> allUsers = DatabaseHelper.readUsers(context, USER_NAME_NAME + " = ? AND " + _ID + " = ? AND " + USER_NAME_DESCRIPTION + " = ?", new String[]{userName, String.valueOf(userID), descr});
 		assertEquals(1, allUsers.size());
 		User userFromDb = allUsers.get(0);
 		//assertArrayEquals(task, taskFromDb);

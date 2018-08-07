@@ -46,7 +46,7 @@ public class AvatarDatabaseTest {
 		String userName = "Dummy user " + n;
 		String userDescription = "Testing only";
 
-		return new User(userName, n, userDescription);
+		return new User(n, userName, userDescription);
 	}
 
 	@Test
@@ -144,7 +144,6 @@ public class AvatarDatabaseTest {
 
 		User user = createRandomUser();
 		Avatar oldAvatar = createRandomAvatar(user);
-		Avatar newAvatar = createRandomAvatar(user);
 
 		long rowID = DatabaseHelper.createAvatar(context, oldAvatar);
 		assertNotEquals(-1, rowID);

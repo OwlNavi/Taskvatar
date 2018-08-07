@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity  {
 		}
 
 		//get the current user from the database
-		String selection = DatabaseColumnNames.User.USER_NAME_ID + "=?";
+		String selection = DatabaseColumnNames.User._ID + " = ?";
 		String[] selectionArgs = new String[]{Integer.toString(userID)};
 		ArrayList<User> users = DatabaseHelper.readUsers(context, selection, selectionArgs);
 		if(users.size() > 1){

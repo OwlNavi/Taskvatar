@@ -18,6 +18,7 @@ import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.helper.DatabaseColumnNames;
 import com.example.cwagt.taskapp345.helper.DatabaseHelper;
 import com.example.cwagt.taskapp345.helper.TaskAdapter;
+import com.example.cwagt.taskapp345.object.Enums;
 import com.example.cwagt.taskapp345.object.Task;
 import com.example.cwagt.taskapp345.object.User;
 import java.util.ArrayList;
@@ -90,6 +91,17 @@ public class MainActivity extends AppCompatActivity  {
 		taskRecyclerView.setItemAnimator(new DefaultItemAnimator());
 		taskRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 		taskRecyclerView.setAdapter(mAdapter);
+
+		//Check the number of compelted tasks and update tasksCompleted
+		if(taskList.size() > 0){
+			int completed = 0;
+			for(Task task: taskList){
+				if(task.getStatus() == Enums.Status.COMPLETED){
+					completed++;
+				}
+			}
+			textTasksCompleted.setText(Integer.toString(completed));
+		}
 
     }
 

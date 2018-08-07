@@ -3,7 +3,10 @@ package com.example.cwagt.taskapp345.object;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import android.view.View;
 import android.widget.ImageView;
+import com.example.cwagt.taskapp345.R;
 
 /**
  * Class representation of the avatar

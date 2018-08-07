@@ -1,9 +1,9 @@
 /**
-* User interacts with the avatar here.
-* Activities include switching cosmetics and starting animations.
-*
-* Authors: Josh April, Shaun Henderson, Craig Thomas
-*/
+ * User interacts with the avatar here.
+ * Activities include switching cosmetics and starting animations.
+ *
+ * Authors: Josh April, Shaun Henderson, Craig Thomas
+ */
 
 package com.example.cwagt.taskapp345.view;
 
@@ -39,6 +39,8 @@ public class AvatarHome extends AppCompatActivity {
         body_parts.add("ARM"); // dont forget we have left arm, right arm
         body_parts.add("LEG"); // left leg, right leg
         body_parts.add("TORSO");
+        body_parts.add("BACKGROUND");
+
 
 
         recyclerView = findViewById(R.id.body_parts);

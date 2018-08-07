@@ -52,7 +52,7 @@ public class AddUser extends AppCompatActivity {
 
                 //The new user needs to have a uniqueID so we set it to the number of users plus
                 //one, this way all the users should have a unique id
-                Long userID = Long.valueOf(users.size()+1);
+                Long userID = (long) (users.size() + 1);
 
                 //Create the new user
                 User newUser = new User(username, userID, fullName);

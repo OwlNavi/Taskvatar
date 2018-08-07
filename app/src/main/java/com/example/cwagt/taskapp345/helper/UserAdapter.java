@@ -91,13 +91,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
                 //Get the reference to the User that was clicked on
                 User user = userList.get(position);
                 //find the userID that identifies them
-                int userID = user.getUserID();
+                Long userID = user.getUserID();
 
                 //Set the current user to the user selected
                 //The current user is saved in SharedPreferences accessible from other classes
                 SharedPreferences preferences = getDefaultSharedPreferences(context);
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putInt("currentUser", userID);
+                editor.putLong("currentUser", userID);
                 editor.apply();
 
                 //Change the current activity to the Main Activity
@@ -131,7 +131,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
         User user = userList.get(position);
         holder.username.setText(user.getUserName());
         holder.userDescription.setText(user.getUserDescription());
-        holder.userID.setText(Integer.toString(user.getUserID()));
+        holder.userID.setText(Long.toString(user.getUserID()));
     }
 
     /**

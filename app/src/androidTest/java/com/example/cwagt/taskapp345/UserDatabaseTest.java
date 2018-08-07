@@ -20,9 +20,12 @@ import static org.junit.Assert.assertNotEquals;
 @RunWith(AndroidJUnit4.class)
 public class UserDatabaseTest {
 
+	private long getRandomLong(long upperLimit) {
+		return (long) (Math.random() * upperLimit);
+	}
+
 	private User createRandomUser(){
-		Random rand = new Random();
-		int n = rand.nextInt(1000) + 1;
+		Long n = getRandomLong(1000L);
 
 		String userName = "Dummy user " + n;
 		String userDescription = "Testing only";
@@ -48,8 +51,7 @@ public class UserDatabaseTest {
 	public void readUserFromDB(){
 		Context context = InstrumentationRegistry.getTargetContext();
 
-		Random rand = new Random();
-		int userID = rand.nextInt(1000) + 1;
+		Long userID = getRandomLong(1000L);
 		String userName = "Dummy user " + userID;
 		String descr = "Dummy descr";
 

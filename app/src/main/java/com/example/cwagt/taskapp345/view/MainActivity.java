@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity  {
         //check current user if set in the shared preferences and load their info from database
 		//if the preference is not set go back to user page
 		SharedPreferences preferences = getDefaultSharedPreferences(context);
-		int userID = preferences.getInt("currentUser", 0);
-		Log.d("Current User", Integer.toString(userID));
+		Long userID = preferences.getLong("currentUser", 0);
+		Log.d("Current User", Long.toString(userID));
 
 		//if the userID is not set go back to user page
 		if (userID == 0) { //not found
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity  {
 
 		//get the current user from the database
 		String selection = DatabaseColumnNames.User._ID + " = ?";
-		String[] selectionArgs = new String[]{Integer.toString(userID)};
+		String[] selectionArgs = new String[]{Long.toString(userID)};
 		ArrayList<User> users = DatabaseHelper.readUsers(context, selection, selectionArgs);
 		if(users.size() > 1){
 			throw new RuntimeException(context + "There should only be one or zero users with the same id: " + userID);

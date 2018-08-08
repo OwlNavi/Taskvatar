@@ -61,7 +61,7 @@ public class EditTask extends AppCompatActivity {
         }
 
         //Retrieve the list of tasks from the database to display on the recycler list
-        List<Task> taskList = DatabaseHelper.readAllTasks(context);
+        List<Task> taskList = DatabaseHelper.readAllTasks(context, userID);
 
         //get the current user from the database
         String selection = DatabaseColumnNames.User._ID + "=?";

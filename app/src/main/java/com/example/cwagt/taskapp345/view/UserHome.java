@@ -87,48 +87,4 @@ public class UserHome extends AppCompatActivity {
         userList.add(user4);
         return userList;
     }
-
-    /**
-     * Populate the options menu
-     * @param menu the options menu
-     * @return true
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    /**
-     * Same as MainActivity
-     * Handles code when the menu items are selected
-     * @param item menu item
-     * @return boolean
-     */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            //Check if user clicked refresh and go back to main activity
-            case R.id.menu_refresh:
-                Intent refreshIntent = new Intent(this, MainActivity.class);
-                finish();
-                startActivity(refreshIntent);
-                break;
-
-            //Change user activity go to UserHome
-            case R.id.menu_user:
-                Intent userIntent = new Intent(this, UserHome.class);
-                startActivity(userIntent);
-                break;
-
-            //Go to avatar activity
-            case R.id.menu_avatar:
-                Intent avatarIntent = new Intent(this, AvatarHome.class);
-                startActivity(avatarIntent);
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }

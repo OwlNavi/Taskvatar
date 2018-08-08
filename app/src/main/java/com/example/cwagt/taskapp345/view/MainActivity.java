@@ -18,10 +18,18 @@ import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.helper.DatabaseColumnNames;
 import com.example.cwagt.taskapp345.helper.DatabaseHelper;
 import com.example.cwagt.taskapp345.helper.TaskAdapter;
+import com.example.cwagt.taskapp345.object.Enums;
 import com.example.cwagt.taskapp345.object.Task;
 import com.example.cwagt.taskapp345.object.User;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 /**
@@ -78,7 +86,7 @@ public class MainActivity extends AppCompatActivity  {
 		}
 
 		//Get a list of tasks for the current user
-		List<Task> taskList = DatabaseHelper.readAllTasks(context);
+		final List<Task> taskList = DatabaseHelper.readAllTasks(context, userID);
 
 		//display the task list in the recycler view
 		taskRecyclerView = findViewById(R.id.taskList);
@@ -90,6 +98,32 @@ public class MainActivity extends AppCompatActivity  {
 		taskRecyclerView.setItemAnimator(new DefaultItemAnimator());
 		taskRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 		taskRecyclerView.setAdapter(mAdapter);
+
+		//Check the number of compelted tasks and update tasksCompleted
+		if(taskList.size() > 0){
+			int completed = 0;
+			for(Task task: taskList){
+				if(task.getStatus() == Enums.Status.COMPLETED){
+					completed++;
+				}
+			}
+			textTasksCompleted.setText(Integer.toString(completed));
+		}
+
+		//use the time to reset completed tasks
+
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				SimpleDateFormat timeFormat = new SimpleDateFormat("hh");
+				String currentTime = timeFormat.format(new Date());
+				if(Integer.parseInt(currentTime) == 0){ //midnight
+					//clear database
+				}
+
+			}
+		}, 3000, 60*60*1000); //every hour 3 seconds after loeading
 
     }
 

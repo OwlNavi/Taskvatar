@@ -111,12 +111,11 @@ public class AvatarDatabaseTest {
 		assertEquals(rightLegRotation, avatarFromDb.getRightLegRotation(), 0.1);
 
 		//delete user
-		int delUser = DatabaseHelper.deleteUser(context, user);
-		assertEquals(1, delUser);
+		DatabaseHelper.deleteUser(context, user);
 
 		//delete avatar
-		int isDeleted = DatabaseHelper.deleteAvatar(context, avatar);
-		assertEquals(1, isDeleted);
+		DatabaseHelper.deleteAvatar(context, avatar);
+
 	}
 
 	@Test
@@ -134,8 +133,8 @@ public class AvatarDatabaseTest {
 		Boolean success = DatabaseHelper.updateAvatar(context, rowID, newAvatar);
 		assertEquals(true, success);
 
-		int rowsDeleted = DatabaseHelper.deleteAvatar(context, rowID);
-		assertEquals(1, rowsDeleted);
+		DatabaseHelper.deleteAvatar(context, rowID);
+
 	}
 
 	@Test

@@ -12,25 +12,14 @@ package com.example.cwagt.taskapp345.view;
  * Activity which holds the Avatar fragment and recycler view
  */
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.ImageView;
 
 import com.example.cwagt.taskapp345.R;
-import com.example.cwagt.taskapp345.helper.BodyPartsAdapter;
-import com.example.cwagt.taskapp345.object.Avatar;
-import com.example.cwagt.taskapp345.object.Task;
+import com.example.cwagt.taskapp345.helper.CategoriesAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,8 +46,8 @@ public class AvatarHome extends AppCompatActivity {
 
 
 
-        recyclerView = findViewById(R.id.body_parts);
-        BodyPartsAdapter mAdapter = new BodyPartsAdapter(this,body_parts);
+        recyclerView = findViewById(R.id.categories);
+        CategoriesAdapter mAdapter = new CategoriesAdapter(this,body_parts);
         RecyclerView.LayoutManager mLayoutManger = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false);
         recyclerView.setLayoutManager(mLayoutManger);
 

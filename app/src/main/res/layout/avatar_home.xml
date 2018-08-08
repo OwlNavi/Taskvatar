@@ -26,7 +26,7 @@
     </LinearLayout>
     <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
-            android:id="@+id/body_parts"
+            android:id="@+id/categories"
             android:layout_height="0dp"
             android:layout_weight="80"/>
 

@@ -2,89 +2,69 @@ package com.example.cwagt.taskapp345.helper;
 
 
 import android.content.Context;
-import android.graphics.Color;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import android.widget.Toast;
 import com.example.cwagt.taskapp345.R;
-import com.example.cwagt.taskapp345.object.Avatar;
-import com.example.cwagt.taskapp345.view.Avatar_Fragment;
-
 import java.util.List;
 
-public class BodyPartsAdapter extends RecyclerView.Adapter<BodyPartsAdapter.AvatarViewHolder>{
+public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.AvatarViewHolder>{
 
-	private List<String> Body_Parts;
+	private List<String> categories;
 	private LayoutInflater mInflater;
 
-	public BodyPartsAdapter(Context context, List<String> body_Parts) {
-
+	public CategoriesAdapter(Context context, List<String> categories) {
 		this.mInflater = LayoutInflater.from(context);
-		this.Body_Parts = body_Parts;
+		this.categories = categories;
 	}
 
 	@Override
 	public AvatarViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		View view = mInflater.inflate(R.layout.bodyparts_row, parent, false);
 
-
-		final RecyclerView recyclerView = parent.findViewById(R.id.body_parts);
-		recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(recyclerView.getContext(), recyclerView, new RecyclerItemClickListener.ClickListener() {
+		final RecyclerView recyclerView = parent.findViewById(R.id.categories);
+		recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(recyclerView.getContext(),
+                recyclerView, new RecyclerItemClickListener.ClickListener() {
 			@Override
 			public void onClick(View view, int position) {
 				//display selected category debug
-
+                Log.d("CategoriesAdapter", "Clicked on: " + position);
 		}
 
 			@Override
 			public void onLongClick(View view, int position) {
-
+                onClick(view, position);
 			}
 		}));
-
-
-
 
 		return new AvatarViewHolder(view);
 	}
 
 	@Override
 	public void onBindViewHolder(AvatarViewHolder holder, int position) {
-		String Body_Part = Body_Parts.get(position);
-		holder.Body_Text.setText(Body_Part);
+		String category = categories.get(position);
+		holder.category.setText(category);
 	}
 
 	class AvatarViewHolder extends RecyclerView.ViewHolder {
-		private TextView Body_Text;
+		private TextView category;
 
 		private AvatarViewHolder(View view) {
 			super(view);
-			Body_Text = view.findViewById(R.id.body_part_text);
+            category = view.findViewById(R.id.body_part_text);
 		}
-
 	}
 
 	@Override
 	public int getItemCount() {
-		return Body_Parts.size();
+		return categories.size();
 	}
-
 
 	String getItem(int id) {
-		return Body_Parts.get(id);
+		return categories.get(id);
 	}
-
-
-	}
-
-
-
-
-
+}

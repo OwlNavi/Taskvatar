@@ -44,8 +44,10 @@ notifications:
 
 after_success:
   - cd /home/travis/build/OwlNavi/345_app/app/build/reports/
-  - cat lint-results.html
+  #- cat lint-results.html
   # http://www.shelldorado.com/articles/mailattachments.html
+  - sudo apt-get -y install sharutils
+  - sudo apt-get -y install mailutils
   - uuencode lint-results.html lint-results.html | mail -s "Travis lint results" cwagthomas@gmail.com
   - uuencode lint-results.html lint-results.html | mail -s "Travis lint results" kurdtpage@gmail.com
   - uuencode lint-results.html lint-results.html | mail -s "Travis lint results" miho19@hotmail.co.nz

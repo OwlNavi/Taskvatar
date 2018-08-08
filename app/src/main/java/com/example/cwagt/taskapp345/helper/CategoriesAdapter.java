@@ -24,9 +24,9 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Av
 
 	@Override
 	public AvatarViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-		View view = mInflater.inflate(R.layout.bodyparts_row, parent, false);
+		View view = mInflater.inflate(R.layout.categories_row, parent, false);
 
-		final RecyclerView recyclerView = parent.findViewById(R.id.categories);
+		final RecyclerView recyclerView = parent.findViewById(R.id.categoriesRecyclerView);
 		recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(recyclerView.getContext(),
                 recyclerView, new RecyclerItemClickListener.ClickListener() {
 			@Override
@@ -47,15 +47,15 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Av
 	@Override
 	public void onBindViewHolder(AvatarViewHolder holder, int position) {
 		String category = categories.get(position);
-		holder.category.setText(category);
+		holder.categoryTextView.setText(category);
 	}
 
 	class AvatarViewHolder extends RecyclerView.ViewHolder {
-		private TextView category;
+		private TextView categoryTextView;
 
 		private AvatarViewHolder(View view) {
 			super(view);
-            category = view.findViewById(R.id.body_part_text);
+            categoryTextView = view.findViewById(R.id.categoryTextView);
 		}
 	}
 

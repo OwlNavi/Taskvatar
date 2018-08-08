@@ -19,50 +19,53 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.example.cwagt.taskapp345.R;
+import com.example.cwagt.taskapp345.helper.BodyPartsAdapter;
 import com.example.cwagt.taskapp345.helper.CategoriesAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AvatarHome extends AppCompatActivity {
-    private List<String> body_parts = new ArrayList<>();
-    private RecyclerView recyclerView;
+    private List<String> categoriesList = new ArrayList<>();
+    private RecyclerView categoryRecyclerView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.avatar_home);
 
+        categoriesList.add("HEAD");
+        categoriesList.add("ARM"); // dont forget we have left arm, right arm
+        categoriesList.add("LEG"); // left leg, right leg
+        categoriesList.add("TORSO");
+        categoriesList.add("BACKGROUND");
 
 
+        //populate categories
+        categoryRecyclerView = findViewById(R.id.categoriesRecyclerView);
+        CategoriesAdapter categoriesAdapter = new CategoriesAdapter(this, categoriesList); //categories list
+        RecyclerView.LayoutManager categoryLayoutManager = new LinearLayoutManager(getApplicationContext(),
+                LinearLayoutManager.HORIZONTAL,false);
+        categoryRecyclerView.setLayoutManager(categoryLayoutManager);
+        categoryRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        categoryRecyclerView.setAdapter(categoriesAdapter);
 
+        //populate body parts
+        ArrayList<String> bodyPartsList = new ArrayList<>();
+        bodyPartsList.add("bodypart1");
+        bodyPartsList.add("bodypart2"); // dont forget we have left arm, right arm
+        bodyPartsList.add("bodypart3"); // left leg, right leg
+        bodyPartsList.add("bodypart4");
+        bodyPartsList.add("bodypart5");
 
-
-        body_parts.add("HEAD");
-        body_parts.add("ARM"); // dont forget we have left arm, right arm
-        body_parts.add("LEG"); // left leg, right leg
-        body_parts.add("TORSO");
-        body_parts.add("BACKGROUND");
-
-
-
-        recyclerView = findViewById(R.id.categories);
-        CategoriesAdapter mAdapter = new CategoriesAdapter(this,body_parts);
-        RecyclerView.LayoutManager mLayoutManger = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false);
-        recyclerView.setLayoutManager(mLayoutManger);
-
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(mAdapter);
-
-
-
-
-
+        RecyclerView bodyPartsRecyclerView = findViewById(R.id.bodyPartsRecyclerView);
+        BodyPartsAdapter bodyPartsAdapter = new BodyPartsAdapter(this, bodyPartsList); //body part list list
+        RecyclerView.LayoutManager bodyPartsLayoutManager = new LinearLayoutManager(getApplicationContext(),
+                LinearLayoutManager.HORIZONTAL,false);
+        bodyPartsRecyclerView.setLayoutManager(bodyPartsLayoutManager);
+        bodyPartsRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        bodyPartsRecyclerView.setAdapter(bodyPartsAdapter);
     }
-
-
-
-
 }
 
 

@@ -31,7 +31,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 	//https://developer.android.com/training/data-storage/sqlite
 
-	private static final int DATABASE_VERSION = 5;
+	private static final int DATABASE_VERSION = 6;
 	private static final String DATABASE_NAME = "Taskvatar.db";
 
 	private static final String SQL_CREATE_TASK_TABLE =
@@ -44,6 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 					", " + TASK_NAME_STATUS + " " + TASK_TYPE_STATUS +
 					", " + TASK_NAME_REMINDER + " " + TASK_TYPE_REMINDER +
 					", " + TASK_NAME_TIME + " " + TASK_TYPE_TIME +
+					", " + TASK_NAME_USER + " " + TASK_TYPE_USER +
 			")";
 	//If you want to add a field, dont forget to change the field names and types in DatabaseColumnNames.java
 
@@ -119,6 +120,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			values.put(TASK_NAME_FREQUENCY, task.getFrequency().name());
 			values.put(TASK_NAME_STATUS, task.getStatus().name());
 			values.put(TASK_NAME_TIME, task.getTime());
+			values.put(TASK_NAME_USER, task.getUserId());
 
 			try {
 				newRowId = db.insert(DatabaseColumnNames.Task.TABLE_NAME, null, values);
@@ -147,7 +149,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 					TASK_NAME_PRIORITY,
 					TASK_NAME_FREQUENCY,
 					TASK_NAME_STATUS,
-					TASK_NAME_TIME
+					TASK_NAME_TIME,
+					TASK_NAME_USER
 			};
 
 			// How you want the results sorted in the resulting Cursor
@@ -175,7 +178,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 						Enums.Frequency.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(TASK_NAME_FREQUENCY))),
 						cursor.getInt(cursor.getColumnIndexOrThrow(TASK_NAME_REMINDER)) > 0,
 						Enums.Status.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(TASK_NAME_STATUS))),
-						cursor.getInt(cursor.getColumnIndexOrThrow(TASK_NAME_PRIORITY))
+						cursor.getInt(cursor.getColumnIndexOrThrow(TASK_NAME_PRIORITY)),
+						cursor.getLong(cursor.getColumnIndexOrThrow(TASK_NAME_USER))
 				);
 				tasks.add(thisTask);
 			}
@@ -192,8 +196,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return tasks;
 	}
 
-	public static ArrayList<Task> readAllTasks(Context context) {
-		return readTasks(context, "", new String[]{});
+	public static ArrayList<Task> readAllTasks(Context context, Long userID) {
+		return readTasks(context, TASK_NAME_USER + " = ?", new String[]{String.valueOf(userID)});
 	}
 
 	public static boolean updateTask(Context context, Long Id, Task task){
@@ -210,6 +214,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			values.put(TASK_NAME_FREQUENCY, task.getFrequency().name());
 			values.put(TASK_NAME_STATUS, task.getStatus().name());
 			values.put(TASK_NAME_TIME, task.getTime());
+			values.put(TASK_NAME_USER, task.getUserId());
 
 			try {
 				int count = db.update(DatabaseColumnNames.Task.TABLE_NAME, values, _ID + " = ?", new String[]{String.valueOf(Id)});
@@ -262,7 +267,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return success;
 	}
 
-	public static int deleteTask(Context context, Integer ID){
+	public static int deleteTask(Context context, Long ID){
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
 		int success = -1;
@@ -294,9 +299,11 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		ArrayList<Task> taskList = new ArrayList<>();
 		Task task;
 
-		for(int i=0; i<10; i++){
-			task = new Task("Example task " + i, "Description", "12:00 am");
-			taskList.add(task);
+		for(Long j=1L; j<4L; j++) {
+			for (int i = 0; i < 5; i++) {
+				task = new Task("Example task " + i, "Description", "12:00 am", j);
+				taskList.add(task);
+			}
 		}
 
 		return taskList;
@@ -430,7 +437,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return success;
 	}
 
-	public static int deleteUser(Context context, Integer ID){
+	public static int deleteUser(Context context, Long ID){
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
 		int success = -1;

@@ -27,6 +27,8 @@ public final class DatabaseColumnNames {
 		public static final String TASK_TYPE_REMINDER = "INTEGER";
 		public static final String TASK_NAME_TIME = "time";
 		public static final String TASK_TYPE_TIME = "TEXT";
+		public static final String TASK_NAME_USER = "userid";
+		public static final String TASK_TYPE_USER = "INTEGER";
 	}
 
 	public static class Avatar implements BaseColumns {

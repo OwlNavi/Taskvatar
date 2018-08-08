@@ -2,6 +2,7 @@ package com.example.cwagt.taskapp345.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.helper.DatabaseHelper;
 import com.example.cwagt.taskapp345.object.Task;
+
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 /**
  * Created by cwagt on 15/07/2018.
@@ -46,8 +49,16 @@ public class AddTask extends AppCompatActivity {
                 String taskDescription = taskDescriptionField.getText().toString();
                 String taskTime = taskTimeField.getText().toString();
 
+                SharedPreferences preferences = getDefaultSharedPreferences(context);
+                Long userID = preferences.getLong("currentUser", 0);
+                if(userID==0) try {
+                    throw new Exception("UserID is 0");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 //Create the new task based on what the user inputted
-                Task newTask = new Task(taskName, taskDescription, taskTime);
+                Task newTask = new Task(taskName, taskDescription, taskTime, userID);
 
                 //write the next task to the database
                 DatabaseHelper.createTask(context, newTask);

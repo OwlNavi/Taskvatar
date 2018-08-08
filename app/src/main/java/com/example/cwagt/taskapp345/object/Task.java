@@ -4,7 +4,7 @@ package com.example.cwagt.taskapp345.object;
  * Class representation of a Task
  */
 public class Task {
-    private Long id;
+    private Long id, userId;
     //Tasks have a name, description of what is to be done and at what time
 	private String name, description, time;
     //How often this task should repeat
@@ -23,10 +23,11 @@ public class Task {
      * @param description description of the task
      * @param time the time the task should occur at
      */
-    public Task(String name, String description, String time) {
+    public Task(String name, String description, String time, Long userId) {
         this.name = name;
         this.description = description;
         this.time = time;
+		this.userId = userId;
 
         //default values
         this.frequency = Enums.Frequency.DAILY;
@@ -38,7 +39,7 @@ public class Task {
     /**
      * Full constructor
      */
-    public Task(String name, String description, String time, Enums.Frequency frequency, Boolean reminder, Enums.Status status, int priority) {
+    public Task(String name, String description, String time, Enums.Frequency frequency, Boolean reminder, Enums.Status status, int priority, Long userId) {
         this.name = name;
         this.description = description;
         this.time = time;
@@ -46,6 +47,7 @@ public class Task {
         this.reminder = reminder;
         this.status = status;
         this.priority = priority;
+		this.userId = userId;
     }
 
 
@@ -69,6 +71,10 @@ public class Task {
         return description;
     }
 
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
     public String getTime() {
         return time;
     }
@@ -81,11 +87,19 @@ public class Task {
         return frequency;
     }
 
-    public Boolean getReminder() {
+	public void setFrequency(Enums.Frequency frequency) {
+    	this.frequency = frequency;
+	}
+
+	public Boolean getReminder() {
         return reminder;
     }
 
-    public Enums.Status getStatus() {
+	public void setReminder(Boolean reminder) {
+		this.reminder = reminder;
+	}
+
+	public Enums.Status getStatus() {
         return status;
     }
 
@@ -97,4 +111,15 @@ public class Task {
         return priority;
     }
 
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
 }

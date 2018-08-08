@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity  {
 		}
 
 		//Get a list of tasks for the current user
-		List<Task> taskList = DatabaseHelper.readAllTasks(context);
+		List<Task> taskList = DatabaseHelper.readAllTasks(context, userID);
 
 		//display the task list in the recycler view
 		taskRecyclerView = findViewById(R.id.taskList);

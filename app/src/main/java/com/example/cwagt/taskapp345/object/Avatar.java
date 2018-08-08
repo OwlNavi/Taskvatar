@@ -1,13 +1,5 @@
 package com.example.cwagt.taskapp345.object;
 
-
-import java.util.ArrayList;
-import java.util.List;
-
-import android.view.View;
-import android.widget.ImageView;
-import com.example.cwagt.taskapp345.R;
-
 /**
  * Class representation of the avatar
  * Creates an avatar with a given rotation for each of the components.
@@ -15,6 +7,16 @@ import com.example.cwagt.taskapp345.R;
  * Rotations are stored in the database.
  * Authors: Josh April, Shaun Henderson, Craig Thomas
  */
+
+import java.util.ArrayList;
+import java.util.List;
+
+import android.graphics.drawable.Drawable;
+import android.view.View;
+import android.widget.ImageView;
+import com.example.cwagt.taskapp345.R;
+
+
 
 public class Avatar {
 	//Avatar unique identifier
@@ -27,6 +29,10 @@ public class Avatar {
 	private String base, leftArm, rightArm, leftLeg, rightLeg;
 	//A list to store the body parts
 	private List<ImageView> body = new ArrayList<>();
+
+
+	private ImageView la;
+
 
 	/**
 	 * Avatar default constructor
@@ -62,6 +68,17 @@ public class Avatar {
 		this.rightArmRotation = rightArmRotation;
 		this.leftLegRotation = leftLegRotation;
 		this.rightLegRotation = rightLegRotation;
+	}
+
+	public ImageView la() {
+		return la;
+	}
+
+	public void setla(View view) {
+
+		la = view.findViewById(R.id.left_arm);
+		la.setImageResource(R.drawable.right_arm);
+
 	}
 
 	public Long getAvatarID() {

@@ -3,11 +3,13 @@ package com.example.cwagt.taskapp345.view;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,8 +42,15 @@ public class Avatar_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.avatar_fragment, container, false);
 
+        FragmentManager fragmentManager = getFragmentManager();
+        Fragment avatar_fragment = getFragmentManager().findFragmentById(R.id.avatar_fragment);
 
-    return view;
+        ConstraintLayout back = view.findViewById(R.id.avatar);
+
+        back.setBackgroundColor(Color.WHITE);
+
+
+        return view;
     }
 
 }

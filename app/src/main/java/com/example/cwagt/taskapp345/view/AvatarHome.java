@@ -6,10 +6,19 @@
  */
 
 package com.example.cwagt.taskapp345.view;
+/**
+ * Created by cwagt on 15/07/2018.
+ *
+ * Activity which holds the Avatar fragment and recycler view
+ */
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,6 +43,11 @@ public class AvatarHome extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.avatar_home);
+
+
+
+
+
 
         body_parts.add("HEAD");
         body_parts.add("ARM"); // dont forget we have left arm, right arm

@@ -12,10 +12,11 @@ import org.junit.runner.RunWith;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.Task.TASK_NAME_DESCRIPTION;
-import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.Task.TASK_NAME_TEXT;
-import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.Task.TASK_NAME_TIME;
 import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.Task._ID;
+import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.Task.TASK_NAME_TEXT;
+import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.Task.TASK_NAME_DESCRIPTION;
+import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.Task.TASK_NAME_TIME;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
@@ -93,8 +94,6 @@ public class TaskDatabaseTest {
 		assertNotEquals(-1, isDeleted);
 	}
 
-	//TODO: update task
-
 	@Test
 	public void updateTaskInDb(){
 		Context context = InstrumentationRegistry.getTargetContext();
@@ -120,6 +119,29 @@ public class TaskDatabaseTest {
 
 	}
 
-	//TODO: delete task
+	@Test
+	public void deleteTaskByTaskFromDb(){
+		Context context = InstrumentationRegistry.getTargetContext();
+		Task task = createRandomTask();
 
+		long rowID = DatabaseHelper.createTask(context, task);
+		assertNotEquals(-1, rowID);
+
+		int numberDeleted = DatabaseHelper.deleteTask(context, task);
+		assertEquals(1, numberDeleted);
+
+	}
+
+	@Test
+	public void deleteTaskByIdFromDb(){
+		Context context = InstrumentationRegistry.getTargetContext();
+		Task task = createRandomTask();
+
+		long rowID = DatabaseHelper.createTask(context, task);
+		assertNotEquals(-1, rowID);
+
+		int numberDeleted = DatabaseHelper.deleteTask(context, rowID);
+		assertEquals(1, numberDeleted);
+
+	}
 }

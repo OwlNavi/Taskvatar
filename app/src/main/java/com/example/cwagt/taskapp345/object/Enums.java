@@ -7,7 +7,9 @@ package com.example.cwagt.taskapp345.object;
  */
 public class Enums {
     public enum Status {
-        COMPLETED, IN_PROGRESS, INCOMPLETE
+        COMPLETED, //green
+        IN_PROGRESS, //yellow
+        INCOMPLETE //white
     }
 
     public enum Frequency {

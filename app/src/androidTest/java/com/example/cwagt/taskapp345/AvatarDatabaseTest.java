@@ -138,17 +138,33 @@ public class AvatarDatabaseTest {
 	}
 
 	@Test
-	public void deleteAvatarFromDB(){
+	public void deleteAvatarByIdFromDB(){
 		Context context = InstrumentationRegistry.getTargetContext();
 
 		User user = createRandomUser();
-		Avatar oldAvatar = createRandomAvatar(user);
+		Avatar avatar = createRandomAvatar(user);
 
-		long rowID = DatabaseHelper.createAvatar(context, oldAvatar);
+		long rowID = DatabaseHelper.createAvatar(context, avatar);
 		assertNotEquals(-1, rowID);
-		oldAvatar.setAvatarID(rowID);
+		avatar.setAvatarID(rowID);
 
 		int rowsDeleted = DatabaseHelper.deleteAvatar(context, rowID);
+		assertEquals(1, rowsDeleted);
+	}
+
+
+	@Test
+	public void deleteAvatarByAvatarFromDB(){
+		Context context = InstrumentationRegistry.getTargetContext();
+
+		User user = createRandomUser();
+		Avatar avatar = createRandomAvatar(user);
+
+		long rowID = DatabaseHelper.createAvatar(context, avatar);
+		assertNotEquals(-1, rowID);
+		avatar.setAvatarID(rowID);
+
+		int rowsDeleted = DatabaseHelper.deleteAvatar(context, avatar);
 		assertEquals(1, rowsDeleted);
 	}
 }

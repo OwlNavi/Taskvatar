@@ -9,11 +9,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
-import java.util.Random;
 
-import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.User.USER_NAME_DESCRIPTION;
 import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.User._ID;
 import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.User.USER_NAME_NAME;
+import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.User.USER_NAME_DESCRIPTION;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
@@ -74,8 +74,59 @@ public class UserDatabaseTest {
 		assertNotEquals(-1, isDeleted);
 	}
 
-	//TODO: update user
+	@Test
+	public void updateUserInDb() {
+		Context context = InstrumentationRegistry.getTargetContext();
 
-	//TODO: delete user
+		//create old user
+		User oldUser = createRandomUser();
+		long oldRowID = DatabaseHelper.createUser(context, oldUser);
+		assertNotEquals(-1, oldRowID);
+
+		//create new user
+		User newUser = createRandomUser();
+		//long newRowID = DatabaseHelper.createUser(context, newUser);
+		assertNotEquals(-1, oldRowID);
+
+		//update user
+		Boolean success = DatabaseHelper.updateUser(context, oldRowID, newUser);
+		assertEquals(true, success);
+
+		//delete users
+		//DatabaseHelper.deleteUser(context, oldUser);
+		DatabaseHelper.deleteUser(context, newUser);
+
+	}
+
+	@Test
+	public void deleteUserByUserFromDb() {
+		Context context = InstrumentationRegistry.getTargetContext();
+
+		//create user
+		User user = createRandomUser();
+		long rowID = DatabaseHelper.createUser(context, user);
+		assertNotEquals(-1, rowID);
+
+		//delete user
+		int numDeleted = DatabaseHelper.deleteUser(context, user);
+		assertEquals(1, numDeleted);
+
+	}
+
+
+	@Test
+	public void deleteUserByIdFromDb() {
+		Context context = InstrumentationRegistry.getTargetContext();
+
+		//create user
+		User user = createRandomUser();
+		long rowID = DatabaseHelper.createUser(context, user);
+		assertNotEquals(-1, rowID);
+
+		//delete user
+		int numDeleted = DatabaseHelper.deleteUser(context, rowID);
+		assertEquals(1, numDeleted);
+
+	}
 
 }

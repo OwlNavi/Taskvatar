@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.helper.DatabaseColumnNames;
@@ -54,6 +55,8 @@ public class MainActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         //Set the layout based on the xml file
         setContentView(R.layout.activity_main);
+
+        //View avatarFragment = findViewById(R.id.avatar_fragment);
 
         //Toolbar  on the top of the screen
         Toolbar toolbar = findViewById(R.id.my_toolbar);

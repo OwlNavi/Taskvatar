@@ -25,7 +25,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+
 import com.example.cwagt.taskapp345.R;
+import com.example.cwagt.taskapp345.helper.AvatarEditer;
 import com.example.cwagt.taskapp345.helper.BodyPartsAdapter;
 import com.example.cwagt.taskapp345.helper.CategoriesAdapter;
 import com.example.cwagt.taskapp345.helper.RecyclerItemClickListener;
@@ -37,6 +40,7 @@ public class AvatarHome extends AppCompatActivity {
     private List<String> categoriesList;
     private RecyclerView categoryRecyclerView;
     private RecyclerView bodyPartsRecyclerView;
+    private AvatarEditer editer;
     private View avatarFragment;
 
     @Override
@@ -46,6 +50,7 @@ public class AvatarHome extends AppCompatActivity {
 
         //find the avatar fragment
         avatarFragment = findViewById(R.id.avatar_fragment);
+        editer = new AvatarEditer(avatarFragment);
 
         //great the list of categories
         categoriesList = getCategories();
@@ -110,7 +115,7 @@ public class AvatarHome extends AppCompatActivity {
                 String itemSelected = items.get(position);
                 Log.d("AvatarHome", "Selected: " + itemSelected);
 
-                //change avatar based on item selected
+                editer.setImage(currentCategory, itemSelected);
 
             }
 
@@ -144,30 +149,20 @@ public class AvatarHome extends AppCompatActivity {
 
         switch (categoryID){
             case 0: //HEAD
-                result.add("Head 1");
-                result.add("Head 2");
-                result.add("Head 3");
-                result.add("Head 4");
-                result.add("Head 5");
-                result.add("Head 6");
+                result.add("Crown");
+                result.add("Pirate");
                 break;
             case 1: //LEFT ARM
             case 2: //RIGHT ARM
-                result.add("Arm 1");
-                result.add("Arm 2");
-                result.add("Arm 3");
-                result.add("Arm 4");
-                result.add("Arm 5");
-                result.add("Arm 6");
+                result.add("Strong");
+                result.add("Robot");
+                result.add("Cartoon");
                 break;
             case 3:
             case 4:
-                result.add("Leg 1");
-                result.add("Leg 2");
-                result.add("Leg 3");
-                result.add("Leg 4");
-                result.add("Leg 5");
-                result.add("Leg 6");
+                result.add("Strong");
+                result.add("Robot");
+                result.add("Cartoon");
                 break;
             case 5:
                 result.add("Torso 1");

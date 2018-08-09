@@ -44,17 +44,12 @@ public class Avatar_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.avatar_fragment, container, false);
 
-        FragmentManager fragmentManager = getFragmentManager();
-        Fragment avatar_fragment = getFragmentManager().findFragmentById(R.id.avatar_fragment);
 
-        back = view.findViewById(R.id.avatar);
 
+        back = view.findViewById(R.id.avatar_container);
         back.setBackgroundColor(Color.WHITE);
 
         return view;
     }
 
-    public void setBackgroundColor(int colour){
-        back.setBackgroundColor(colour);
-    }
 }

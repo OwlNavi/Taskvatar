@@ -212,12 +212,9 @@ public class AvatarHome extends AppCompatActivity {
                 result.add("Torso 6");
                 break;
             case 6:
-                result.add("Background 1");
-                result.add("Background 2");
-                result.add("Background 3");
-                result.add("Background 4");
-                result.add("Background 5");
-                result.add("Background 6");
+                result.add("Beach");
+                result.add("Desert");
+                result.add("Jungle");
                 break;
             default:
                 result.add("Head 1");

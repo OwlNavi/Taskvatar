@@ -88,17 +88,6 @@ public class Avatar {
 		this.rightLegRotation = rightLegRotation;
 	}
 
-	public ImageView la() {
-		return la;
-	}
-
-	public void setla(View view) {
-
-		la = view.findViewById(R.id.left_arm);
-		la.setImageResource(R.drawable.right_arm);
-
-	}
-
 	public Long getAvatarID() {
 		return avatarID;
 	}

@@ -1,5 +1,8 @@
 package com.example.cwagt.taskapp345.helper;
 
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.widget.ImageView;
 import com.example.cwagt.taskapp345.R;
@@ -17,6 +20,8 @@ public class AvatarEditer {
     private ImageView leftLeg;
     private ImageView rightLeg;
     private ImageView base;
+    private ConstraintLayout background;
+    private View avatar;
 
     private final int HEAD = 0;
     private final int LEFT_ARM = 1;
@@ -36,12 +41,14 @@ public class AvatarEditer {
      */
     public AvatarEditer(View avatarFragment){
         View avatar = avatarFragment;
+        this.avatar = avatarFragment;
         this.base = avatar.findViewById(R.id.base);
         this.leftArm = avatar.findViewById(R.id.left_arm);
         this.hat = avatar.findViewById(R.id.hat);
         this.leftLeg = avatar.findViewById(R.id.left_leg);
         this.rightLeg = avatar.findViewById(R.id.right_leg);
         this.rightArm = avatar.findViewById(R.id.right_arm);
+        this.background = avatar.findViewById(R.id.avatar_container);
 
         bodyParts = new HashMap<>();
         bodyParts.put("base", R.id.base);
@@ -50,8 +57,7 @@ public class AvatarEditer {
         bodyParts.put("rightArm", R.id.right_arm);
         bodyParts.put("leftLeg", R.id.left_leg);
         bodyParts.put("rightLeg", R.id.right_leg);
-        //bodyParts.put("background", R.id.hat);
-
+        bodyParts.put("background", R.id.avatar_container);
     }
 
     /**
@@ -76,6 +82,8 @@ public class AvatarEditer {
             case(RIGHT_LEG):
                 setRightLeg(itemSelected);
                 break;
+            case(BACKGROUND):
+                setBackground(itemSelected);
             default:
                 break;
         }
@@ -100,6 +108,24 @@ public class AvatarEditer {
         }
 
         saveAvatar();
+    }
+    /**
+     * Sets the background based on the item selected
+     * @param itemSelected the name of the item selected
+     */
+    private void setBackground(String itemSelected) {
+        if(itemSelected.equals("Beach")) {
+            avatar.setBackgroundResource(R.drawable.beach);
+        }
+        if(itemSelected.equals("Desert")) {
+            avatar.setBackgroundResource(R.drawable.desert);
+
+        }
+        if(itemSelected.equals("Jungle")) {
+            avatar.setBackgroundResource(R.drawable.jungle);
+
+        }
+
     }
 
     /**

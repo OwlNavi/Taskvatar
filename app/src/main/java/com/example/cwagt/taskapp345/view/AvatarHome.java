@@ -12,7 +12,9 @@ package com.example.cwagt.taskapp345.view;
  * Activity which holds the Avatar fragment and recycler view
  */
 
+import android.app.Fragment;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -32,11 +34,15 @@ public class AvatarHome extends AppCompatActivity {
     private List<String> categoriesList;
     private RecyclerView categoryRecyclerView;
     private RecyclerView bodyPartsRecyclerView;
+    private View avatarFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.avatar_home);
+
+        //find the avatar fragment
+        avatarFragment = findViewById(R.id.avatar_fragment);
 
         //great the list of categories
         categoriesList = getCategories();
@@ -80,6 +86,29 @@ public class AvatarHome extends AppCompatActivity {
                 int category = position;
                 ArrayList<String> currentBodyPartList = getCategoryItems(category);
                 setBodyPartList(bodyPartsRecyclerView, currentBodyPartList);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+                onClick(view, position);
+            }
+        }));
+
+        //Define the behaviour of the body parts list when clicked
+        bodyPartsRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(),
+                bodyPartsRecyclerView, new RecyclerItemClickListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                //get current list and item selected
+                SharedPreferences preferences = getDefaultSharedPreferences(getApplicationContext());
+                Long categoryPreference = preferences.getLong("currentCategory", 0);//default zero
+                int currentCategory = categoryPreference.intValue();
+                ArrayList<String> items = getCategoryItems(currentCategory);
+                String itemSelected = items.get(position);
+                Log.d("AvatarHome", "Selected: " + itemSelected);
+
+                //change avatar based on item selected
+
             }
 
             @Override

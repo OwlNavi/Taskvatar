@@ -12,11 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import com.example.cwagt.taskapp345.R;
-
-
 
 public class Avatar {
 	//Avatar unique identifier
@@ -30,9 +29,7 @@ public class Avatar {
 	//A list to store the body parts
 	private List<ImageView> body = new ArrayList<>();
 
-
 	private ImageView la;
-
 
 	/**
 	 * Avatar default constructor
@@ -45,6 +42,27 @@ public class Avatar {
 		this.rightLeg = "right_leg";
 
 		//this.user = ??
+
+		this.leftArmRotation = 0;
+		this.rightArmRotation = 0;
+		this.leftLegRotation = 0;
+		this.rightLegRotation = 0;
+	}
+
+	/**
+	 * Convenience constructer takes a list of body part filenames
+	 * @param bodyParts
+	 */
+	public Avatar(ArrayList<String> bodyParts){
+		if(bodyParts.size() < 5){
+			Log.d("Avatar", "Avatar needs at least 5 bodyParts");
+			throw new IndexOutOfBoundsException();
+		}
+		this.base = bodyParts.get(0);
+		this.leftArm = bodyParts.get(1);;
+		this.rightArm = bodyParts.get(2);;
+		this.leftLeg = bodyParts.get(3);;
+		this.rightLeg = bodyParts.get(4);
 
 		this.leftArmRotation = 0;
 		this.rightArmRotation = 0;
@@ -183,5 +201,17 @@ public class Avatar {
 
 	public Long getID() {
 		return avatarID;
+	}
+
+	public ArrayList<String> bodyParts(){
+		ArrayList<String> result = new ArrayList<>();
+
+		result.add(base);
+		result.add(leftArm);
+		result.add(rightArm);
+		result.add(leftLeg);
+		result.add(rightLeg);
+
+		return result;
 	}
 }

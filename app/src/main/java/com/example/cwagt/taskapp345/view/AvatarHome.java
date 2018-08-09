@@ -224,6 +224,7 @@ public class AvatarHome extends AppCompatActivity {
                 result.add("Beach");
                 result.add("Desert");
                 result.add("Jungle");
+                result.add("White");
                 break;
             default:
                 result.add("Head 1");

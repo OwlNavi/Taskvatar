@@ -84,6 +84,7 @@ public class AvatarEditer {
                 break;
             case(BACKGROUND):
                 setBackground(itemSelected);
+                break;
             default:
                 break;
         }
@@ -116,16 +117,23 @@ public class AvatarEditer {
     private void setBackground(String itemSelected) {
         if(itemSelected.equals("Beach")) {
             avatar.setBackgroundResource(R.drawable.beach);
+            bodyParts.put("background", R.drawable.beach);
         }
         if(itemSelected.equals("Desert")) {
             avatar.setBackgroundResource(R.drawable.desert);
-
+            bodyParts.put("background", R.drawable.desert);
         }
         if(itemSelected.equals("Jungle")) {
             avatar.setBackgroundResource(R.drawable.jungle);
-
+            bodyParts.put("background", R.drawable.jungle);
+        }
+        if(itemSelected.equals("White")) {
+            avatar.setBackgroundResource(R.drawable.base);
+            bodyParts.put("background", R.drawable.base);
+            avatar.setBackgroundColor(Color.WHITE);
         }
 
+        saveAvatar();
     }
 
     /**
@@ -225,5 +233,6 @@ public class AvatarEditer {
         rightArm.setImageResource(bodyParts.get("rightArm"));
         leftLeg.setImageResource(bodyParts.get("leftLeg"));
         rightLeg.setImageResource(bodyParts.get("rightLeg"));
+        //background.setImageResource
     }
 }

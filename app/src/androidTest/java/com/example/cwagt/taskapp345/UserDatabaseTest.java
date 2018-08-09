@@ -3,18 +3,17 @@ package com.example.cwagt.taskapp345;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.v4.widget.TextViewCompat;
 import com.example.cwagt.taskapp345.helper.DatabaseHelper;
 import com.example.cwagt.taskapp345.object.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
-import java.util.Random;
 
-import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.User.USER_NAME_DESCRIPTION;
 import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.User._ID;
 import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.User.USER_NAME_NAME;
+import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.User.USER_NAME_DESCRIPTION;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 

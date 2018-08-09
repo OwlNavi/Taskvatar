@@ -12,10 +12,11 @@ import org.junit.runner.RunWith;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.Task.TASK_NAME_DESCRIPTION;
-import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.Task.TASK_NAME_TEXT;
-import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.Task.TASK_NAME_TIME;
 import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.Task._ID;
+import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.Task.TASK_NAME_TEXT;
+import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.Task.TASK_NAME_DESCRIPTION;
+import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.Task.TASK_NAME_TIME;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 

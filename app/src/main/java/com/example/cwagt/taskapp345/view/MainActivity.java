@@ -125,16 +125,34 @@ public class MainActivity extends AppCompatActivity  {
 		timer.schedule(new TimerTask() {
 			@Override
 			public void run() {
-				SimpleDateFormat timeFormat = new SimpleDateFormat("hh");
+				/*SimpleDateFormat timeFormat = new SimpleDateFormat("hh");
 				String currentTime = timeFormat.format(new Date());
 				if(Integer.parseInt(currentTime) == 0){ //midnight
 					//clear database
-				}
+				}*/
+				//setAllTasksToIncomplete(context);
+				Log.d("MainActivity", "Timer called");
+
 
 			}
-		}, 3000, 60*60*1000); //every hour 3 seconds after loeading
+		}, 3000, 30*1000); //1000 is one second
 
     }
+
+	/**
+	 * Sets all tasks in the database to incomplete
+	 * @param context the current context
+	 */
+	private void setAllTasksToIncomplete(Context context) {
+		ArrayList<User> users = DatabaseHelper.readAllUsers(context);
+		for(User user: users){
+			ArrayList<Task> taskList = DatabaseHelper.readAllTasks(context, user.getUserID());
+			for(Task task: taskList){
+				task.setStatus(Enums.Status.INCOMPLETE);
+				DatabaseHelper.updateTask(context, user.getUserID(), task);
+			}
+		}
+	}
 
 	/**
 	 * Populates the options dropdown menu in the top right of the activity
@@ -195,5 +213,7 @@ public class MainActivity extends AppCompatActivity  {
 		DatabaseHelper.closeDatabase(this);
 		super.onDestroy();
 	}
+
+
 
 }

@@ -13,7 +13,6 @@ package com.example.cwagt.taskapp345.view;
  */
 
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -21,16 +20,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.helper.BodyPartsAdapter;
 import com.example.cwagt.taskapp345.helper.CategoriesAdapter;
-import com.example.cwagt.taskapp345.helper.DatabaseHelper;
 import com.example.cwagt.taskapp345.helper.RecyclerItemClickListener;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 public class AvatarHome extends AppCompatActivity {
@@ -56,12 +51,7 @@ public class AvatarHome extends AppCompatActivity {
         categoryRecyclerView.setAdapter(categoriesAdapter);
 
         //populate body parts
-        ArrayList<String> bodyPartsList = new ArrayList<>();
-        bodyPartsList.add("bodypart1");
-        bodyPartsList.add("bodypart2"); // dont forget we have left arm, right arm
-        bodyPartsList.add("bodypart3"); // left leg, right leg
-        bodyPartsList.add("bodypart4");
-        bodyPartsList.add("bodypart5");
+        ArrayList<String> bodyPartsList = getCategoryItems(0); //default is zero
 
         //create the bodyparts recyclerview
         bodyPartsRecyclerView = findViewById(R.id.bodyPartsRecyclerView);
@@ -182,13 +172,13 @@ public class AvatarHome extends AppCompatActivity {
      */
     public ArrayList<String> getCategories(){
         ArrayList<String> result = new ArrayList<>();
-        categoriesList.add("HEAD");
-        categoriesList.add("LEFT ARM"); // dont forget we have left arm, right arm
-        categoriesList.add("RIGHT ARM");
-        categoriesList.add("LEFT LEG"); // left leg, right leg
-        categoriesList.add("RIGHT LEG");
-        categoriesList.add("TORSO");
-        categoriesList.add("BACKGROUND");
+        result.add("HEAD");
+        result.add("LEFT ARM"); // dont forget we have left arm, right arm
+        result.add("RIGHT ARM");
+        result.add("LEFT LEG"); // left leg, right leg
+        result.add("RIGHT LEG");
+        result.add("TORSO");
+        result.add("BACKGROUND");
         return result;
     }
 }

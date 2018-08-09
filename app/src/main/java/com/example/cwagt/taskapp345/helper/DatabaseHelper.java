@@ -238,7 +238,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	public static int deleteTask(Context context, Task task){
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
-		int success = -1;
+		int rowsAffected = 0;
 
 		if(checkDatabase(db)) {
 
@@ -252,7 +252,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			values[2] = task.getTime();
 
 			try {
-				success = db.delete(
+				rowsAffected = db.delete(
 						DatabaseColumnNames.Task.TABLE_NAME,
 						whereClause,
 						values
@@ -264,13 +264,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		}else{
 			sout("Error: could not open database for deleting");
 		}
-		return success;
+		return rowsAffected;
 	}
 
 	public static int deleteTask(Context context, Long ID){
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
-		int success = -1;
+		int rowsAffected = 0;
 
 		if(checkDatabase(db)) {
 
@@ -280,7 +280,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			values[0] = String.valueOf(ID);
 
 			try {
-				success = db.delete(
+				rowsAffected = db.delete(
 						DatabaseColumnNames.Task.TABLE_NAME,
 						whereClause,
 						values
@@ -292,7 +292,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		}else{
 			sout("Error: could not open database for deleting");
 		}
-		return success;
+		return rowsAffected;
 	}
 
 	private static ArrayList<Task> generateDummyData() {

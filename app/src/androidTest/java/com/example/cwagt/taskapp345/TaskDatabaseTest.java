@@ -93,8 +93,6 @@ public class TaskDatabaseTest {
 		assertNotEquals(-1, isDeleted);
 	}
 
-	//TODO: update task
-
 	@Test
 	public void updateTaskInDb(){
 		Context context = InstrumentationRegistry.getTargetContext();
@@ -120,6 +118,29 @@ public class TaskDatabaseTest {
 
 	}
 
-	//TODO: delete task
+	@Test
+	public void deleteTaskByTaskFromDb(){
+		Context context = InstrumentationRegistry.getTargetContext();
+		Task task = createRandomTask();
 
+		long rowID = DatabaseHelper.createTask(context, task);
+		assertNotEquals(-1, rowID);
+
+		int numberDeleted = DatabaseHelper.deleteTask(context, task);
+		assertEquals(1, numberDeleted);
+
+	}
+
+	@Test
+	public void deleteTaskByIdFromDb(){
+		Context context = InstrumentationRegistry.getTargetContext();
+		Task task = createRandomTask();
+
+		long rowID = DatabaseHelper.createTask(context, task);
+		assertNotEquals(-1, rowID);
+
+		int numberDeleted = DatabaseHelper.deleteTask(context, rowID);
+		assertEquals(1, numberDeleted);
+
+	}
 }

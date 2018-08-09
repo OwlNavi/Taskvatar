@@ -20,6 +20,7 @@ import com.example.cwagt.taskapp345.helper.AvatarEditer;
 import com.example.cwagt.taskapp345.helper.DatabaseColumnNames;
 import com.example.cwagt.taskapp345.helper.DatabaseHelper;
 import com.example.cwagt.taskapp345.helper.TaskAdapter;
+import com.example.cwagt.taskapp345.object.Avatar;
 import com.example.cwagt.taskapp345.object.Enums;
 import com.example.cwagt.taskapp345.object.Task;
 import com.example.cwagt.taskapp345.object.User;
@@ -58,9 +59,7 @@ public class MainActivity extends AppCompatActivity  {
         //Set the layout based on the xml file
         setContentView(R.layout.activity_main);
 
-		//find the avatar fragment
-		View avatarFragment = findViewById(R.id.avatar_fragment);
-		AvatarEditer editer = new AvatarEditer(avatarFragment);
+
 		//HashMap<String, Integer> avatarBodyParts = DatabaseHelper.loadAvatar();
 		//editer.setAvatar(avatarBodyParts);
 
@@ -88,14 +87,15 @@ public class MainActivity extends AppCompatActivity  {
 		String selection = DatabaseColumnNames.User._ID + " = ?";
 		String[] selectionArgs = new String[]{Long.toString(userID)};
 		ArrayList<User> users = DatabaseHelper.readUsers(context, selection, selectionArgs);
+		User currentUser = null;
 		if(users.size() > 1){
 			throw new RuntimeException(context + "There should only be one or zero users with the same id: " + userID);
 		}
-		if(users.size() != 0){
-			User currentUser = users.get(0);
-			Log.d("Current User", currentUser.getUserName());
+		try{
+			currentUser = users.get(0);
+		} catch(NullPointerException e){
+			Log.d("MainActivity", e.toString());
 		}
-
 		//Get a list of tasks for the current user
 		final List<Task> taskList = DatabaseHelper.readAllTasks(context, userID);
 
@@ -139,6 +139,10 @@ public class MainActivity extends AppCompatActivity  {
 			}
 		}, 3000, 30*1000); //1000 is one second
 
+		//find the avatar fragment
+		View avatarFragment = findViewById(R.id.avatar_fragment);
+		AvatarEditer editer = new AvatarEditer(avatarFragment);
+		//editer.setAvatar(currentUser.getBodyParts());
     }
 
 	/**

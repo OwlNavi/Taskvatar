@@ -1,5 +1,7 @@
 package com.example.cwagt.taskapp345.object;
 
+import java.util.HashMap;
+
 /**
  * This is the class representation of Users
  */
@@ -12,7 +14,8 @@ public class User {
 	private String userDescription;
 	//Each user has their own avatar
 	private Avatar avatar;
-
+	//List of body parts the user wants for their avatar
+	private HashMap<String, Integer> bodyParts;
 	/**
 	 * Constructor for Users
 	 * @param userID the User's unique identifier
@@ -45,6 +48,10 @@ public class User {
 
 	public String getUserName() {
 		return userName;
+	}
+
+	public HashMap<String, Integer> getBodyParts(){
+		return bodyParts;
 	}
 
 }

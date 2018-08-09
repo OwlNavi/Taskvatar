@@ -13,6 +13,7 @@ package com.example.cwagt.taskapp345.view;
  */
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -21,6 +22,8 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.helper.BodyPartsAdapter;
@@ -209,6 +212,55 @@ public class AvatarHome extends AppCompatActivity {
         result.add("TORSO");
         result.add("BACKGROUND");
         return result;
+    }
+    /**
+     * Populates the options dropdown menu in the top right of the activity
+     * @param menu the menu to display
+     * @return true when created
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    /**
+     * Code that handles what happens when you click on one of the menu items
+     * @param item the menu item clicked on
+     * @return boolean clicked
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            //Check if user clicked on the refresh button
+            case R.id.menu_refresh:
+                //go back to main activity
+                Intent refreshIntent = new Intent(this, MainActivity.class);
+                finish();
+                startActivity(refreshIntent);
+                break;
+
+            //Got to select/change user activity
+            case R.id.menu_user:
+                Intent userIntent = new Intent(this, UserHome.class);
+                startActivity(userIntent);
+                break;
+
+            //Got to avatar screen
+            case R.id.menu_avatar:
+                Intent avatarIntent = new Intent(this, AvatarHome.class);
+                startActivity(avatarIntent);
+                break;
+
+            //Go to edit task screen
+            case R.id.menu_tasks:
+                Intent editTaskIntent = new Intent(this, EditTask.class);
+                startActivity(editTaskIntent);
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
 

@@ -119,10 +119,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 					view.setBackgroundColor(Color.GREEN);
 				}
 
-				//Update task in a dirty way
-                //DatabaseHelper.updateTask(context, task.getId() ????, task);
-				DatabaseHelper.deleteTask(context, task);
-				DatabaseHelper.createTask(context, task);
+				//Update task in database
+                DatabaseHelper.updateTask(context, task.getId(), task);
+
 				//update display of tasks completed
                 if(textTasksCompleted != null){
                     int completed = 0;

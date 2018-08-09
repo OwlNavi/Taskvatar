@@ -7,4 +7,8 @@
     <string name="left_leg">left leg</string>
     <string name="right_leg">right leg</string>
     <string name="hat">hat</string>
+    <string name="task_name">Task Name</string>
+    <string name="description">Description</string>
+    <string name="task_time">Task Time</string>
+    <string name="submit">Submit</string>
 </resources>

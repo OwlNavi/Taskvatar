@@ -10,49 +10,54 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:text="Task Name"
+            android:text="@string/task_name"
             android:id="@+id/textTaskName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <EditText
-            android:id="@+id/edittextTaskName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/textTaskName"/>
+                android:id="@+id/edittextTaskName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/textTaskName"
+                android:hint="@string/task_name"
+                android:inputType="text"/>
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:text="Description"
+            android:text="@string/description"
             android:id="@+id/textTaskDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <EditText
-            android:id="@+id/edittextTaskDescription"
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/textTaskDescription"/>
+                android:id="@+id/edittextTaskDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/textTaskDescription"
+                android:labelFor="@id/edittextTaskDescription"
+                android:hint="@string/description"
+                android:inputType="text"/>
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:text="Task Time"
+            android:text="@string/task_time"
             android:id="@+id/textTaskTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <EditText
-            android:id="@+id/edittextTaskTime"
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/textTaskTime"/>
+                android:id="@+id/edittextTaskTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/textTaskTime"
+                android:hint="@string/task_time"
+                android:inputType="time"/>
     </RelativeLayout>
     <Button
         android:id="@+id/submitButton"
-        android:text="Submit"
+        android:text="@string/submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>

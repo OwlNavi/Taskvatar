@@ -34,7 +34,7 @@ import java.util.List;
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 public class AvatarHome extends AppCompatActivity {
-    private List<String> categoriesList = new ArrayList<>();
+    private List<String> categoriesList;
     private RecyclerView categoryRecyclerView;
     private RecyclerView bodyPartsRecyclerView;
 
@@ -43,13 +43,8 @@ public class AvatarHome extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.avatar_home);
 
-        categoriesList.add("HEAD");
-        categoriesList.add("LEFT ARM"); // dont forget we have left arm, right arm
-        categoriesList.add("RIGHT ARM");
-        categoriesList.add("LEFT LEG"); // left leg, right leg
-        categoriesList.add("RIGHT LEG");
-        categoriesList.add("TORSO");
-        categoriesList.add("BACKGROUND");
+        //great the list of categories
+        categoriesList = getCategories();
 
         //populate categories
         categoryRecyclerView = findViewById(R.id.categoriesRecyclerView);
@@ -68,6 +63,7 @@ public class AvatarHome extends AppCompatActivity {
         bodyPartsList.add("bodypart4");
         bodyPartsList.add("bodypart5");
 
+        //create the bodyparts recyclerview
         bodyPartsRecyclerView = findViewById(R.id.bodyPartsRecyclerView);
         BodyPartsAdapter bodyPartsAdapter = new BodyPartsAdapter(this, bodyPartsList); //body part list list
         RecyclerView.LayoutManager bodyPartsLayoutManager = new LinearLayoutManager(getApplicationContext(),
@@ -176,6 +172,23 @@ public class AvatarHome extends AppCompatActivity {
                 result.add("Head 6");
                 break;
         }
+        return result;
+    }
+
+    /**
+     * Creates a list of categories to display on the screen
+     * DUMMY METHOD should get categories from database
+     * @return a list of categories
+     */
+    public ArrayList<String> getCategories(){
+        ArrayList<String> result = new ArrayList<>();
+        categoriesList.add("HEAD");
+        categoriesList.add("LEFT ARM"); // dont forget we have left arm, right arm
+        categoriesList.add("RIGHT ARM");
+        categoriesList.add("LEFT LEG"); // left leg, right leg
+        categoriesList.add("RIGHT LEG");
+        categoriesList.add("TORSO");
+        categoriesList.add("BACKGROUND");
         return result;
     }
 }

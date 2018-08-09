@@ -12,7 +12,10 @@ package com.example.cwagt.taskapp345.view;
  * Activity which holds the Avatar fragment and recycler view
  */
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -31,7 +34,11 @@ import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.helper.AvatarEditer;
 import com.example.cwagt.taskapp345.helper.BodyPartsAdapter;
 import com.example.cwagt.taskapp345.helper.CategoriesAdapter;
+import com.example.cwagt.taskapp345.helper.DatabaseHelper;
 import com.example.cwagt.taskapp345.helper.RecyclerItemClickListener;
+import com.example.cwagt.taskapp345.object.Enums;
+import com.example.cwagt.taskapp345.object.Task;
+
 import java.util.ArrayList;
 import java.util.List;
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
@@ -42,11 +49,13 @@ public class AvatarHome extends AppCompatActivity {
     private RecyclerView bodyPartsRecyclerView;
     private AvatarEditer editer;
     private View avatarFragment;
+    private Context context;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.avatar_home);
+        context = getApplicationContext();
 
         //find the avatar fragment
         avatarFragment = findViewById(R.id.avatar_fragment);
@@ -107,16 +116,46 @@ public class AvatarHome extends AppCompatActivity {
                 bodyPartsRecyclerView, new RecyclerItemClickListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                //get current list and item selected
-                SharedPreferences preferences = getDefaultSharedPreferences(getApplicationContext());
-                Long categoryPreference = preferences.getLong("currentCategory", 0);//default zero
-                int currentCategory = categoryPreference.intValue();
-                ArrayList<String> items = getCategoryItems(currentCategory);
-                String itemSelected = items.get(position);
-                Log.d("AvatarHome", "Selected: " + itemSelected);
+                //make sure they have completed a task before changing body parts
+                //get current user
+                SharedPreferences preferences = getDefaultSharedPreferences(context);
+                Long userID = preferences.getLong("currentUser", 0);
+                final List<Task> taskList = DatabaseHelper.readAllTasks(context, userID);
+                //Check the number of compelted tasks and update tasksCompleted
+                int completed = 0;
+                if(taskList.size() > 0) {
+                    for (Task task : taskList) {
+                        if (task.getStatus() == Enums.Status.COMPLETED) {
+                            completed++;
+                        }
+                    }
+                }
+                if(completed < 1){
+                    //NOT ENOUGH TASKS COMPLETED
+                    //show the user a message to let them know they must complete tasks first
+                    AlertDialog.Builder builder = new AlertDialog.Builder(AvatarHome.this);
+                    builder.setMessage("You must complete a task before changing your avatar!")
+                            .setTitle("Task Check");
+                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User clicked OK button
 
-                editer.setImage(currentCategory, itemSelected);
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
 
+
+                } else {
+                    //get current list and item selected
+                    Long categoryPreference = preferences.getLong("currentCategory", 0);//default zero
+                    int currentCategory = categoryPreference.intValue();
+                    ArrayList<String> items = getCategoryItems(currentCategory);
+                    String itemSelected = items.get(position);
+                    Log.d("AvatarHome", "Selected: " + itemSelected);
+
+                    editer.setImage(currentCategory, itemSelected);
+                }
             }
 
             @Override

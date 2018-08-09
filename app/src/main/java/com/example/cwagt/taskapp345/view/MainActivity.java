@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import com.example.cwagt.taskapp345.R;
+import com.example.cwagt.taskapp345.helper.AvatarEditer;
 import com.example.cwagt.taskapp345.helper.DatabaseColumnNames;
 import com.example.cwagt.taskapp345.helper.DatabaseHelper;
 import com.example.cwagt.taskapp345.helper.TaskAdapter;
@@ -27,6 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -56,7 +58,11 @@ public class MainActivity extends AppCompatActivity  {
         //Set the layout based on the xml file
         setContentView(R.layout.activity_main);
 
-        //View avatarFragment = findViewById(R.id.avatar_fragment);
+		//find the avatar fragment
+		View avatarFragment = findViewById(R.id.avatar_fragment);
+		AvatarEditer editer = new AvatarEditer(avatarFragment);
+		//HashMap<String, Integer> avatarBodyParts = DatabaseHelper.loadAvatar();
+		//editer.setAvatar(avatarBodyParts);
 
         //Toolbar  on the top of the screen
         Toolbar toolbar = findViewById(R.id.my_toolbar);

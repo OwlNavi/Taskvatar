@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -31,6 +32,7 @@ import java.util.List;
 
 public class Avatar_Fragment extends Fragment {
     private Context context;
+    private ConstraintLayout back;
 
     @Override
     public void onAttach(Context context) {
@@ -45,12 +47,14 @@ public class Avatar_Fragment extends Fragment {
         FragmentManager fragmentManager = getFragmentManager();
         Fragment avatar_fragment = getFragmentManager().findFragmentById(R.id.avatar_fragment);
 
-        ConstraintLayout back = view.findViewById(R.id.avatar);
+        back = view.findViewById(R.id.avatar);
 
         back.setBackgroundColor(Color.WHITE);
-
 
         return view;
     }
 
+    public void setBackgroundColor(int colour){
+        back.setBackgroundColor(colour);
+    }
 }

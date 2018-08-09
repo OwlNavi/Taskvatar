@@ -67,6 +67,8 @@ public class MainActivity extends AppCompatActivity  {
         //Toolbar  on the top of the screen
         Toolbar toolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbar.setTitleTextColor(getColor(android.R.color.white));
 
         //check current user if set in the shared preferences and load their info from database
@@ -199,6 +201,8 @@ public class MainActivity extends AppCompatActivity  {
 				Intent editTaskIntent = new Intent(this, EditTask.class);
 				startActivity(editTaskIntent);
 				break;
+			case android.R.id.home:
+				finish();
 		}
 
         return super.onOptionsItemSelected(item);

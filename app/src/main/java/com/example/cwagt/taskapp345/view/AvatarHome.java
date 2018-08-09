@@ -245,9 +245,9 @@ public class AvatarHome extends AppCompatActivity {
     public ArrayList<String> getCategories(){
         ArrayList<String> result = new ArrayList<>();
         result.add("HEAD");
-        result.add("LEFT ARM"); // dont forget we have left arm, right arm
+        result.add("LEFT ARM");
         result.add("RIGHT ARM");
-        result.add("LEFT LEG"); // left leg, right leg
+        result.add("LEFT LEG");
         result.add("RIGHT LEG");
         result.add("TORSO");
         result.add("BACKGROUND");
@@ -284,18 +284,21 @@ public class AvatarHome extends AppCompatActivity {
             //Got to select/change user activity
             case R.id.menu_user:
                 Intent userIntent = new Intent(this, UserHome.class);
+                finish();
                 startActivity(userIntent);
                 break;
 
             //Got to avatar screen
             case R.id.menu_avatar:
                 Intent avatarIntent = new Intent(this, AvatarHome.class);
+                finish();
                 startActivity(avatarIntent);
                 break;
 
             //Go to edit task screen
             case R.id.menu_tasks:
                 Intent editTaskIntent = new Intent(this, EditTask.class);
+                finish();
                 startActivity(editTaskIntent);
                 break;
             case android.R.id.home:

@@ -1,6 +1,7 @@
 package com.example.cwagt.taskapp345.view;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -32,7 +33,7 @@ import java.util.List;
 
 public class Avatar_Fragment extends Fragment {
     private Context context;
-    private ConstraintLayout back;
+    private View view;
 
     @Override
     public void onAttach(Context context) {
@@ -43,13 +44,10 @@ public class Avatar_Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.avatar_fragment, container, false);
-
-
-
-        back = view.findViewById(R.id.avatar_container);
-        back.setBackgroundColor(Color.WHITE);
-
+        this.view = view;
         return view;
     }
+
+
 
 }

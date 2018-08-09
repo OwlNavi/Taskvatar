@@ -12,6 +12,7 @@ package com.example.cwagt.taskapp345.view;
  * Activity which holds the Avatar fragment and recycler view
  */
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
@@ -20,10 +21,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -56,6 +59,11 @@ public class AvatarHome extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.avatar_home);
         context = getApplicationContext();
+
+        //Toolbar  on the top of the screen
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
 
         //find the avatar fragment
         avatarFragment = findViewById(R.id.avatar_fragment);
@@ -163,6 +171,7 @@ public class AvatarHome extends AppCompatActivity {
                 onClick(view, position);
             }
         }));
+
     }
 
     /**
@@ -289,6 +298,8 @@ public class AvatarHome extends AppCompatActivity {
                 Intent editTaskIntent = new Intent(this, EditTask.class);
                 startActivity(editTaskIntent);
                 break;
+            case android.R.id.home:
+                finish();
         }
 
         return super.onOptionsItemSelected(item);

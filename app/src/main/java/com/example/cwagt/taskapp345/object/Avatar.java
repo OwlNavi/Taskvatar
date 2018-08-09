@@ -29,7 +29,6 @@ public class Avatar {
 	//A list to store the body parts
 	private List<ImageView> body = new ArrayList<>();
 
-	private ImageView la;
 
 	/**
 	 * Avatar default constructor

@@ -3,6 +3,7 @@ package com.example.cwagt.taskapp345.view;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -20,16 +21,10 @@ import com.example.cwagt.taskapp345.helper.AvatarEditer;
 import com.example.cwagt.taskapp345.helper.DatabaseColumnNames;
 import com.example.cwagt.taskapp345.helper.DatabaseHelper;
 import com.example.cwagt.taskapp345.helper.TaskAdapter;
-import com.example.cwagt.taskapp345.object.Avatar;
 import com.example.cwagt.taskapp345.object.Enums;
 import com.example.cwagt.taskapp345.object.Task;
 import com.example.cwagt.taskapp345.object.User;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -66,9 +61,11 @@ public class MainActivity extends AppCompatActivity  {
         //Toolbar  on the top of the screen
         Toolbar toolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true); //add back button
 		getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.setTitleTextColor(getColor(android.R.color.white));
+		//Apply a white colour to elements of toolbar
+		toolbar.getNavigationIcon().setColorFilter(getColor(android.R.color.white), PorterDuff.Mode.SRC_ATOP);
+		toolbar.setTitleTextColor(getColor(android.R.color.white));
 
         //check current user if set in the shared preferences and load their info from database
 		//if the preference is not set go back to user page

@@ -12,27 +12,21 @@ package com.example.cwagt.taskapp345.view;
  * Activity which holds the Avatar fragment and recycler view
  */
 
-import android.app.ActionBar;
+
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.helper.AvatarEditer;
 import com.example.cwagt.taskapp345.helper.BodyPartsAdapter;
@@ -41,9 +35,9 @@ import com.example.cwagt.taskapp345.helper.DatabaseHelper;
 import com.example.cwagt.taskapp345.helper.RecyclerItemClickListener;
 import com.example.cwagt.taskapp345.object.Enums;
 import com.example.cwagt.taskapp345.object.Task;
-
 import java.util.ArrayList;
 import java.util.List;
+
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 public class AvatarHome extends AppCompatActivity {
@@ -62,7 +56,6 @@ public class AvatarHome extends AppCompatActivity {
 
         //Toolbar  on the top of the screen
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
 
         //find the avatar fragment
@@ -138,7 +131,7 @@ public class AvatarHome extends AppCompatActivity {
                         }
                     }
                 }
-                if(completed < 1){
+                if(completed < 0){
                     //NOT ENOUGH TASKS COMPLETED
                     //show the user a message to let them know they must complete tasks first
                     AlertDialog.Builder builder = new AlertDialog.Builder(AvatarHome.this);
@@ -213,12 +206,7 @@ public class AvatarHome extends AppCompatActivity {
                 result.add("Cartoon");
                 break;
             case 5:
-                result.add("Torso 1");
-                result.add("Torso 2");
-                result.add("Torso 3");
-                result.add("Torso 4");
-                result.add("Torso 5");
-                result.add("Torso 6");
+                result.add("Surprised");
                 break;
             case 6:
                 result.add("Beach");
@@ -302,6 +290,7 @@ public class AvatarHome extends AppCompatActivity {
                 finish();
                 startActivity(editTaskIntent);
                 break;
+                //Go to main Activity
             case android.R.id.home:
                 finish();
         }

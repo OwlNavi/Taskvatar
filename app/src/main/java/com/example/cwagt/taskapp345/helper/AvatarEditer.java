@@ -1,6 +1,9 @@
 package com.example.cwagt.taskapp345.helper;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.constraint.ConstraintLayout;
 import android.view.View;
@@ -14,15 +17,18 @@ import java.util.HashMap;
  * It is used to edit body parts and save the avatar to the database
  */
 public class AvatarEditer {
+    //Image Views used to display the Avatar
     private ImageView hat;
     private ImageView leftArm;
     private ImageView rightArm;
     private ImageView leftLeg;
     private ImageView rightLeg;
     private ImageView base;
+    //The background of the Constraint container
     private ConstraintLayout background;
+    //Current view
     private View avatar;
-
+    //currentCategory numbers
     private final int HEAD = 0;
     private final int LEFT_ARM = 1;
     private final int RIGHT_ARM = 2;
@@ -40,7 +46,6 @@ public class AvatarEditer {
      * @param avatarFragment the View of the avatar fragment
      */
     public AvatarEditer(View avatarFragment){
-        View avatar = avatarFragment;
         this.avatar = avatarFragment;
         this.base = avatar.findViewById(R.id.base);
         this.leftArm = avatar.findViewById(R.id.left_arm);
@@ -82,12 +87,29 @@ public class AvatarEditer {
             case(RIGHT_LEG):
                 setRightLeg(itemSelected);
                 break;
+            case(TORSO):
+                setTorso(itemSelected);
+                break;
             case(BACKGROUND):
                 setBackground(itemSelected);
                 break;
             default:
                 break;
         }
+    }
+
+    /**
+     * Sets the Torso based on the item selected
+     * @param itemSelected the name of the item selected
+     */
+    private void setTorso(String itemSelected) {
+
+        if(itemSelected.equals("Surprised")) {
+            base.setImageResource(R.drawable.surprised);
+            bodyParts.put("base", R.drawable.surprised);
+        }
+
+        saveAvatar();
     }
 
     /**
@@ -233,6 +255,5 @@ public class AvatarEditer {
         rightArm.setImageResource(bodyParts.get("rightArm"));
         leftLeg.setImageResource(bodyParts.get("leftLeg"));
         rightLeg.setImageResource(bodyParts.get("rightLeg"));
-        //background.setImageResource
     }
 }

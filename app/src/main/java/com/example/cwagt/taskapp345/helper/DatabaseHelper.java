@@ -5,15 +5,16 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import com.example.cwagt.taskapp345.object.Avatar;
 import com.example.cwagt.taskapp345.object.Enums;
 import com.example.cwagt.taskapp345.object.Task;
 import com.example.cwagt.taskapp345.object.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.Task.*;
-import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.Avatar.*;
+import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.Task._ID;
 import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.User.*;
 
 /**
@@ -31,7 +32,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 	//https://developer.android.com/training/data-storage/sqlite
 
-	private static final int DATABASE_VERSION = 6;
+	private static final int DATABASE_VERSION = 7;
 	private static final String DATABASE_NAME = "Taskvatar.db";
 
 	private static final String SQL_CREATE_TASK_TABLE =
@@ -48,17 +49,18 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			")";
 	//If you want to add a field, dont forget to change the field names and types in DatabaseColumnNames.java
 
-	private static final String SQL_CREATE_AVATAR_TABLE =
-			"CREATE TABLE " + DatabaseColumnNames.Avatar.TABLE_NAME + " (" +
-					DatabaseColumnNames.Avatar._ID + " INTEGER PRIMARY KEY" +
+	private static final String SQL_CREATE_USER_TABLE =
+			"CREATE TABLE " + DatabaseColumnNames.User.TABLE_NAME + " (" +
+					DatabaseColumnNames.User._ID + " INTEGER PRIMARY KEY" +
+					"," + USER_NAME_NAME + " " + USER_TYPE_NAME +
+					"," + USER_NAME_DESCRIPTION + " " + USER_TYPE_DESCRIPTION +
 
 					", " + AVATAR_NAME_BASE + " " + AVATAR_TYPE_BASE +
+					", " + AVATAR_NAME_HAT + " " + AVATAR_TYPE_HAT +
 					", " + AVATAR_NAME_LEFT_ARM + " " + AVATAR_TYPE_LEFT_ARM +
 					", " + AVATAR_NAME_RIGHT_ARM + " " + AVATAR_TYPE_RIGHT_ARM +
 					", " + AVATAR_NAME_LEFT_LEG + " " + AVATAR_TYPE_LEFT_LEG +
 					", " + AVATAR_NAME_RIGHT_LEG + " " + AVATAR_TYPE_RIGHT_LEG +
-
-					", " + AVATAR_NAME_USER + " " + AVATAR_TYPE_USER +
 
 					", " + AVATAR_NAME_LEFT_ARM_ROTATION + " " + AVATAR_TYPE_LEFT_ARM_ROTATION +
 					", " + AVATAR_NAME_RIGHT_ARM_ROTATION + " " + AVATAR_TYPE_RIGHT_ARM_ROTATION +
@@ -66,18 +68,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 					", " + AVATAR_NAME_RIGHT_LEG_ROTATION + " " + AVATAR_TYPE_RIGHT_LEG_ROTATION +
 			")";
 
-	private static final String SQL_CREATE_USER_TABLE =
-			"CREATE TABLE " + DatabaseColumnNames.User.TABLE_NAME + " (" +
-					DatabaseColumnNames.User._ID + " INTEGER PRIMARY KEY" +
-					"," + USER_NAME_NAME + " " + USER_TYPE_NAME +
-					"," + USER_NAME_DESCRIPTION + " " + USER_TYPE_DESCRIPTION +
-			")";
-
 	private static final String SQL_DELETE_TASK_TABLE =
 			"DROP TABLE IF EXISTS " + DatabaseColumnNames.Task.TABLE_NAME;
-
-	private static final String SQL_DELETE_AVATAR_TABLE =
-			"DROP TABLE IF EXISTS " + DatabaseColumnNames.Avatar.TABLE_NAME;
 
 	private static final String SQL_DELETE_USER_TABLE =
 			"DROP TABLE IF EXISTS " + DatabaseColumnNames.User.TABLE_NAME;
@@ -89,7 +81,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(SQL_CREATE_TASK_TABLE);
-		db.execSQL(SQL_CREATE_AVATAR_TABLE);
 		db.execSQL(SQL_CREATE_USER_TABLE);
 	}
 
@@ -97,7 +88,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		//delete old database
 		db.execSQL(SQL_DELETE_TASK_TABLE);
-		db.execSQL(SQL_DELETE_AVATAR_TABLE);
 		db.execSQL(SQL_DELETE_USER_TABLE);
 		//create new database
 		onCreate(db);
@@ -323,6 +313,21 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			values.put(USER_NAME_NAME, user.getUserName());
 			values.put(USER_NAME_DESCRIPTION, user.getUserDescription());
 
+			Avatar avatar = user.getAvatar();
+			HashMap<String, Integer> bodyParts = avatar.getBodyParts();
+
+			values.put(AVATAR_NAME_BASE, bodyParts.get("base"));
+			values.put(AVATAR_NAME_HAT, bodyParts.get("hat"));
+			values.put(AVATAR_NAME_LEFT_ARM, bodyParts.get("leftArm"));
+			values.put(AVATAR_NAME_RIGHT_ARM, bodyParts.get("rightArm"));
+			values.put(AVATAR_NAME_LEFT_LEG, bodyParts.get("leftLeg"));
+			values.put(AVATAR_NAME_RIGHT_LEG, bodyParts.get("rightLeg"));
+
+			values.put(AVATAR_NAME_LEFT_ARM_ROTATION, avatar.getLeftArmRotation());
+			values.put(AVATAR_NAME_RIGHT_ARM_ROTATION, avatar.getRightArmRotation());
+			values.put(AVATAR_NAME_LEFT_LEG_ROTATION, avatar.getLeftLegRotation());
+			values.put(AVATAR_NAME_RIGHT_LEG_ROTATION, avatar.getRightLegRotation());
+
 			try {
 				newRowId = db.insert(DatabaseColumnNames.User.TABLE_NAME, null, values);
 			} catch (Exception e) {
@@ -340,18 +345,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		ArrayList<User> users = new ArrayList<>();
 		if(checkDatabase(db)) {
 
-			//String selection = TASK_NAME_TEXT + " = ?"; //can use multiple "?" as placeholders
-			//String[] selectionArgs = { "Task text" }; //use comma separated list here
-
-			String[] projection = {
-					_ID,
-					USER_NAME_NAME,
-					USER_NAME_DESCRIPTION
-			};
-
 			Cursor cursor = db.query(
 					DatabaseColumnNames.User.TABLE_NAME,   // The table to query
-					projection,             // The array of columns to return (pass null to get all)
+					null,             // The array of columns to return (pass null to get all)
 					selection,              // The columns for the WHERE clause
 					selectionArgs,          // The values for the WHERE clause
 					null,                   // don't group the rows
@@ -360,10 +356,30 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			);
 
 			while (cursor.moveToNext()) {
+
+				HashMap<String, Integer> bodyParts = new HashMap<>();
+				bodyParts.put("base", cursor.getInt(cursor.getColumnIndexOrThrow(AVATAR_NAME_BASE)));
+				bodyParts.put("hat", cursor.getInt(cursor.getColumnIndexOrThrow(AVATAR_NAME_HAT)));
+				bodyParts.put("leftArm", cursor.getInt(cursor.getColumnIndexOrThrow(AVATAR_NAME_LEFT_ARM)));
+				bodyParts.put("rightArm", cursor.getInt(cursor.getColumnIndexOrThrow(AVATAR_NAME_RIGHT_ARM)));
+				bodyParts.put("leftLeg", cursor.getInt(cursor.getColumnIndexOrThrow(AVATAR_NAME_LEFT_LEG)));
+				bodyParts.put("rightLeg", cursor.getInt(cursor.getColumnIndexOrThrow(AVATAR_NAME_RIGHT_LEG)));
+
+
+				Avatar avatar = new Avatar(
+						bodyParts,
+						cursor.getFloat(cursor.getColumnIndexOrThrow(AVATAR_NAME_LEFT_ARM_ROTATION)),
+						cursor.getFloat(cursor.getColumnIndexOrThrow(AVATAR_NAME_RIGHT_ARM_ROTATION)),
+						cursor.getFloat(cursor.getColumnIndexOrThrow(AVATAR_NAME_LEFT_LEG_ROTATION)),
+						cursor.getFloat(cursor.getColumnIndexOrThrow(AVATAR_NAME_RIGHT_LEG_ROTATION))
+				);
+
+
 				User thisUser = new User(
 						cursor.getLong(cursor.getColumnIndexOrThrow(_ID)),
 						cursor.getString(cursor.getColumnIndexOrThrow(USER_NAME_NAME)),
-						cursor.getString(cursor.getColumnIndexOrThrow(USER_NAME_DESCRIPTION))
+						cursor.getString(cursor.getColumnIndexOrThrow(USER_NAME_DESCRIPTION)),
+						avatar
 				);
 				users.add(thisUser);
 			}
@@ -391,6 +407,21 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			values.put(USER_NAME_NAME, user.getUserName());
 			values.put(USER_NAME_DESCRIPTION, user.getUserDescription());
 
+			Avatar avatar = user.getAvatar();
+			values.put(AVATAR_NAME_LEFT_ARM_ROTATION, avatar.getLeftArmRotation());
+			values.put(AVATAR_NAME_RIGHT_ARM_ROTATION, avatar.getRightArmRotation());
+			values.put(AVATAR_NAME_LEFT_LEG_ROTATION, avatar.getLeftLegRotation());
+			values.put(AVATAR_NAME_RIGHT_LEG_ROTATION, avatar.getRightLegRotation());
+
+			HashMap<String, Integer> bodyParts = avatar.getBodyParts();
+			values.put(AVATAR_NAME_BASE, bodyParts.get("base"));
+			values.put(AVATAR_NAME_HAT, bodyParts.get("hat"));
+			values.put(AVATAR_NAME_LEFT_ARM, bodyParts.get("leftArm"));
+			values.put(AVATAR_NAME_RIGHT_ARM, bodyParts.get("rightArm"));
+			values.put(AVATAR_NAME_LEFT_LEG, bodyParts.get("leftLeg"));
+			values.put(AVATAR_NAME_RIGHT_LEG, bodyParts.get("rightLeg"));
+
+
 			try {
 				count = db.update(DatabaseColumnNames.User.TABLE_NAME, values,_ID + " = ?", new String[]{String.valueOf(Id)});
 				if(count == 1) success = true;
@@ -412,14 +443,16 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 		if(checkDatabase(db)) {
 
-			String whereClause = _ID + " = ?" +
-					" AND " + USER_NAME_NAME + " = ?" +
-					" AND " + USER_NAME_DESCRIPTION + " = ?";
+			String whereClause = _ID + " = ?"
+					+ " AND " + USER_NAME_NAME + " = ?"
+					+ " AND " + USER_NAME_DESCRIPTION + " = ?"
+			;
 
 			String[] values = new String[3];
-			values[0] = "" + user.getUserID();
-			values[1] = user.getUserName();
-			values[2] = user.getUserDescription();
+			int i = 0;
+			values[i++] = "" + user.getUserID();
+			values[i++] = user.getUserName();
+			values[i] = user.getUserDescription();
 
 			try {
 				success = db.delete(
@@ -452,207 +485,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			try {
 				success = db.delete(
 						DatabaseColumnNames.User.TABLE_NAME,
-						whereClause,
-						values
-				);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-		}else{
-			sout("Error: could not open database for deleting");
-		}
-		return success;
-	}
-
-	/* Avatars */
-
-	public static long createAvatar(Context context, Avatar avatar){
-		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
-		SQLiteDatabase db = mDbHelper.getWritableDatabase();
-		long newRowId = -1; //allows cheating e.g. `if(writeTaskToDatabase(){...}`
-		if(checkDatabase(db)) {
-
-			ContentValues values = new ContentValues();
-			values.put(_ID, avatar.getID());
-
-			values.put(AVATAR_NAME_BASE, avatar.getBase());
-			values.put(AVATAR_NAME_LEFT_ARM, avatar.getLeftArm());
-			values.put(AVATAR_NAME_RIGHT_ARM, avatar.getRightArm());
-			values.put(AVATAR_NAME_LEFT_LEG, avatar.getLeftLeg());
-			values.put(AVATAR_NAME_RIGHT_LEG, avatar.getRightLeg());
-
-			values.put(AVATAR_NAME_USER, avatar.getUserID());
-
-			values.put(AVATAR_NAME_LEFT_ARM_ROTATION, avatar.getLeftArmRotation());
-			values.put(AVATAR_NAME_RIGHT_ARM_ROTATION, avatar.getRightArmRotation());
-			values.put(AVATAR_NAME_LEFT_LEG_ROTATION, avatar.getLeftLegRotation());
-			values.put(AVATAR_NAME_RIGHT_LEG_ROTATION, avatar.getRightLegRotation());
-
-			try {
-				newRowId = db.insert(DatabaseColumnNames.Avatar.TABLE_NAME, null, values);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}else{
-			sout("Error: could not open database for writing");
-		}
-		return newRowId;
-	}
-
-	public static Avatar readAvatar(Context context, User user) {
-		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
-		SQLiteDatabase db = mDbHelper.getReadableDatabase();
-		String selection = AVATAR_NAME_USER + " = ?";
-		String[] selectionArgs = new String[]{String.valueOf(user.getUserID())};
-		Avatar thisAvatar = null;
-		if(checkDatabase(db)) {
-
-			Cursor cursor = db.query(
-					DatabaseColumnNames.Avatar.TABLE_NAME,   // The table to query
-					null,             // The array of columns to return (pass null to get all)
-					selection,              // The columns for the WHERE clause
-					selectionArgs,          // The values for the WHERE clause
-					null,                   // don't group the rows
-					null,                   // don't filter by row groups
-					_ID               // The sort order
-			);
-
-			//TODO: Check there is only one avatar. Currently returns the last avatar found
-
-			while (cursor.moveToNext()) {
-				thisAvatar = new Avatar(
-						cursor.getString(cursor.getColumnIndexOrThrow(AVATAR_NAME_BASE)),
-						cursor.getString(cursor.getColumnIndexOrThrow(AVATAR_NAME_LEFT_ARM)),
-						cursor.getString(cursor.getColumnIndexOrThrow(AVATAR_NAME_RIGHT_ARM)),
-						cursor.getString(cursor.getColumnIndexOrThrow(AVATAR_NAME_LEFT_LEG)),
-						cursor.getString(cursor.getColumnIndexOrThrow(AVATAR_NAME_RIGHT_LEG)),
-
-						user,
-
-						cursor.getFloat(cursor.getColumnIndexOrThrow(AVATAR_NAME_LEFT_ARM_ROTATION)),
-						cursor.getFloat(cursor.getColumnIndexOrThrow(AVATAR_NAME_RIGHT_ARM_ROTATION)),
-						cursor.getFloat(cursor.getColumnIndexOrThrow(AVATAR_NAME_LEFT_LEG_ROTATION)),
-						cursor.getFloat(cursor.getColumnIndexOrThrow(AVATAR_NAME_RIGHT_LEG_ROTATION))
-				);
-
-			}
-			cursor.close();
-
-		}else{
-			sout("Error: could not open database for reading");
-		}
-		return thisAvatar;
-	}
-
-	public static Boolean updateAvatar(Context context, Long Id, Avatar avatar){
-		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
-		SQLiteDatabase db = mDbHelper.getWritableDatabase();
-		Boolean success = false;
-		Integer count;
-		if(checkDatabase(db)) {
-
-			ContentValues values = new ContentValues();
-			values.put(_ID, avatar.getID());
-
-			values.put(AVATAR_NAME_BASE, avatar.getBase());
-			values.put(AVATAR_NAME_LEFT_ARM, avatar.getLeftArm());
-			values.put(AVATAR_NAME_RIGHT_ARM, avatar.getRightArm());
-			values.put(AVATAR_NAME_LEFT_LEG, avatar.getLeftLeg());
-			values.put(AVATAR_NAME_RIGHT_LEG, avatar.getRightLeg());
-
-			values.put(AVATAR_NAME_USER, avatar.getUserID());
-
-			values.put(AVATAR_NAME_LEFT_ARM_ROTATION, avatar.getLeftArmRotation());
-			values.put(AVATAR_NAME_RIGHT_ARM_ROTATION, avatar.getRightArmRotation());
-			values.put(AVATAR_NAME_LEFT_LEG_ROTATION, avatar.getLeftLegRotation());
-			values.put(AVATAR_NAME_RIGHT_LEG_ROTATION, avatar.getRightLegRotation());
-
-			try {
-				count = db.update(DatabaseColumnNames.Avatar.TABLE_NAME, values, _ID + " = ?", new String[]{String.valueOf(Id)});
-				if(count == 1) success = true;
-				else throw new Exception("[DatabaseHelper.updateAvatar] db.update returned " + count + " rows");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-		}else{
-			sout("Error: could not open database for writing");
-		}
-		return success;
-	}
-
-	public static int deleteAvatar(Context context, Avatar avatar){
-		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
-		SQLiteDatabase db = mDbHelper.getWritableDatabase();
-		int success = -1;
-
-		if(checkDatabase(db)) {
-
-			String whereClause = _ID + " = ?" +
-
-					" AND " + AVATAR_NAME_BASE + " = ?" +
-					" AND " + AVATAR_NAME_LEFT_ARM + " = ?" +
-					" AND " + AVATAR_NAME_RIGHT_ARM + " = ?" +
-					" AND " + AVATAR_NAME_LEFT_LEG + " = ?" +
-					" AND " + AVATAR_NAME_RIGHT_LEG + " = ?" +
-
-					" AND " + AVATAR_NAME_USER + " = ?" +
-
-					" AND " + AVATAR_NAME_LEFT_ARM_ROTATION + " = ?" +
-					" AND " + AVATAR_NAME_RIGHT_ARM_ROTATION + " = ?" +
-					" AND " + AVATAR_NAME_LEFT_LEG_ROTATION + " = ?" +
-					" AND " + AVATAR_NAME_RIGHT_LEG_ROTATION + " = ?"
-			;
-
-			String[] values = new String[11];
-			int i = 0;
-			values[i++] = "" + avatar.getID();
-
-			values[i++] = "" + avatar.getBase();
-			values[i++] = "" + avatar.getLeftArm();
-			values[i++] = "" + avatar.getRightArm();
-			values[i++] = "" + avatar.getLeftLeg();
-			values[i++] = "" + avatar.getRightLeg();
-
-			values[i++] = "" + avatar.getUserID();
-
-			values[i++] = "" + avatar.getLeftArmRotation();
-			values[i++] = "" + avatar.getRightArmRotation();
-			values[i++] = "" + avatar.getLeftLegRotation();
-			values[i] = "" + avatar.getRightLegRotation();
-
-			try {
-				success = db.delete(
-						DatabaseColumnNames.Avatar.TABLE_NAME,
-						whereClause,
-						values
-				);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-		}else{
-			sout("Error: could not open database for deleting");
-		}
-		return success;
-	}
-
-	public static int deleteAvatar(Context context, Long ID){
-		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
-		SQLiteDatabase db = mDbHelper.getWritableDatabase();
-		int success = -1;
-
-		if(checkDatabase(db)) {
-
-			String whereClause = _ID + " = ?";
-
-			String[] values = new String[1];
-			values[0] = String.valueOf(ID);
-
-			try {
-				success = db.delete(
-						DatabaseColumnNames.Avatar.TABLE_NAME,
 						whereClause,
 						values
 				);

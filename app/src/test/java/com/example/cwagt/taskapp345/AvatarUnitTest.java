@@ -1,18 +1,14 @@
 package com.example.cwagt.taskapp345;
 
 import com.example.cwagt.taskapp345.object.Avatar;
-import com.example.cwagt.taskapp345.object.User;
 import org.junit.Test;
 
+import java.util.HashMap;
 import java.util.Random;
 
 import static org.junit.Assert.assertEquals;
 
 public class AvatarUnitTest {
-
-	private long getRandomLong(long upperLimit) {
-		return (long) (Math.random() * upperLimit);
-	}
 
 	@Test
 	public void avatarGetRotationDefault() {
@@ -31,15 +27,21 @@ public class AvatarUnitTest {
 
 		Float degrees = (float)360;
 
-		Long avatarID = getRandomLong(100L);
 		Float leftArmRotation = rand.nextFloat() * degrees;
 		Float rightArmRotation = rand.nextFloat() * degrees;
 		Float leftLegRotation = rand.nextFloat() * degrees;
 		Float rightLegRotation = rand.nextFloat() * degrees;
 
-		User user = new User(avatarID, "Dummy user " + avatarID, "Desc");
+		HashMap<String, Integer> bodyParts = new HashMap<>();
+		Integer intVal = 1;
+		bodyParts.put("base", intVal++);
+		bodyParts.put("hat", intVal++);
+		bodyParts.put("leftArm", intVal++);
+		bodyParts.put("rightArm", intVal++);
+		bodyParts.put("leftLeg", intVal++);
+		bodyParts.put("rightLeg", intVal);
 
-		Avatar testAvatar2 = new Avatar("base_red", "left_arm", "right_arm", "left_leg", "right_leg", user, leftArmRotation, rightArmRotation, leftLegRotation, rightLegRotation);
+		Avatar testAvatar2 = new Avatar(bodyParts, leftArmRotation, rightArmRotation, leftLegRotation, rightLegRotation);
 		assertEquals(leftArmRotation, testAvatar2.getLeftArmRotation(), 0.1);
 		assertEquals(rightArmRotation, testAvatar2.getRightArmRotation(), 0.1);
 		assertEquals(leftLegRotation, testAvatar2.getLeftLegRotation(), 0.1);
@@ -61,15 +63,21 @@ public class AvatarUnitTest {
 
 		Float degrees = (float)360;
 
-		Long avatarID = getRandomLong(100L);
 		Float leftArmRotation = rand.nextFloat() * degrees + 10;
 		Float rightArmRotation = rand.nextFloat() * degrees + 10;
 		Float leftLegRotation = rand.nextFloat() * degrees + 10;
 		Float rightLegRotation = rand.nextFloat() * degrees + 10;
 
-		User user = new User(avatarID,"Dummy user " + avatarID, "Desc");
+		HashMap<String, Integer> bodyParts = new HashMap<>();
+		Integer intVal = 1;
+		bodyParts.put("base", intVal++);
+		bodyParts.put("hat", intVal++);
+		bodyParts.put("leftArm", intVal++);
+		bodyParts.put("rightArm", intVal++);
+		bodyParts.put("leftLeg", intVal++);
+		bodyParts.put("rightLeg", intVal);
 
-		Avatar testAvatar4 = new Avatar("base_red", "left_arm", "right_arm", "left_leg", "right_leg", user, leftArmRotation, rightArmRotation, leftLegRotation, rightLegRotation);
+		Avatar testAvatar4 = new Avatar(bodyParts, leftArmRotation, rightArmRotation, leftLegRotation, rightLegRotation);
 
 		testAvatar4.setLeftArmRotation(2);
 		testAvatar4.setRightArmRotation(3);

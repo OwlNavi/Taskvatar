@@ -31,23 +31,25 @@ public final class DatabaseColumnNames {
 		public static final String TASK_TYPE_USER = "INTEGER";
 	}
 
-	public static class Avatar implements BaseColumns {
-		public static final String TABLE_NAME = "avatar";
+	public static class User implements BaseColumns {
+		public static final String TABLE_NAME = "user";
+		public static final String USER_NAME_NAME = "name";
+		public static final String USER_TYPE_NAME = "TEXT";
+		public static final String USER_NAME_DESCRIPTION = "description";
+		public static final String USER_TYPE_DESCRIPTION = "TEXT";
 
 		public static final String AVATAR_NAME_BASE = "base";
 		public static final String AVATAR_TYPE_BASE = "INTEGER";
-
+		public static final String AVATAR_NAME_HAT = "hat";
+		public static final String AVATAR_TYPE_HAT = "INTEGER";
 		public static final String AVATAR_NAME_LEFT_ARM = "leftArm";
-		public static final String AVATAR_TYPE_LEFT_ARM = "TEXT";
+		public static final String AVATAR_TYPE_LEFT_ARM = "INTEGER";
 		public static final String AVATAR_NAME_RIGHT_ARM = "rightArm";
-		public static final String AVATAR_TYPE_RIGHT_ARM = "TEXT";
+		public static final String AVATAR_TYPE_RIGHT_ARM = "INTEGER";
 		public static final String AVATAR_NAME_LEFT_LEG = "leftLeg";
-		public static final String AVATAR_TYPE_LEFT_LEG = "TEXT";
+		public static final String AVATAR_TYPE_LEFT_LEG = "INTEGER";
 		public static final String AVATAR_NAME_RIGHT_LEG = "rightLeg";
-		public static final String AVATAR_TYPE_RIGHT_LEG = "TEXT";
-
-		public static final String AVATAR_NAME_USER = "userID";
-		public static final String AVATAR_TYPE_USER = "INTEGER";
+		public static final String AVATAR_TYPE_RIGHT_LEG = "INTEGER";
 
 		public static final String AVATAR_NAME_LEFT_ARM_ROTATION = "leftArmRotation";
 		public static final String AVATAR_TYPE_LEFT_ARM_ROTATION = "INTEGER";
@@ -58,13 +60,5 @@ public final class DatabaseColumnNames {
 		public static final String AVATAR_NAME_RIGHT_LEG_ROTATION = "rightLegRotation";
 		public static final String AVATAR_TYPE_RIGHT_LEG_ROTATION = "INTEGER";
 
-	}
-
-	public static class User implements BaseColumns {
-		public static final String TABLE_NAME = "user";
-		public static final String USER_NAME_NAME = "name";
-		public static final String USER_TYPE_NAME = "TEXT";
-		public static final String USER_NAME_DESCRIPTION = "description";
-		public static final String USER_TYPE_DESCRIPTION = "TEXT";
 	}
 }

@@ -1,14 +1,11 @@
 package com.example.cwagt.taskapp345.helper;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.widget.ImageView;
 import com.example.cwagt.taskapp345.R;
+
 import java.util.HashMap;
 
 /**
@@ -18,12 +15,12 @@ import java.util.HashMap;
  */
 public class AvatarEditer {
     //Image Views used to display the Avatar
+    private ImageView base;
     private ImageView hat;
     private ImageView leftArm;
     private ImageView rightArm;
     private ImageView leftLeg;
     private ImageView rightLeg;
-    private ImageView base;
     //The background of the Constraint container
     private ConstraintLayout background;
     //Current view
@@ -63,6 +60,7 @@ public class AvatarEditer {
         bodyParts.put("leftLeg", R.id.left_leg);
         bodyParts.put("rightLeg", R.id.right_leg);
         bodyParts.put("background", R.id.avatar_container);
+        //TODO: we never do anything with bodyParts
     }
 
     /**
@@ -247,7 +245,7 @@ public class AvatarEditer {
 
     /**
      * Sets the avatar in the view based on the provided hashmap values
-     * @param bodyParts
+     * @param bodyParts lit of body parts
      */
     public void setAvatar(HashMap<String, Integer> bodyParts){
         hat.setImageResource(bodyParts.get("hat"));

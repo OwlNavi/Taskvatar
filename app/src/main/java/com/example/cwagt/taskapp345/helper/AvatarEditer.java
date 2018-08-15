@@ -254,4 +254,8 @@ public class AvatarEditer {
         leftLeg.setImageResource(bodyParts.get("leftLeg"));
         rightLeg.setImageResource(bodyParts.get("rightLeg"));
     }
+
+    public HashMap<String, Integer> getBodyParts() {
+        return bodyParts;
+    }
 }

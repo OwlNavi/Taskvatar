@@ -1,5 +1,8 @@
 package com.example.cwagt.taskapp345.view;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -53,6 +56,9 @@ public class MainActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         //Set the layout based on the xml file
         setContentView(R.layout.activity_main);
+
+        //create and add an AvatarFragment to the activity
+		displayAvatar();
 
 
 		//HashMap<String, Integer> avatarBodyParts = DatabaseHelper.loadAvatar();
@@ -137,10 +143,25 @@ public class MainActivity extends AppCompatActivity  {
 		}, 3000, 30*1000); //1000 is one second
 
 		//find the avatar fragment
-		View avatarFragment = findViewById(R.id.avatar_fragment);
+		View avatarFragment = findViewById(R.id.main_avatar_container);
 		AvatarEditer editer = new AvatarEditer(avatarFragment);
-		//editer.setAvatar(currentUser.getBodyParts());
+
     }
+
+    private void displayAvatar() {
+
+		//create instance of avatar fragment
+		Avatar_Fragment main_activity_avatar_fragment = Avatar_Fragment.newInstance();
+
+		//instance of manager and transaction
+		android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
+
+		android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+		//add fragment to main_activity
+		fragmentTransaction.add(R.id.main_avatar_container,main_activity_avatar_fragment).commit();
+
+	}
 
 	/**
 	 * Sets all tasks in the database to incomplete

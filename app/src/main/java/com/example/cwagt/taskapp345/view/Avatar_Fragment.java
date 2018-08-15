@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.cwagt.taskapp345.R;
-
+import com.example.cwagt.taskapp345.helper.AvatarEditer;
 
 
 public class Avatar_Fragment extends Fragment {
@@ -27,15 +27,47 @@ public class Avatar_Fragment extends Fragment {
         super.onAttach(context);
     }
 
+    public Avatar_Fragment() {
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.avatar_fragment, container, false);
         this.view = view;
 
+        //persist(view);
+
         openAvatarHome(view);
+
         return view;
     }
 
+    public static Avatar_Fragment newInstance() {
+
+        Avatar_Fragment fragment = new Avatar_Fragment();
+
+        return fragment;
+    }
+
+    /**
+     * Function persist
+     * */
+    private void persist(View view) {
+
+        AvatarEditer editer = new AvatarEditer(view);
+
+        editer.setAvatar(editer.getBodyParts());
+
+    }
+
+
+
+
+
+    /**
+     * Function 2
+     * */
     //onClickListener for clicking avatar
     private void openAvatarHome(View view) {
 

@@ -195,7 +195,7 @@ public class MainActivity extends AppCompatActivity  {
 			case R.id.menu_avatar:
 				Intent avatarIntent = new Intent(this, AvatarHome.class);
 				startActivity(avatarIntent);
-				break;
+			break;
 
 			//Go to edit task screen
 			case R.id.menu_tasks:

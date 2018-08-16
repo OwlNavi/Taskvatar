@@ -190,7 +190,17 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return readTasks(context, TASK_NAME_USER + " = ?", new String[]{String.valueOf(userID)});
 	}
 
-	public static boolean updateTask(Context context, Long Id, Task task){
+	public static boolean updateTask(Context context, Long Id, Task task) {
+
+		try{
+			if(Id == null) {
+				//return false;
+				throw new Exception("[DatabaseHelper.updateTask] Id is null. Task: " + task);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
 		Boolean success = false;
@@ -205,6 +215,11 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			values.put(TASK_NAME_STATUS, task.getStatus().name());
 			values.put(TASK_NAME_TIME, task.getTime());
 			values.put(TASK_NAME_USER, task.getUserId());
+
+			System.out.println("[DatabaseHelper.updateTask] Updating table: " + DatabaseColumnNames.Task.TABLE_NAME);
+			System.out.println("Values: " + values);
+			System.out.println("Where " + _ID + " = " + String.valueOf(Id));
+
 
 			try {
 				int count = db.update(DatabaseColumnNames.Task.TABLE_NAME, values, _ID + " = ?", new String[]{String.valueOf(Id)});
@@ -421,6 +436,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			values.put(AVATAR_NAME_LEFT_LEG, bodyParts.get("leftLeg"));
 			values.put(AVATAR_NAME_RIGHT_LEG, bodyParts.get("rightLeg"));
 
+
+			System.out.println("Values: " + values);
 
 			try {
 				count = db.update(DatabaseColumnNames.User.TABLE_NAME, values,_ID + " = ?", new String[]{String.valueOf(Id)});

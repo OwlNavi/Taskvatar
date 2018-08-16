@@ -1,36 +1,26 @@
 package com.example.cwagt.taskapp345.view;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.*;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 import com.example.cwagt.taskapp345.R;
-import com.example.cwagt.taskapp345.helper.AvatarEditer;
 import com.example.cwagt.taskapp345.helper.DatabaseColumnNames;
 import com.example.cwagt.taskapp345.helper.DatabaseHelper;
 import com.example.cwagt.taskapp345.helper.TaskAdapter;
 import com.example.cwagt.taskapp345.object.Enums;
 import com.example.cwagt.taskapp345.object.Task;
 import com.example.cwagt.taskapp345.object.User;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
@@ -125,16 +115,12 @@ public class MainActivity extends AppCompatActivity  {
 		}
 
 		//use the time to reset completed tasks
-
+/*
 		Timer timer = new Timer();
 		timer.schedule(new TimerTask() {
 			@Override
 			public void run() {
-				/*SimpleDateFormat timeFormat = new SimpleDateFormat("hh");
-				String currentTime = timeFormat.format(new Date());
-				if(Integer.parseInt(currentTime) == 0){ //midnight
-					//clear database
-				}*/
+
 				//setAllTasksToIncomplete(context);
 				Log.d("MainActivity", "Timer called");
 
@@ -145,7 +131,7 @@ public class MainActivity extends AppCompatActivity  {
 		//find the avatar fragment
 		View avatarFragment = findViewById(R.id.main_avatar_container);
 		AvatarEditer editer = new AvatarEditer(avatarFragment);
-
+*/
     }
 
     private void displayAvatar() {

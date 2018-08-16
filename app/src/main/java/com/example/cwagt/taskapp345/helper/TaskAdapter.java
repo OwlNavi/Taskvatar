@@ -3,7 +3,6 @@ package com.example.cwagt.taskapp345.helper;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +12,7 @@ import android.widget.TextView;
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.object.Enums;
 import com.example.cwagt.taskapp345.object.Task;
+
 import java.util.List;
 
 /**
@@ -102,6 +102,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 			@SuppressLint("SetTextI18n")
 			@Override
 			public void onClick(View view, int position) {
+
                 //The current task
                 Task task = taskList.get(position);
                 //The status of the task so we can check if it is already completed
@@ -120,7 +121,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 				}
 
 				//Update task in database
-                DatabaseHelper.updateTask(context, task.getId(), task);
+                if(DatabaseHelper.updateTask(context, task.getId(), task)){
+                	//the task was updated
+				}else{
+                	//the task was not updated
+				}
 
 				//update display of tasks completed
                 if(textTasksCompleted != null){

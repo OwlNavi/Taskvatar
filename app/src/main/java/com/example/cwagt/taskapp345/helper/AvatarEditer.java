@@ -106,6 +106,10 @@ public class AvatarEditer {
             base.setImageResource(R.drawable.surprised);
             bodyParts.put("base", R.drawable.surprised);
         }
+        if(itemSelected.equals("Silly")){
+            base.setImageResource(R.drawable.base_red);
+            bodyParts.put("base", R.drawable.surprised);
+        }
 
         saveAvatar();
     }

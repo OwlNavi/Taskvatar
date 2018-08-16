@@ -206,6 +206,7 @@ public class AvatarHome extends AppCompatActivity {
                 result.add("Cartoon");
                 break;
             case 5:
+                result.add("Silly");
                 result.add("Surprised");
                 break;
             case 6:

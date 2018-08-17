@@ -23,8 +23,8 @@ public class Task {
      * @param description description of the task
      * @param time the time the task should occur at
      */
-    public Task(Long _id, String name, String description, String time, Long userId) {
-		this._id = _id;
+    public Task(String name, String description, String time, Long userId) {
+		this._id = null;
 
         this.name = name;
         this.description = description;
@@ -41,8 +41,8 @@ public class Task {
     /**
      * Full constructor
      */
-    public Task(Long _id, String name, String description, String time, Enums.Frequency frequency, Boolean reminder, Enums.Status status, int priority, long userId) {
-		this._id = _id;
+    public Task(String name, String description, String time, Enums.Frequency frequency, Boolean reminder, Enums.Status status, int priority, long userId) {
+		this._id = null;
         this.name = name;
         this.description = description;
         this.time = time;
@@ -53,12 +53,11 @@ public class Task {
 		this.userId = userId;
     }
 
-
-	public Long getId() {
+	public Long get_id() {
 		return _id;
 	}
 
-	public void setId(Long _id) {
+	public void set_id(Long _id) {
 		this._id = _id;
 	}
 

@@ -40,33 +40,34 @@ public class AddTask extends AppCompatActivity {
         //Set onclick listener
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //Retrieve what the user entered into the text fields
-                TextView taskNameField = findViewById(R.id.edittextTaskName);
-                TextView taskDescriptionField = findViewById(R.id.edittextTaskDescription);
-                TextView taskTimeField = findViewById(R.id.edittextTaskTime);
-                String taskName = taskNameField.getText().toString();
-                String taskDescription = taskDescriptionField.getText().toString();
-                String taskTime = taskTimeField.getText().toString();
+				//Retrieve what the user entered into the text fields
+				TextView taskNameField = findViewById(R.id.edittextTaskName);
+				TextView taskDescriptionField = findViewById(R.id.edittextTaskDescription);
+				TextView taskTimeField = findViewById(R.id.edittextTaskTime);
+				String taskName = taskNameField.getText().toString();
+				String taskDescription = taskDescriptionField.getText().toString();
+				String taskTime = taskTimeField.getText().toString();
 
-                SharedPreferences preferences = getDefaultSharedPreferences(context);
-                Long userID = preferences.getLong("currentUser", 0);
-                if(userID==0) try {
-                    throw new Exception("UserID is 0");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+				SharedPreferences preferences = getDefaultSharedPreferences(context);
+				Long userID = preferences.getLong("currentUser", -1);
 
-                //Create the new task based on what the user inputted
-                Task newTask = new Task(null, taskName, taskDescription, taskTime, userID);
+				if(userID == -1) try {
+					throw new Exception("UserID is -1");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 
-                //write the next task to the database
-                Long newID = DatabaseHelper.createTask(context, newTask);
-                newTask.setId(newID);
-                //DatabaseHelper.updateTask(context, newID, newTask);
+				//Create the new task based on what the user inputted
+				Task newTask = new Task(taskName, taskDescription, taskTime, userID);
 
-                // Once the task has been added go back to the edit task activity
-                Intent addUserIntent = new Intent(context, EditTask.class);
-                startActivity(addUserIntent);
+				//write the next task to the database
+				Long newID = DatabaseHelper.createTask(context, newTask);
+				newTask.set_id(newID);
+				//DatabaseHelper.updateTask(context, newID, newTask);
+
+				// Once the task has been added go back to the edit task activity
+				Intent addUserIntent = new Intent(context, EditTask.class);
+				startActivity(addUserIntent);
             }
         });
     }

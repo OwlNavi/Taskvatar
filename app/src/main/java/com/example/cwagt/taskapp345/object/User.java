@@ -5,6 +5,7 @@ package com.example.cwagt.taskapp345.object;
  * Each User also contains an Avatar
  */
 public class User {
+
 	//The unique identifier for the user
 	private Long _id;
 	//The chosen username for the user
@@ -16,31 +17,13 @@ public class User {
 
 	/**
 	 * Constructor for Users
-	 * @param _id the User's unique identifier
 	 * @param userName the username of the User
 	 * @param userDescription the user's fullname
 	 */
-	public User(Long _id, String userName, String userDescription) {
-		this._id = _id;
-		this.userName = userName;
-		this.userDescription = userDescription;
-
-		this.avatar = new Avatar();
-	}
-
-	public User(Long _id, String userName, String userDescription, Avatar avatar) {
-		this._id = _id;
-		this.userName = userName;
-		this.userDescription = userDescription;
-
-		this.avatar = avatar;
-	}
-
 	public User(String userName, String userDescription) {
 		this._id = null;
 		this.userName = userName;
 		this.userDescription = userDescription;
-
 		this.avatar = new Avatar();
 	}
 
@@ -48,7 +31,6 @@ public class User {
 		this._id = null;
 		this.userName = userName;
 		this.userDescription = userDescription;
-
 		this.avatar = avatar;
 	}
 

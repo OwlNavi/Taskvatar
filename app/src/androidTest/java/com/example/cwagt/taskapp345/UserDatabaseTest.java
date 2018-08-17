@@ -1,8 +1,18 @@
 package com.example.cwagt.taskapp345;
 
+import android.content.Context;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+import com.example.cwagt.taskapp345.helper.DatabaseHelper;
 import com.example.cwagt.taskapp345.object.User;
+import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.ArrayList;
+
+import static android.provider.BaseColumns._ID;
+import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 @RunWith(AndroidJUnit4.class)
 public class UserDatabaseTest {
@@ -15,9 +25,9 @@ public class UserDatabaseTest {
 		String userName = "Dummy user";
 		String userDescription = "Testing only";
 
-		return new User(null, userName, userDescription);
+		return new User(userName, userDescription);
 	}
-/*
+
 	@Test
 	public void writeUserToDB(){
 		Context context = InstrumentationRegistry.getTargetContext();
@@ -31,8 +41,7 @@ public class UserDatabaseTest {
 		int isDeleted = DatabaseHelper.deleteUser(context, user);
 		assertNotEquals(-1, isDeleted);
 	}
-*/
-/*
+
 	@Test
 	public void readUserFromDB(){
 		Context context = InstrumentationRegistry.getTargetContext();
@@ -41,7 +50,7 @@ public class UserDatabaseTest {
 		String descr = "Dummy descr";
 
 		//create user
-		User user = new User(null, userName, descr);
+		User user = new User(userName, descr);
 		long userID = DatabaseHelper.createUser(context, user);
 		assertNotEquals(-1, userID);
 		user.set_id(userID);
@@ -59,8 +68,7 @@ public class UserDatabaseTest {
 		int isDeleted = DatabaseHelper.deleteUser(context, user);
 		assertNotEquals(-1, isDeleted);
 	}
-*/
-/*
+
 	@Test
 	public void updateUserInDb() {
 		Context context = InstrumentationRegistry.getTargetContext();
@@ -77,14 +85,14 @@ public class UserDatabaseTest {
 
 		//update user
 		Boolean success = DatabaseHelper.updateUser(context, oldRowID, newUser);
-		assertEquals(true, success);
+		Boolean truebool = true;
+		assertEquals(truebool, success);
 
 		//delete users
 		//DatabaseHelper.deleteUser(context, oldUser);
 		DatabaseHelper.deleteUser(context, newUser);
 	}
-*/
-/*
+
 	@Test
 	public void deleteUserByUserFromDb() {
 		Context context = InstrumentationRegistry.getTargetContext();
@@ -98,8 +106,7 @@ public class UserDatabaseTest {
 		int numDeleted = DatabaseHelper.deleteUser(context, user);
 		assertEquals(1, numDeleted);
 	}
-*/
-/*
+
 	@Test
 	public void deleteUserByIdFromDb() {
 		Context context = InstrumentationRegistry.getTargetContext();
@@ -113,5 +120,5 @@ public class UserDatabaseTest {
 		int numDeleted = DatabaseHelper.deleteUser(context, rowID);
 		assertEquals(1, numDeleted);
 	}
-*/
+
 }

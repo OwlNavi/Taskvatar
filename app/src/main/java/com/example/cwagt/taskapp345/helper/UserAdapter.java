@@ -125,7 +125,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
         User user = userList.get(position);
         holder.username.setText(user.getUserName());
         holder.userDescription.setText(user.getUserDescription());
-        holder.userID.setText(Long.toString(user.get_id()));
+        //holder.userID.setText(Long.toString(user.get_id()));
     }
 
     /**

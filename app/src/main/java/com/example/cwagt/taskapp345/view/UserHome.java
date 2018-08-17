@@ -7,14 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.helper.DatabaseHelper;
 import com.example.cwagt.taskapp345.helper.UserAdapter;
 import com.example.cwagt.taskapp345.object.User;
+
 import java.util.ArrayList;
 
 /**
@@ -77,10 +76,10 @@ public class UserHome extends AppCompatActivity {
      */
     private ArrayList<User> defaultUserlist(){
         ArrayList<User> userList = new ArrayList<>();
-        User user1 = new User(1L, "Alex", "Alexander Example");
-        User user2 = new User(2L, "Ben", "Benjamen Default");
-        User user3 = new User(3L, "Chris", "Christopher Template");
-        User user4 = new User(4L, "Dave", "David Standard");
+        User user1 = new User("Alex", "Alexander Example");
+        User user2 = new User("Ben", "Benjamen Default");
+        User user3 = new User("Chris", "Christopher Template");
+        User user4 = new User("Dave", "David Standard");
         userList.add(user1);
         userList.add(user2);
         userList.add(user3);

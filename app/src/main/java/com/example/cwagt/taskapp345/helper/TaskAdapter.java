@@ -121,7 +121,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 				}
 
 				//Update task in database
-                if(DatabaseHelper.updateTask(context, task.getId(), task)){
+                if(DatabaseHelper.updateTask(context, task.get_id(), task)){
                 	//the task was updated
 				}else{
                 	//the task was not updated

@@ -29,7 +29,7 @@ public class TaskDatabaseTest {
 		String userName = "Dummy user " + n;
 		String userDescription = "Testing only";
 
-		return new User(n, userName, userDescription);
+		return new User(userName, userDescription);
 	}
 
 	private Task createRandomTask(){
@@ -42,7 +42,7 @@ public class TaskDatabaseTest {
 
 		User randomUser = createRandomUser();
 
-		return new Task(null, name, descr, time, randomUser.get_id());
+		return new Task(name, descr, time, randomUser.get_id());
 	}
 
 	@Test
@@ -72,7 +72,7 @@ public class TaskDatabaseTest {
 
 		User randomUser = createRandomUser();
 
-		Task task = new Task(null, name, descr, time, randomUser.get_id());
+		Task task = new Task(name, descr, time, randomUser.get_id());
 		long rowID = DatabaseHelper.createTask(context, task);
 		assertNotEquals(-1, rowID);
 
@@ -102,7 +102,7 @@ public class TaskDatabaseTest {
 			rowID,
 			Matchers.greaterThan((long) 0)
 		);
-		task.setId(rowID);
+		task.set_id(rowID);
 
 		task.setName(new_name);
 
@@ -120,7 +120,7 @@ public class TaskDatabaseTest {
 		Task task = createRandomTask();
 
 		long rowID = DatabaseHelper.createTask(context, task);
-		task.setId(rowID);
+		task.set_id(rowID);
 
 		int numberDeleted = DatabaseHelper.deleteTask(context, task);
 		assertEquals(1, numberDeleted);

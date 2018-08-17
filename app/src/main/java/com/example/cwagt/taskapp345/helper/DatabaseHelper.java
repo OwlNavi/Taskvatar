@@ -33,7 +33,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 	//https://developer.android.com/training/data-storage/sqlite
 
-	private static final int DATABASE_VERSION = 8;
+	private static final int DATABASE_VERSION = 9;
 	private static final String DATABASE_NAME = "Taskvatar.db";
 
 	private static final String SQL_CREATE_TASK_TABLE =
@@ -67,6 +67,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 					", " + AVATAR_NAME_RIGHT_ARM_ROTATION + " " + AVATAR_TYPE_RIGHT_ARM_ROTATION +
 					", " + AVATAR_NAME_LEFT_LEG_ROTATION + " " + AVATAR_TYPE_LEFT_LEG_ROTATION +
 					", " + AVATAR_NAME_RIGHT_LEG_ROTATION + " " + AVATAR_TYPE_RIGHT_LEG_ROTATION +
+					", " + AVATAR_NAME_BACKGROUND + " " + AVATAR_TYPE_BACKGROUND +
 			")";
 
 	private static final String SQL_DELETE_TASK_TABLE =
@@ -159,7 +160,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 			while (cursor.moveToNext()) {
 				Task thisTask = new Task(
-						cursor.getLong(cursor.getColumnIndexOrThrow(_ID)),
 						cursor.getString(cursor.getColumnIndexOrThrow(TASK_NAME_TEXT)),
 						cursor.getString(cursor.getColumnIndexOrThrow(TASK_NAME_DESCRIPTION)),
 						cursor.getString(cursor.getColumnIndexOrThrow(TASK_NAME_TIME)),
@@ -169,6 +169,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 						cursor.getInt(cursor.getColumnIndexOrThrow(TASK_NAME_PRIORITY)),
 						cursor.getLong(cursor.getColumnIndexOrThrow(TASK_NAME_USER))
 				);
+				Long taskID = cursor.getLong(cursor.getColumnIndexOrThrow(_ID));
+				thisTask.set_id(taskID);
 				tasks.add(thisTask);
 
 				System.out.println("Task: " + thisTask);
@@ -315,7 +317,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 		for(Long j=1L; j<4L; j++) {
 			for (int i = 0; i < 5; i++) {
-				task = new Task(j, "Example task " + i, "Description", "12:00 am", j);
+				task = new Task("Example task " + i, "Description", "12:00 am", j);
 				taskList.add(task);
 			}
 		}
@@ -400,7 +402,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 				bodyParts.put("rightArm", cursor.getInt(cursor.getColumnIndexOrThrow(AVATAR_NAME_RIGHT_ARM)));
 				bodyParts.put("leftLeg", cursor.getInt(cursor.getColumnIndexOrThrow(AVATAR_NAME_LEFT_LEG)));
 				bodyParts.put("rightLeg", cursor.getInt(cursor.getColumnIndexOrThrow(AVATAR_NAME_RIGHT_LEG)));
-
+				bodyParts.put("background", cursor.getInt(cursor.getColumnIndexOrThrow(AVATAR_NAME_BACKGROUND)));
 
 				Avatar avatar = new Avatar(
 						bodyParts,
@@ -411,11 +413,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 				);
 
 				User thisUser = new User(
-						cursor.getLong(cursor.getColumnIndexOrThrow(_ID)),
 						cursor.getString(cursor.getColumnIndexOrThrow(USER_NAME_NAME)),
 						cursor.getString(cursor.getColumnIndexOrThrow(USER_NAME_DESCRIPTION)),
 						avatar
 				);
+				long userID = cursor.getLong(cursor.getColumnIndexOrThrow(_ID));
+				thisUser.set_id(userID);
 				users.add(thisUser);
 
 				System.out.println("User: " + thisUser);

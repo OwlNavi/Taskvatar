@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.helper.DatabaseHelper;
 import com.example.cwagt.taskapp345.object.User;
-import java.util.ArrayList;
 
 /**
  * Created by cwagt on 15/07/2018.
@@ -47,17 +46,11 @@ public class AddUser extends AppCompatActivity {
                 String lastName = lastNameField.getText().toString();
                 String fullName = firstName + " " + lastName;
 
-                //Retrieve the list of users from the database so we can check the number of users
-                ArrayList<User> users = DatabaseHelper.readAllUsers(context);
-
-                //The new user needs to have a uniqueID so we set it to the number of users plus
-                //one, this way all the users should have a unique id
-                Long userID = (long) (users.size() + 1);
-
                 //Create the new user
-                User newUser = new User(userID, username, fullName);
+                User newUser = new User(username, fullName);
                 //Save them to the database
-                DatabaseHelper.createUser(context, newUser);
+                long userID = DatabaseHelper.createUser(context, newUser);
+                newUser.set_id(userID);
 
                 //Go back to the choose user page now the user has been saved
                 Intent addUserIntent = new Intent(context, UserHome.class);

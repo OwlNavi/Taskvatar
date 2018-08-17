@@ -1,24 +1,18 @@
 package com.example.cwagt.taskapp345.helper;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.object.User;
 import com.example.cwagt.taskapp345.view.MainActivity;
-import com.example.cwagt.taskapp345.view.UserHome;
 
 import java.util.List;
 
@@ -91,7 +85,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
                 //Get the reference to the User that was clicked on
                 User user = userList.get(position);
                 //find the userID that identifies them
-                Long userID = user.getUserID();
+                Long userID = user.get_id();
 
                 //Set the current user to the user selected
                 //The current user is saved in SharedPreferences accessible from other classes
@@ -131,7 +125,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
         User user = userList.get(position);
         holder.username.setText(user.getUserName());
         holder.userDescription.setText(user.getUserDescription());
-        holder.userID.setText(Long.toString(user.getUserID()));
+        holder.userID.setText(Long.toString(user.get_id()));
     }
 
     /**

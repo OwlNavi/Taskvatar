@@ -108,4 +108,14 @@ public class Avatar {
 		return bodyParts;
 	}
 
+	@Override
+	public String toString() {
+		return "Avatar{" +
+				"leftArmRotation=" + leftArmRotation +
+				", rightArmRotation=" + rightArmRotation +
+				", leftLegRotation=" + leftLegRotation +
+				", rightLegRotation=" + rightLegRotation +
+				", bodyParts=" + bodyParts +
+		'}';
+	}
 }

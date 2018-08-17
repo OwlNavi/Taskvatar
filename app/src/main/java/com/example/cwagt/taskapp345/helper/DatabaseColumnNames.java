@@ -50,6 +50,8 @@ public final class DatabaseColumnNames {
 		public static final String AVATAR_TYPE_LEFT_LEG = "INTEGER";
 		public static final String AVATAR_NAME_RIGHT_LEG = "rightLeg";
 		public static final String AVATAR_TYPE_RIGHT_LEG = "INTEGER";
+		public static final String AVATAR_NAME_BACKGROUND = "background";
+		public static final String AVATAR_TYPE_BACKGROUND = "INTEGER";
 
 		public static final String AVATAR_NAME_LEFT_ARM_ROTATION = "leftArmRotation";
 		public static final String AVATAR_TYPE_LEFT_ARM_ROTATION = "INTEGER";

@@ -4,7 +4,7 @@ package com.example.cwagt.taskapp345.object;
  * Class representation of a Task
  */
 public class Task {
-    private Long id, userId;
+    private Long _id, userId;
     //Tasks have a name, description of what is to be done and at what time
 	private String name, description, time;
     //How often this task should repeat
@@ -23,7 +23,9 @@ public class Task {
      * @param description description of the task
      * @param time the time the task should occur at
      */
-    public Task(String name, String description, String time, Long userId) {
+    public Task(Long _id, String name, String description, String time, Long userId) {
+		this._id = _id;
+
         this.name = name;
         this.description = description;
         this.time = time;
@@ -39,7 +41,8 @@ public class Task {
     /**
      * Full constructor
      */
-    public Task(String name, String description, String time, Enums.Frequency frequency, Boolean reminder, Enums.Status status, int priority, Long userId) {
+    public Task(Long _id, String name, String description, String time, Enums.Frequency frequency, Boolean reminder, Enums.Status status, int priority, long userId) {
+		this._id = _id;
         this.name = name;
         this.description = description;
         this.time = time;
@@ -52,11 +55,11 @@ public class Task {
 
 
 	public Long getId() {
-		return id;
+		return _id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setId(Long _id) {
+		this._id = _id;
 	}
 
     public String getName() {
@@ -121,5 +124,20 @@ public class Task {
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+
+	@Override
+	public String toString() {
+		return "Task{" +
+				"_id=" + _id +
+				", userId=" + userId +
+				", name='" + name + '\'' +
+				", description='" + description + '\'' +
+				", time='" + time + '\'' +
+				", frequency=" + frequency +
+				", reminder=" + reminder +
+				", status=" + status +
+				", priority=" + priority +
+		'}';
 	}
 }

@@ -156,10 +156,10 @@ public class MainActivity extends AppCompatActivity  {
 	private void setAllTasksToIncomplete(Context context) {
 		ArrayList<User> users = DatabaseHelper.readAllUsers(context);
 		for(User user: users){
-			ArrayList<Task> taskList = DatabaseHelper.readAllTasks(context, user.getUserID());
+			ArrayList<Task> taskList = DatabaseHelper.readAllTasks(context, user.get_id());
 			for(Task task: taskList){
 				task.setStatus(Enums.Status.INCOMPLETE);
-				DatabaseHelper.updateTask(context, user.getUserID(), task);
+				DatabaseHelper.updateTask(context, user.get_id(), task);
 			}
 		}
 	}

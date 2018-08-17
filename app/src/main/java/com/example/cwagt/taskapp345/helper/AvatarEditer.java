@@ -22,16 +22,16 @@ public class AvatarEditer {
     private ImageView leftLeg;
     private ImageView rightLeg;
     //The background of the Constraint container
-    private ConstraintLayout background;
+    private ConstraintLayout background; //maybe should be ImageView?
     //Current view
     private View avatar;
     //currentCategory numbers
-    private final int HEAD = 0;
+    private final int BASE = 5;
+	private final int HAT = 0;
     private final int LEFT_ARM = 1;
     private final int RIGHT_ARM = 2;
     private final int LEFT_LEG = 3;
     private final int RIGHT_LEG = 4;
-    private final int TORSO = 5;
     private final int BACKGROUND = 6;
 
     //a data structure linking the name of the body part with the R.drawable id describing the resource
@@ -45,8 +45,8 @@ public class AvatarEditer {
     public AvatarEditer(View avatarFragment){
         this.avatar = avatarFragment;
         this.base = avatar.findViewById(R.id.base);
+		this.hat = avatar.findViewById(R.id.hat);
         this.leftArm = avatar.findViewById(R.id.left_arm);
-        this.hat = avatar.findViewById(R.id.hat);
         this.leftLeg = avatar.findViewById(R.id.left_leg);
         this.rightLeg = avatar.findViewById(R.id.right_leg);
         this.rightArm = avatar.findViewById(R.id.right_arm);
@@ -70,7 +70,10 @@ public class AvatarEditer {
      */
     public void setImage(int currentCategory, String itemSelected) {
         switch (currentCategory){
-            case(HEAD):
+			case(BASE):
+				setBase(itemSelected);
+				break;
+            case(HAT):
                 setHat(itemSelected);
                 break;
             case(LEFT_ARM):
@@ -85,9 +88,6 @@ public class AvatarEditer {
             case(RIGHT_LEG):
                 setRightLeg(itemSelected);
                 break;
-            case(TORSO):
-                setTorso(itemSelected);
-                break;
             case(BACKGROUND):
                 setBackground(itemSelected);
                 break;
@@ -100,7 +100,7 @@ public class AvatarEditer {
      * Sets the Torso based on the item selected
      * @param itemSelected the name of the item selected
      */
-    private void setTorso(String itemSelected) {
+    private void setBase(String itemSelected) {
 
         if(itemSelected.equals("Surprised")) {
             base.setImageResource(R.drawable.surprised);
@@ -108,7 +108,7 @@ public class AvatarEditer {
         }
         if(itemSelected.equals("Silly")){
             base.setImageResource(R.drawable.base_red);
-            bodyParts.put("base", R.drawable.surprised);
+            bodyParts.put("base", R.drawable.base_red);
         }
 
         saveAvatar();
@@ -244,7 +244,7 @@ public class AvatarEditer {
      * Saves the avatar so it can be retrieved
      */
     private void saveAvatar(){
-        //SAVE IN DATABASE
+        //TODO: SAVE IN DATABASE
     }
 
     /**

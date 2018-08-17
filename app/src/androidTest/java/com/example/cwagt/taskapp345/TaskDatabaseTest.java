@@ -6,19 +6,15 @@ import android.support.test.runner.AndroidJUnit4;
 import com.example.cwagt.taskapp345.helper.DatabaseHelper;
 import com.example.cwagt.taskapp345.object.Task;
 import com.example.cwagt.taskapp345.object.User;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.Task._ID;
-import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.Task.TASK_NAME_TEXT;
-import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.Task.TASK_NAME_DESCRIPTION;
-import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.Task.TASK_NAME_TIME;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.Task.*;
+import static org.junit.Assert.*;
 
 @RunWith(AndroidJUnit4.class)
 public class TaskDatabaseTest {
@@ -46,7 +42,7 @@ public class TaskDatabaseTest {
 
 		User randomUser = createRandomUser();
 
-		return new Task(name, descr, time, randomUser.getUserID());
+		return new Task(null, name, descr, time, randomUser.get_id());
 	}
 
 	@Test
@@ -76,7 +72,7 @@ public class TaskDatabaseTest {
 
 		User randomUser = createRandomUser();
 
-		Task task = new Task(name, descr, time, randomUser.getUserID());
+		Task task = new Task(null, name, descr, time, randomUser.get_id());
 		long rowID = DatabaseHelper.createTask(context, task);
 		assertNotEquals(-1, rowID);
 
@@ -97,25 +93,24 @@ public class TaskDatabaseTest {
 	@Test
 	public void updateTaskInDb(){
 		Context context = InstrumentationRegistry.getTargetContext();
-		Task oldTask = createRandomTask();
-		Task newTask = createRandomTask();
+		String new_name = "new name";
+		Task task = createRandomTask();
 
-		long rowID = DatabaseHelper.createTask(context, oldTask);
+		long rowID = DatabaseHelper.createTask(context, task);
 		assertNotEquals(-1, rowID);
+		assertThat("rowID must be greater than 0",
+			rowID,
+			Matchers.greaterThan((long) 0)
+		);
+		task.setId(rowID);
 
-		Boolean success = DatabaseHelper.updateTask(context, rowID, newTask);
+		task.setName(new_name);
+
+		Boolean success = DatabaseHelper.updateTask(context, rowID, task);
 		assertEquals(true, success);
 
-		Long id = newTask.getId();
-		String name = newTask.getName();
-
-		ArrayList<Task> allTasks = DatabaseHelper.readTasks(context, _ID + " = ? AND " + TASK_NAME_TEXT + " = ?", new String[]{String.valueOf(id), name});
-
-		Task taskFromDb = allTasks.get(0);
-
 		//delete task
-		DatabaseHelper.deleteTask(context, oldTask);
-		DatabaseHelper.deleteTask(context, newTask);
+		DatabaseHelper.deleteTask(context, task);
 
 	}
 
@@ -125,7 +120,7 @@ public class TaskDatabaseTest {
 		Task task = createRandomTask();
 
 		long rowID = DatabaseHelper.createTask(context, task);
-		assertNotEquals(-1, rowID);
+		task.setId(rowID);
 
 		int numberDeleted = DatabaseHelper.deleteTask(context, task);
 		assertEquals(1, numberDeleted);

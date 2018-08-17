@@ -11,6 +11,7 @@ import com.example.cwagt.taskapp345.object.Task;
 import com.example.cwagt.taskapp345.object.User;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.Task.*;
@@ -32,7 +33,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 	//https://developer.android.com/training/data-storage/sqlite
 
-	private static final int DATABASE_VERSION = 7;
+	private static final int DATABASE_VERSION = 8;
 	private static final String DATABASE_NAME = "Taskvatar.db";
 
 	private static final String SQL_CREATE_TASK_TABLE =
@@ -102,7 +103,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		if(checkDatabase(db)) {
 
 			ContentValues values = new ContentValues();
-			values.put(_ID, task.getId());
+			//values.put(_ID, task.getId());
 			values.put(TASK_NAME_TEXT, task.getName());
 			values.put(TASK_NAME_DESCRIPTION, task.getDescription());
 			values.put(TASK_NAME_REMINDER, task.getReminder());
@@ -117,6 +118,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+
+			System.out.println("[DatabaseHelper.createTask] Creating task in table: " + DatabaseColumnNames.Task.TABLE_NAME);
+			System.out.println("Task: " + task);
+			System.out.println("Values: " + values);
+			System.out.println(_ID + ": " + newRowId);
+
 		}else{
 			sout("Error: could not open database for writing");
 		}
@@ -129,20 +136,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		ArrayList<Task> tasks = new ArrayList<>();
 		if(checkDatabase(db)) {
 
-			//String selection = TASK_NAME_TEXT + " = ?"; //can use multiple "?" as placeholders
-			//String[] selectionArgs = { "Task text" }; //use comma separated list here
-
-			String[] projection = {
-					TASK_NAME_TEXT,
-					TASK_NAME_DESCRIPTION,
-					TASK_NAME_REMINDER,
-					TASK_NAME_PRIORITY,
-					TASK_NAME_FREQUENCY,
-					TASK_NAME_STATUS,
-					TASK_NAME_TIME,
-					TASK_NAME_USER
-			};
-
 			// How you want the results sorted in the resulting Cursor
 			String sortOrder =
 					TASK_NAME_PRIORITY +
@@ -152,7 +145,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 			Cursor cursor = db.query(
 					DatabaseColumnNames.Task.TABLE_NAME,   // The table to query
-					projection,             // The array of columns to return (pass null to get all)
+					null,             // The array of columns to return (pass null to get all)
 					selection,              // The columns for the WHERE clause
 					selectionArgs,          // The values for the WHERE clause
 					null,                   // don't group the rows
@@ -160,8 +153,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 					sortOrder               // The sort order
 			);
 
+			System.out.println("[DatabaseHelper.readTasks] Reading tasks from table: " + DatabaseColumnNames.Task.TABLE_NAME);
+			System.out.println("Selection: " + selection);
+			System.out.println("Arguments: " + Arrays.toString(selectionArgs));
+
 			while (cursor.moveToNext()) {
 				Task thisTask = new Task(
+						cursor.getLong(cursor.getColumnIndexOrThrow(_ID)),
 						cursor.getString(cursor.getColumnIndexOrThrow(TASK_NAME_TEXT)),
 						cursor.getString(cursor.getColumnIndexOrThrow(TASK_NAME_DESCRIPTION)),
 						cursor.getString(cursor.getColumnIndexOrThrow(TASK_NAME_TIME)),
@@ -172,10 +170,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 						cursor.getLong(cursor.getColumnIndexOrThrow(TASK_NAME_USER))
 				);
 				tasks.add(thisTask);
+
+				System.out.println("Task: " + thisTask);
+
 			}
 
 			if (tasks.size() == 0) {
-				tasks = generateDummyData();
+				//tasks = generateDummyData();
 			}
 
 			cursor.close();
@@ -187,6 +188,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	}
 
 	public static ArrayList<Task> readAllTasks(Context context, Long userID) {
+		System.out.println("[DatabaseHelper.readAllTasks] Reading all tasks where userID = " + userID);
 		return readTasks(context, TASK_NAME_USER + " = ?", new String[]{String.valueOf(userID)});
 	}
 
@@ -217,9 +219,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			values.put(TASK_NAME_USER, task.getUserId());
 
 			System.out.println("[DatabaseHelper.updateTask] Updating table: " + DatabaseColumnNames.Task.TABLE_NAME);
+			System.out.println("Task: " + task);
 			System.out.println("Values: " + values);
 			System.out.println("Where " + _ID + " = " + String.valueOf(Id));
-
 
 			try {
 				int count = db.update(DatabaseColumnNames.Task.TABLE_NAME, values, _ID + " = ?", new String[]{String.valueOf(Id)});
@@ -256,6 +258,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			values[1] = task.getDescription();
 			values[2] = task.getTime();
 
+			System.out.println("[DatabaseHelper.deleteTask] Deleting task from table: " + DatabaseColumnNames.Task.TABLE_NAME);
+			System.out.println("Task: " + task);
+			System.out.println("Values: " + Arrays.toString(values));
+
 			try {
 				rowsAffected = db.delete(
 						DatabaseColumnNames.Task.TABLE_NAME,
@@ -284,6 +290,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			String[] values = new String[1];
 			values[0] = String.valueOf(ID);
 
+			System.out.println("[DatabaseHelper.deleteTask] Deleting task from table: " + DatabaseColumnNames.Task.TABLE_NAME);
+			System.out.println("Where " + _ID + " = " + ID);
+
 			try {
 				rowsAffected = db.delete(
 						DatabaseColumnNames.Task.TABLE_NAME,
@@ -306,7 +315,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 		for(Long j=1L; j<4L; j++) {
 			for (int i = 0; i < 5; i++) {
-				task = new Task("Example task " + i, "Description", "12:00 am", j);
+				task = new Task(j, "Example task " + i, "Description", "12:00 am", j);
 				taskList.add(task);
 			}
 		}
@@ -324,7 +333,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		if(checkDatabase(db)) {
 
 			ContentValues values = new ContentValues();
-			values.put(_ID, user.getUserID());
+
 			values.put(USER_NAME_NAME, user.getUserName());
 			values.put(USER_NAME_DESCRIPTION, user.getUserDescription());
 
@@ -337,17 +346,25 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			values.put(AVATAR_NAME_RIGHT_ARM, bodyParts.get("rightArm"));
 			values.put(AVATAR_NAME_LEFT_LEG, bodyParts.get("leftLeg"));
 			values.put(AVATAR_NAME_RIGHT_LEG, bodyParts.get("rightLeg"));
+			values.put(AVATAR_NAME_BACKGROUND, bodyParts.get("background"));
 
 			values.put(AVATAR_NAME_LEFT_ARM_ROTATION, avatar.getLeftArmRotation());
 			values.put(AVATAR_NAME_RIGHT_ARM_ROTATION, avatar.getRightArmRotation());
 			values.put(AVATAR_NAME_LEFT_LEG_ROTATION, avatar.getLeftLegRotation());
 			values.put(AVATAR_NAME_RIGHT_LEG_ROTATION, avatar.getRightLegRotation());
 
+			System.out.println("[DatabaseHelper.createUser] Creating user and avatar in table: " + DatabaseColumnNames.User.TABLE_NAME);
+			System.out.println("User: " + user);
+			System.out.println("Values: " + values);
+
 			try {
 				newRowId = db.insert(DatabaseColumnNames.User.TABLE_NAME, null, values);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+
+			System.out.println(_ID + ": " + newRowId);
+
 		}else{
 			sout("Error: could not open database for writing");
 		}
@@ -370,6 +387,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 					USER_NAME_NAME               // The sort order
 			);
 
+			System.out.println("[DatabaseHelper.readUsers] Reading user and avatar from table: " + DatabaseColumnNames.User.TABLE_NAME);
+			System.out.println("Selection: " + selection);
+			System.out.println("Arguments: " + Arrays.toString(selectionArgs));
+
 			while (cursor.moveToNext()) {
 
 				HashMap<String, Integer> bodyParts = new HashMap<>();
@@ -389,7 +410,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 						cursor.getFloat(cursor.getColumnIndexOrThrow(AVATAR_NAME_RIGHT_LEG_ROTATION))
 				);
 
-
 				User thisUser = new User(
 						cursor.getLong(cursor.getColumnIndexOrThrow(_ID)),
 						cursor.getString(cursor.getColumnIndexOrThrow(USER_NAME_NAME)),
@@ -397,6 +417,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 						avatar
 				);
 				users.add(thisUser);
+
+				System.out.println("User: " + thisUser);
 			}
 			cursor.close();
 
@@ -407,6 +429,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	}
 
 	public static ArrayList<User> readAllUsers(Context context) {
+		System.out.println("[DatabaseHelper.readAllUsers] Reading all users");
 		return readUsers(context, "", new String[]{});
 	}
 
@@ -418,7 +441,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		if(checkDatabase(db)) {
 
 			ContentValues values = new ContentValues();
-			values.put(_ID, user.getUserID());
+			values.put(_ID, user.get_id());
 			values.put(USER_NAME_NAME, user.getUserName());
 			values.put(USER_NAME_DESCRIPTION, user.getUserDescription());
 
@@ -436,8 +459,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			values.put(AVATAR_NAME_LEFT_LEG, bodyParts.get("leftLeg"));
 			values.put(AVATAR_NAME_RIGHT_LEG, bodyParts.get("rightLeg"));
 
-
+			System.out.println("[DatabaseHelper.updateUser] Updating table: " + DatabaseColumnNames.User.TABLE_NAME);
+			System.out.println("User: " + user);
 			System.out.println("Values: " + values);
+			System.out.println("Where " + _ID + " = " + String.valueOf(Id));
 
 			try {
 				count = db.update(DatabaseColumnNames.User.TABLE_NAME, values,_ID + " = ?", new String[]{String.valueOf(Id)});
@@ -467,9 +492,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 			String[] values = new String[3];
 			int i = 0;
-			values[i++] = "" + user.getUserID();
+			values[i++] = "" + user.get_id();
 			values[i++] = user.getUserName();
 			values[i] = user.getUserDescription();
+
+			System.out.println("[DatabaseHelper.deleteUser] Deleting user from table: " + DatabaseColumnNames.User.TABLE_NAME);
+			System.out.println("User: " + user);
+			System.out.println("Values: " + Arrays.toString(values));
 
 			try {
 				success = db.delete(
@@ -498,6 +527,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 			String[] values = new String[1];
 			values[0] = String.valueOf(ID);
+
+			System.out.println("[DatabaseHelper.deleteUser] Deleting user from table: " + DatabaseColumnNames.User.TABLE_NAME);
+			System.out.println("Where " + _ID + " = " + ID);
 
 			try {
 				success = db.delete(

@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.helper.DatabaseHelper;
 import com.example.cwagt.taskapp345.object.Task;
@@ -58,12 +57,12 @@ public class AddTask extends AppCompatActivity {
                 }
 
                 //Create the new task based on what the user inputted
-                Task newTask = new Task(taskName, taskDescription, taskTime, userID);
+                Task newTask = new Task(null, taskName, taskDescription, taskTime, userID);
 
                 //write the next task to the database
                 Long newID = DatabaseHelper.createTask(context, newTask);
                 newTask.setId(newID);
-                DatabaseHelper.updateTask(context, newID, newTask);
+                //DatabaseHelper.updateTask(context, newID, newTask);
 
                 // Once the task has been added go back to the edit task activity
                 Intent addUserIntent = new Intent(context, EditTask.class);

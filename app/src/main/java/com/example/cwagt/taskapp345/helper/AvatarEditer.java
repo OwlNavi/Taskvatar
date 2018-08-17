@@ -5,6 +5,8 @@ import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.widget.ImageView;
 import com.example.cwagt.taskapp345.R;
+import com.example.cwagt.taskapp345.object.Avatar;
+import com.example.cwagt.taskapp345.object.User;
 
 import java.util.HashMap;
 
@@ -243,8 +245,33 @@ public class AvatarEditer {
     /**
      * Saves the avatar so it can be retrieved
      */
-    private void saveAvatar(){
+    private Boolean saveAvatar(){
         //TODO: SAVE IN DATABASE
+		Boolean success = false;
+        //get avatar
+        Avatar avatar = new Avatar(bodyParts);
+        //get user
+        User user = new User("name", "description", avatar);
+        //user has no ID, call createUser to get the ID
+        //success = DatabaseHelper.updateUser(context, userID, user);
+		return success;
+    }
+
+    private Boolean saveAvatar(Avatar avatar){
+        //TODO: SAVE IN DATABASE
+		Boolean success = false;
+        //get user
+        User user = new User("name", "description", avatar);
+        //user has no ID, call createUser to get the ID
+		//success = DatabaseHelper.updateUser(context, userID, user);
+		return success;
+    }
+
+    private Boolean saveAvatar(User user){
+        //TODO: SAVE IN DATABASE
+		Boolean success = false;
+		//success = DatabaseHelper.updateUser(context, userID, user);
+		return success;
     }
 
     /**

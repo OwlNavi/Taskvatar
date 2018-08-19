@@ -1,17 +1,4 @@
-/**
- * User interacts with the avatar here.
- * Activities include switching cosmetics and starting animations.
- *
- * Authors: Josh April, Shaun Henderson, Craig Thomas
- */
-
 package com.example.cwagt.taskapp345.view;
-/**
- * Created by cwagt on 15/07/2018.
- *
- * Activity which holds the Avatar fragment and recycler view
- */
-
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -28,24 +15,25 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import com.example.cwagt.taskapp345.R;
-import com.example.cwagt.taskapp345.helper.AvatarEditer;
-import com.example.cwagt.taskapp345.helper.BodyPartsAdapter;
-import com.example.cwagt.taskapp345.helper.CategoriesAdapter;
-import com.example.cwagt.taskapp345.helper.DatabaseHelper;
-import com.example.cwagt.taskapp345.helper.RecyclerItemClickListener;
+import com.example.cwagt.taskapp345.helper.*;
+import com.example.cwagt.taskapp345.helper.AvatarEditor;
 import com.example.cwagt.taskapp345.object.Enums;
 import com.example.cwagt.taskapp345.object.Task;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
+/**
+ * User interacts with the avatar here.
+ * Activities include switching cosmetics and starting animations.
+ *
+ * Authors: Josh April, Shaun Henderson, Craig Thomas
+ */
 public class AvatarHome extends AppCompatActivity {
-    private List<String> categoriesList;
-    private RecyclerView categoryRecyclerView;
     private RecyclerView bodyPartsRecyclerView;
-    private AvatarEditer editer;
-    private View avatarFragment;
+    private AvatarEditor editor;
     private Context context;
 
     @Override
@@ -54,19 +42,19 @@ public class AvatarHome extends AppCompatActivity {
         setContentView(R.layout.avatar_home);
         context = getApplicationContext();
 
-        //Toolbar  on the top of the screen
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //Toolbar on the top of the screen
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
 
         //find the avatar fragment
-        avatarFragment = findViewById(R.id.avatar_fragment);
-        editer = new AvatarEditer(avatarFragment);
+        View avatarFragment = findViewById(R.id.avatar_fragment);
+        editor = new AvatarEditor(avatarFragment);
 
         //great the list of categories
-        categoriesList = getCategories();
+        List<String> categoriesList = getCategories();
 
         //populate categories
-        categoryRecyclerView = findViewById(R.id.categoriesRecyclerView);
+        RecyclerView categoryRecyclerView = findViewById(R.id.categoriesRecyclerView);
         CategoriesAdapter categoriesAdapter = new CategoriesAdapter(this, categoriesList); //categories list
         RecyclerView.LayoutManager categoryLayoutManager = new LinearLayoutManager(getApplicationContext(),
                 LinearLayoutManager.HORIZONTAL,false);
@@ -101,8 +89,7 @@ public class AvatarHome extends AppCompatActivity {
                 editor.apply();
 
                 //change the bodyPartsRecyclerView list
-                int category = position;
-                ArrayList<String> currentBodyPartList = getCategoryItems(category);
+                ArrayList<String> currentBodyPartList = getCategoryItems(position);
                 setBodyPartList(bodyPartsRecyclerView, currentBodyPartList);
             }
 
@@ -155,7 +142,7 @@ public class AvatarHome extends AppCompatActivity {
                     String itemSelected = items.get(position);
                     Log.d("AvatarHome", "Selected: " + itemSelected);
 
-                    editer.setImage(currentCategory, itemSelected);
+                    editor.setImage(currentCategory, itemSelected);
                 }
             }
 
@@ -186,10 +173,10 @@ public class AvatarHome extends AppCompatActivity {
      * @return a list of strings to display
      */
     private ArrayList<String> getCategoryItems(int categoryID){
-        ArrayList<String> result = new ArrayList<String>();
+        ArrayList<String> result = new ArrayList<>();
 
         switch (categoryID){
-            case 0: //HEAD
+            case 0: //HAT
                 result.add("Crown");
                 result.add("Pirate");
                 break;
@@ -205,7 +192,7 @@ public class AvatarHome extends AppCompatActivity {
                 result.add("Robot");
                 result.add("Cartoon");
                 break;
-            case 5:
+            case 5: //BASE
                 result.add("Silly");
                 result.add("Surprised");
                 break;
@@ -234,12 +221,12 @@ public class AvatarHome extends AppCompatActivity {
      */
     public ArrayList<String> getCategories(){
         ArrayList<String> result = new ArrayList<>();
-        result.add("HEAD");
+        result.add("HAT");
+		result.add("BASE");
         result.add("LEFT ARM");
         result.add("RIGHT ARM");
         result.add("LEFT LEG");
         result.add("RIGHT LEG");
-        result.add("TORSO");
         result.add("BACKGROUND");
         return result;
     }

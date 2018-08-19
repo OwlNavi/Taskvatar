@@ -1,12 +1,7 @@
 package com.example.cwagt.taskapp345.view;
 
-/**
- * Reusable fragment used to display the Avatar in Main Activity and AvatarHome
- */
-
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
@@ -15,11 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.cwagt.taskapp345.R;
-import com.example.cwagt.taskapp345.helper.AvatarEditer;
+import com.example.cwagt.taskapp345.helper.AvatarEditor;
 
+/**
+ * Reusable fragment used to display the Avatar in Main Activity and AvatarHome
+ */
 
 public class Avatar_Fragment extends Fragment {
-    private View view;
 
     @Override
     public void onAttach(Context context) {
@@ -34,7 +31,6 @@ public class Avatar_Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.avatar_fragment, container, false);
-        this.view = view;
 
         //persist(view);
 
@@ -44,26 +40,15 @@ public class Avatar_Fragment extends Fragment {
     }
 
     public static Avatar_Fragment newInstance() {
-
-        Avatar_Fragment fragment = new Avatar_Fragment();
-
-        return fragment;
+        return new Avatar_Fragment();
     }
 
-    /**
-     * Function persist
-     * */
     private void persist(View view) {
 
-        AvatarEditer editer = new AvatarEditer(view);
-
-        editer.setAvatar(editer.getBodyParts());
+        AvatarEditor editor = new AvatarEditor(view);
+        editor.setAvatar(editor.getBodyParts());
 
     }
-
-
-
-
 
     /**
      * Function 2

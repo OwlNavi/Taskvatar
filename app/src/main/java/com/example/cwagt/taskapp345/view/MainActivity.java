@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import com.example.cwagt.taskapp345.R;
-import com.example.cwagt.taskapp345.helper.DatabaseColumnNames;
 import com.example.cwagt.taskapp345.helper.DatabaseHelper;
 import com.example.cwagt.taskapp345.helper.TaskAdapter;
 import com.example.cwagt.taskapp345.object.Enums;
@@ -21,6 +20,7 @@ import com.example.cwagt.taskapp345.object.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
@@ -57,10 +57,10 @@ public class MainActivity extends AppCompatActivity  {
         //Toolbar  on the top of the screen
         Toolbar toolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true); //add back button
+		Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true); //add back button
 		getSupportActionBar().setDisplayShowHomeEnabled(true);
 		//Apply a white colour to elements of toolbar
-		toolbar.getNavigationIcon().setColorFilter(getColor(android.R.color.white), PorterDuff.Mode.SRC_ATOP);
+		Objects.requireNonNull(toolbar.getNavigationIcon()).setColorFilter(getColor(android.R.color.white), PorterDuff.Mode.SRC_ATOP);
 		toolbar.setTitleTextColor(getColor(android.R.color.white));
 
         //check current user if set in the shared preferences and load their info from database
@@ -75,20 +75,13 @@ public class MainActivity extends AppCompatActivity  {
 			finish();
 			startActivity(userHomeIntent);
 		}
-
+		/*
 		//get the current user from the database
 		String selection = DatabaseColumnNames.User._ID + " = ?";
 		String[] selectionArgs = new String[]{Long.toString(userID)};
 		ArrayList<User> users = DatabaseHelper.readUsers(context, selection, selectionArgs);
-		User currentUser = null;
-		if(users.size() > 1){
-			throw new RuntimeException(context + "There should only be one or zero users with the same id: " + userID);
-		}
-		try{
-			currentUser = users.get(0);
-		} catch(NullPointerException e){
-			Log.d("MainActivity", e.toString());
-		}
+		User currentUser = users.get(0);
+		*/
 		//Get a list of tasks for the current user
 		final List<Task> taskList = DatabaseHelper.readAllTasks(context, userID);
 
@@ -103,7 +96,7 @@ public class MainActivity extends AppCompatActivity  {
 		taskRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 		taskRecyclerView.setAdapter(mAdapter);
 
-		//Check the number of compelted tasks and update tasksCompleted
+		//Check the number of completed tasks and update tasksCompleted
 		if(taskList.size() > 0){
 			int completed = 0;
 			for(Task task: taskList){
@@ -111,7 +104,7 @@ public class MainActivity extends AppCompatActivity  {
 					completed++;
 				}
 			}
-			textTasksCompleted.setText(Integer.toString(completed));
+			textTasksCompleted.setText(completed);
 		}
 
 		//use the time to reset completed tasks
@@ -130,7 +123,7 @@ public class MainActivity extends AppCompatActivity  {
 
 		//find the avatar fragment
 		View avatarFragment = findViewById(R.id.main_avatar_container);
-		AvatarEditer editer = new AvatarEditer(avatarFragment);
+		AvatarEditor editer = new AvatarEditor(avatarFragment);
 */
     }
 
@@ -140,7 +133,7 @@ public class MainActivity extends AppCompatActivity  {
 		Avatar_Fragment main_activity_avatar_fragment = Avatar_Fragment.newInstance();
 
 		//instance of manager and transaction
-		android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
+		//android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
 
 		android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 

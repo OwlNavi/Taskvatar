@@ -177,10 +177,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 			}
 
-			if (tasks.size() == 0) {
-				//tasks = generateDummyData();
-			}
-
 			cursor.close();
 
 		}else{
@@ -309,21 +305,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			sout("Error: could not open database for deleting");
 		}
 		return rowsAffected;
-	}
-
-	private static ArrayList<Task> generateDummyData() {
-		ArrayList<Task> taskList = new ArrayList<>();
-		Task task;
-
-		for(Long j=1L; j<4L; j++) {
-			for (int i = 0; i < 5; i++) {
-				task = new Task("Example task " + i, "Description", "12:00 am", j);
-				taskList.add(task);
-			}
-		}
-
-		return taskList;
-
 	}
 
 	/* Users */

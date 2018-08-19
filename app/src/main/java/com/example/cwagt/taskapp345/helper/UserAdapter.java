@@ -1,6 +1,5 @@
 package com.example.cwagt.taskapp345.helper;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -87,16 +86,21 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
                 //find the userID that identifies them
                 Long userID = user.get_id();
 
-                //Set the current user to the user selected
-                //The current user is saved in SharedPreferences accessible from other classes
-                SharedPreferences preferences = getDefaultSharedPreferences(context);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putLong("currentUser", userID);
-                editor.apply();
+                if(userID>0) {
 
-                //Change the current activity to the Main Activity
-                Intent mainMenuIntent = new Intent(context, MainActivity.class);
-                context.startActivity(mainMenuIntent);
+					//Set the current user to the user selected
+					//The current user is saved in SharedPreferences accessible from other classes
+					SharedPreferences preferences = getDefaultSharedPreferences(context);
+					SharedPreferences.Editor editor = preferences.edit();
+					editor.putLong("currentUser", userID);
+					editor.apply();
+
+					//Change the current activity to the Main Activity
+					Intent mainMenuIntent = new Intent(context, MainActivity.class);
+					context.startActivity(mainMenuIntent);
+				}else{
+                	System.out.println("Error: User ID is null. You get the user ID from the createUser method");
+				}
             }
 
             /**
@@ -119,13 +123,18 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
      * @param holder the item to change
      * @param position the position of the item clicked in the list
      */
-    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         User user = userList.get(position);
         holder.username.setText(user.getUserName());
         holder.userDescription.setText(user.getUserDescription());
-        //holder.userID.setText(Long.toString(user.get_id()));
+        if(user.get_id() > 0) {
+        	System.out.println("UserID: " + user.get_id().intValue());
+        	//TODO: Apparently "holder.userID" doesn't exist???
+			//holder.userID.setText(user.get_id().intValue());
+		}else{
+        	System.out.println("ERROR: User ID is null. Have you got the users from the database?");
+		}
     }
 
     /**

@@ -64,7 +64,4 @@ public class BodyPartsAdapter extends RecyclerView.Adapter<BodyPartsAdapter.Avat
         return bodyPartsList.size();
     }
 
-    String getItem(int id) {
-        return bodyPartsList.get(id);
-    }
 }

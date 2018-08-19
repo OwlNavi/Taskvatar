@@ -123,8 +123,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 				//Update task in database
                 if(DatabaseHelper.updateTask(context, task.get_id(), task)){
                 	//the task was updated
+					System.out.println("Task with ID:" + task.get_id() + " was updated. New data: " + task);
 				}else{
                 	//the task was not updated
+					System.out.println("ERROR: Task with ID:" + task.get_id() + " Could not be updated. Tried updating with: " + task);
 				}
 
 				//update display of tasks completed

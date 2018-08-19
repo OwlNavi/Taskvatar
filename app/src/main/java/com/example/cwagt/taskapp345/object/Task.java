@@ -89,17 +89,9 @@ public class Task {
         return frequency;
     }
 
-	public void setFrequency(Enums.Frequency frequency) {
-    	this.frequency = frequency;
-	}
-
 	public Boolean getReminder() {
         return reminder;
     }
-
-	public void setReminder(Boolean reminder) {
-		this.reminder = reminder;
-	}
 
 	public Enums.Status getStatus() {
         return status;
@@ -113,16 +105,8 @@ public class Task {
         return priority;
     }
 
-	public void setPriority(int priority) {
-		this.priority = priority;
-	}
-
 	public Long getUserId() {
 		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
 	}
 
 	@Override

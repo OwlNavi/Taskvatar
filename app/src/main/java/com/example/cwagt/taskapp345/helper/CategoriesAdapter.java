@@ -64,7 +64,4 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Av
 		return categories.size();
 	}
 
-	String getItem(int id) {
-		return categories.get(id);
-	}
 }

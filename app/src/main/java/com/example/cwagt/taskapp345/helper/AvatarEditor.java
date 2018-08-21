@@ -1,6 +1,5 @@
 package com.example.cwagt.taskapp345.helper;
 
-import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.widget.ImageView;
@@ -272,6 +271,7 @@ public class AvatarEditor {
      */
     private Boolean saveAvatar(){
         //TODO: SAVE IN DATABASE
+		System.out.println("Saving avatar to database");
 		Boolean success = false;
         //get avatar
         Avatar avatar = new Avatar(bodyParts);
@@ -281,7 +281,7 @@ public class AvatarEditor {
         //success = DatabaseHelper.updateUser(context, userID, user);
 		return success;
     }
-
+/*
     private Boolean saveAvatar(Avatar avatar){
         //TODO: SAVE IN DATABASE
 		Boolean success = false;
@@ -298,7 +298,7 @@ public class AvatarEditor {
 		//success = DatabaseHelper.updateUser(context, userID, user);
 		return success;
     }
-
+*/
     /**
      * Sets the avatar in the view based on the provided hashmap values
      * @param bodyParts lit of body parts

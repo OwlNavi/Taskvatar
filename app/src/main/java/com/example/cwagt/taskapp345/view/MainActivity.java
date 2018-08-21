@@ -1,5 +1,6 @@
 package com.example.cwagt.taskapp345.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity  {
 	 * Code executed when the main activity is loaded
 	 * @param savedInstanceState the savedInstanceState
 	 */
+	@SuppressLint("SetTextI18n")
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,7 +106,7 @@ public class MainActivity extends AppCompatActivity  {
 					completed++;
 				}
 			}
-			textTasksCompleted.setText(completed);
+			textTasksCompleted.setText("" + completed);
 		}
 
 		//use the time to reset completed tasks

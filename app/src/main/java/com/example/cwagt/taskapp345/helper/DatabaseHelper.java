@@ -157,6 +157,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			System.out.println("[DatabaseHelper.readTasks] Reading tasks from table: " + DatabaseColumnNames.Task.TABLE_NAME);
 			System.out.println("Selection: " + selection);
 			System.out.println("Arguments: " + Arrays.toString(selectionArgs));
+			System.out.println("Number of tasks: " + cursor.getCount());
 
 			while (cursor.moveToNext()) {
 				Task thisTask = new Task(
@@ -373,9 +374,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			System.out.println("[DatabaseHelper.readUsers] Reading user and avatar from table: " + DatabaseColumnNames.User.TABLE_NAME);
 			System.out.println("Selection: " + selection);
 			System.out.println("Arguments: " + Arrays.toString(selectionArgs));
+			System.out.println("Number of users: " + cursor.getCount());
 
 			while (cursor.moveToNext()) {
-
 				HashMap<String, Integer> bodyParts = new HashMap<>();
 				bodyParts.put("base", cursor.getInt(cursor.getColumnIndexOrThrow(AVATAR_NAME_BASE)));
 				bodyParts.put("hat", cursor.getInt(cursor.getColumnIndexOrThrow(AVATAR_NAME_HAT)));
@@ -459,6 +460,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		}else{
 			sout("Error: could not open database for writing");
 		}
+		closeDatabase(context);
 		return success;
 	}
 

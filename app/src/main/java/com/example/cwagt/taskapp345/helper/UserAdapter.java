@@ -128,6 +128,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
         User user = userList.get(position);
         holder.username.setText(user.getUserName());
         holder.userDescription.setText(user.getUserDescription());
+        System.out.println("User: " + user);
         if(user.get_id() > 0) {
         	System.out.println("UserID: " + user.get_id().intValue());
         	//TODO: Apparently "holder.userID" doesn't exist???

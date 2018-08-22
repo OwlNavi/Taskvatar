@@ -8,7 +8,6 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.*;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -69,14 +68,9 @@ public class MainActivity extends AppCompatActivity  {
 		//if the preference is not set go back to user page
 		SharedPreferences preferences = getDefaultSharedPreferences(context);
 		Long userID = preferences.getLong("currentUser", 0);
-		Log.d("Current User", Long.toString(userID));
+		System.out.println("Current User" + Long.toString(userID));
 
-		//if the userID is not set go back to user page
-		if (userID == 0) { //not found
-			Intent userHomeIntent = new Intent(context, UserHome.class);
-			finish();
-			startActivity(userHomeIntent);
-		}
+
 		/*
 		//get the current user from the database
 		String selection = DatabaseColumnNames.User._ID + " = ?";
@@ -128,6 +122,12 @@ public class MainActivity extends AppCompatActivity  {
 		AvatarEditor editer = new AvatarEditor(avatarFragment);
 */
     }
+
+    @Override
+	protected void onResume() {
+		super.onResume();
+
+	}
 
     private void displayAvatar() {
 

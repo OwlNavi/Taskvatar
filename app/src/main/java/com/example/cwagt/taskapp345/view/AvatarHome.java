@@ -16,9 +16,9 @@ import android.view.MenuItem;
 import android.view.View;
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.helper.*;
-import com.example.cwagt.taskapp345.helper.AvatarEditor;
 import com.example.cwagt.taskapp345.object.Enums;
 import com.example.cwagt.taskapp345.object.Task;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -222,11 +222,11 @@ public class AvatarHome extends AppCompatActivity {
     public ArrayList<String> getCategories(){
         ArrayList<String> result = new ArrayList<>();
         result.add("HAT");
-		result.add("BASE");
         result.add("LEFT ARM");
         result.add("RIGHT ARM");
         result.add("LEFT LEG");
         result.add("RIGHT LEG");
+        result.add("BASE");
         result.add("BACKGROUND");
         return result;
     }

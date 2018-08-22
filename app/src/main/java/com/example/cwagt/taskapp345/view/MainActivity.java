@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity  {
 		//if the preference is not set go back to user page
 		SharedPreferences preferences = getDefaultSharedPreferences(context);
 		Long userID = preferences.getLong("currentUser", 0);
-		System.out.println("Current User" + Long.toString(userID));
+		System.out.println("[MainActivity] Current User " + Long.toString(userID));
 
 
 		/*
@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity  {
     @Override
 	protected void onResume() {
 		super.onResume();
-
+		//recreate();
 	}
 
     private void displayAvatar() {
@@ -205,6 +205,7 @@ public class MainActivity extends AppCompatActivity  {
 				startActivity(editTaskIntent);
 				break;
 			case android.R.id.home:
+				//onDestroy();
 				finish();
 		}
 

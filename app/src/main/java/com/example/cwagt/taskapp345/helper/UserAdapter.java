@@ -85,21 +85,22 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
                 User user = userList.get(position);
                 //find the userID that identifies them
                 Long userID = user.get_id();
-
+				System.out.println("[UserAdapter] You clicked on user " + userID);
                 if(userID>0) {
 
 					//Set the current user to the user selected
 					//The current user is saved in SharedPreferences accessible from other classes
 					SharedPreferences preferences = getDefaultSharedPreferences(context);
 					SharedPreferences.Editor editor = preferences.edit();
-					editor.putLong("currentUser", userID);
+					editor.putLong("currentUser ", userID);
 					editor.apply();
 
 					//Change the current activity to the Main Activity
-					Intent mainMenuIntent = new Intent(context, MainActivity.class);
-					context.startActivity(mainMenuIntent);
+					System.out.println("[UserAdapter] Starting MainActivity class for user " + userID);
+					context.startActivity(new Intent(context, MainActivity.class));
+
 				}else{
-                	System.out.println("Error: User ID is null. You get the user ID from the createUser method");
+                	System.out.println("[UserAdapter] Error: User ID is null. You get the user ID from the createUser method");
 				}
             }
 
@@ -134,7 +135,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
         	//TODO: Apparently "holder.userID" doesn't exist???
 			//holder.userID.setText(user.get_id().intValue());
 		}else{
-        	System.out.println("ERROR: User ID is null. Have you got the users from the database?");
+        	System.out.println("[UserAdapter] ERROR: User ID is null. Have you got the users from the database?");
 		}
     }
 

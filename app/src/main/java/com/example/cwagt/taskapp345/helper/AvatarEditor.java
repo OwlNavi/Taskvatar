@@ -1,14 +1,19 @@
 package com.example.cwagt.taskapp345.helper;
 
-import android.support.constraint.ConstraintLayout;
-import android.view.View;
-import android.widget.ImageView;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.object.Avatar;
 import com.example.cwagt.taskapp345.object.User;
+import com.example.cwagt.taskapp345.view.AvatarHome;
 import com.example.cwagt.taskapp345.view.Avatar_Fragment;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+import static android.provider.BaseColumns._ID;
 
 /**
  * Created by cwagt on 9/08/2018.
@@ -17,7 +22,7 @@ import java.util.HashMap;
  */
 public class AvatarEditor {
     //Current view
-    private View avatar;
+    private Avatar avatar;
     private Avatar_Fragment avatar_fragment;
 
 
@@ -39,20 +44,33 @@ public class AvatarEditor {
      * Given the view of the avatar fragment it will locate the body parts to initialise itself
      * @param avatarFragment the View of the avatar fragment
      */
-    public AvatarEditor(Avatar_Fragment avatarFragment){
+    public AvatarEditor(Avatar_Fragment avatarFragment, Avatar avatar){
 		this.avatar_fragment = avatarFragment;
-        initBodyParts();
+		this.avatar = avatar;
+		/*
+		if(avatar.getBodyParts().isEmpty()) { //crashes here
+			//if avatar doesnt have default values, initialise them
+			initBodyParts();
+		}
+		*/
+
+		//overwrites whatevers in the avatar with default values
+		initBodyParts();
     }
 
+	/**
+	 * Initialises the bodyParts hash map to default values
+	 */
     private void initBodyParts() {
 		bodyParts = new HashMap<>();
-		bodyParts.put("base", R.id.base);
-		bodyParts.put("hat", R.id.hat);
-		bodyParts.put("leftArm", R.id.left_arm);
-		bodyParts.put("rightArm", R.id.right_arm);
-		bodyParts.put("leftLeg", R.id.left_leg);
-		bodyParts.put("rightLeg", R.id.right_leg);
-		bodyParts.put("background", R.id.avatar_container);
+		bodyParts.put("base", R.drawable.base);
+		bodyParts.put("hat", R.drawable.hat_crown);
+		bodyParts.put("leftArm", R.drawable.left_arm);
+		bodyParts.put("rightArm", R.drawable.right_arm);
+		bodyParts.put("leftLeg", R.drawable.left_leg);
+		bodyParts.put("rightLeg", R.drawable.right_leg);
+		bodyParts.put("background", R.drawable.white);
+		avatar.setBodyParts(bodyParts);
 	}
 
     /**
@@ -251,7 +269,7 @@ public class AvatarEditor {
 				bodyParts.put("hat", R.drawable.hat_pirate);
 				break;
 			default:
-				System.out.println("Error: Cannot set hat to " + itemSelected + " because it does not exist");
+				Log.e("helper.AvatarEditor", "Error: Cannot set hat to " + itemSelected + " because it does not exist");
         }
 
         saveAvatar();
@@ -261,34 +279,27 @@ public class AvatarEditor {
      * Saves the avatar so it can be retrieved
      */
     private Boolean saveAvatar(){
-        //TODO: SAVE IN DATABASE
-		System.out.println("Saving avatar to database");
-		Boolean success = false;
-        //get avatar
-        Avatar avatar = new Avatar(bodyParts);
-        //get user
-        User user = new User("name", "description", avatar);
-        //user has no ID, call createUser to get the ID
-        //success = DatabaseHelper.updateUser(context, userID, user);
-		return success;
-    }
-/*
-    private Boolean saveAvatar(Avatar avatar){
-        //TODO: SAVE IN DATABASE
-		Boolean success = false;
-        //get user
-        User user = new User("name", "description", avatar);
-        //user has no ID, call createUser to get the ID
-		//success = DatabaseHelper.updateUser(context, userID, user);
-		return success;
-    }
 
-    private Boolean saveAvatar(User user){
-        //TODO: SAVE IN DATABASE
-		Boolean success = false;
-		//success = DatabaseHelper.updateUser(context, userID, user);
-		return success;
+		Log.d("helper.AvatarEditor", "Saving avatar to database");
+
+		AvatarHome ah = new AvatarHome();
+		Context context = ah.getContext();
+
+		//get current user
+		SharedPreferences preferences = getDefaultSharedPreferences(context); //TODO CRASHES HERE :(
+		Long userID = preferences.getLong("currentUser", 0);
+		ArrayList<User> users = DatabaseHelper.readUsers(context, _ID + " = ?", new String[]{Long.toString(userID)});
+		if(users.isEmpty()){
+			Log.e("helper.AvatarEditor", "There are 0 users in database with ID " + userID);
+			return false;
+		}else {
+			User user = users.get(0); //gets the name, descr, etc
+			avatar.setBodyParts(bodyParts);
+			user.setAvatar(avatar);
+			return DatabaseHelper.updateUser(context, userID, user);
+
+		}
+
     }
-*/
 
 }

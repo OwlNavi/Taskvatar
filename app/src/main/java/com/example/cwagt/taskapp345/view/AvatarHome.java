@@ -18,12 +18,14 @@ import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.helper.*;
 import com.example.cwagt.taskapp345.object.Enums;
 import com.example.cwagt.taskapp345.object.Task;
+import com.example.cwagt.taskapp345.object.User;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+import static android.provider.BaseColumns._ID;
 
 /**
  * User interacts with the avatar here.
@@ -36,6 +38,7 @@ public class AvatarHome extends AppCompatActivity {
     private AvatarEditor editor;
     private Avatar_Fragment avatar_fragment;
     private Context context;
+    private User user;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,7 +55,16 @@ public class AvatarHome extends AppCompatActivity {
 
         //TODO HERE
 
-        editor = new AvatarEditor(avatar_fragment);
+        //avatar = new Avatar();
+        SharedPreferences preferences = getDefaultSharedPreferences(context);
+        Long userID = preferences.getLong("currentUser", 0);
+        ArrayList<User> avatars = DatabaseHelper.readUsers(context, _ID + " = ?", new String[]{Long.toString(userID)});
+        if(avatars.isEmpty()){
+        	System.out.println("[view.AvatarHome] Could not get any user with id " + userID);
+		}else{
+			user = avatars.get(0);
+			editor = new AvatarEditor(avatar_fragment, user.getAvatar());
+		}
 
         //great the list of categories
         List<String> categoriesList = getCategories();
@@ -156,6 +168,10 @@ public class AvatarHome extends AppCompatActivity {
             }
         }));
 
+    }
+
+    public Context getContext(){
+        return context;
     }
 
     /**

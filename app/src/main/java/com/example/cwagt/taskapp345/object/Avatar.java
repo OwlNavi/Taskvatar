@@ -118,4 +118,8 @@ public class Avatar {
 				", bodyParts=" + bodyParts +
 		'}';
 	}
+
+	public void setBodyParts(HashMap<String, Integer> bodyParts) {
+		this.bodyParts = bodyParts;
+	}
 }

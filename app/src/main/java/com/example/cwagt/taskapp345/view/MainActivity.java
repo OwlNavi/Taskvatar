@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import com.example.cwagt.taskapp345.R;
+import com.example.cwagt.taskapp345.helper.AvatarEditor;
 import com.example.cwagt.taskapp345.helper.DatabaseHelper;
 import com.example.cwagt.taskapp345.helper.TaskAdapter;
 import com.example.cwagt.taskapp345.object.Enums;
@@ -52,8 +53,6 @@ public class MainActivity extends AppCompatActivity  {
 		displayAvatar();
 
 
-		//HashMap<String, Integer> avatarBodyParts = DatabaseHelper.loadAvatar();
-		//editer.setAvatar(avatarBodyParts);
 
         //Toolbar  on the top of the screen
         Toolbar toolbar = findViewById(R.id.my_toolbar);
@@ -121,6 +120,7 @@ public class MainActivity extends AppCompatActivity  {
 		View avatarFragment = findViewById(R.id.main_avatar_container);
 		AvatarEditor editer = new AvatarEditor(avatarFragment);
 */
+
     }
 
     @Override
@@ -129,19 +129,17 @@ public class MainActivity extends AppCompatActivity  {
 		//recreate();
 	}
 
-    private void displayAvatar() {
+	/**
+	 * Display the avatar fragment within the main activity
+	 *
+	 * */
 
+    private void displayAvatar() {
 		//create instance of avatar fragment
 		Avatar_Fragment main_activity_avatar_fragment = Avatar_Fragment.newInstance();
-
-		//instance of manager and transaction
-		//android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
-
+		//add fragment to main activity
 		android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-
-		//add fragment to main_activity
-		fragmentTransaction.add(R.id.main_avatar_container,main_activity_avatar_fragment).commit();
-
+		fragmentTransaction.add(R.id.main_avatar_container,main_activity_avatar_fragment,"main_activity_fragment").commit();
 	}
 
 	/**

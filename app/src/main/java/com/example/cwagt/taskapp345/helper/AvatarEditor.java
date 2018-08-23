@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.object.Avatar;
 import com.example.cwagt.taskapp345.object.User;
+import com.example.cwagt.taskapp345.view.Avatar_Fragment;
 
 import java.util.HashMap;
 
@@ -15,17 +16,12 @@ import java.util.HashMap;
  * It is used to edit body parts and save the avatar to the database
  */
 public class AvatarEditor {
-    //Image Views used to display the Avatar
-    private ImageView base;
-    private ImageView hat;
-    private ImageView leftArm;
-    private ImageView rightArm;
-    private ImageView leftLeg;
-    private ImageView rightLeg;
-    //The background of the Constraint container
-    private ConstraintLayout background; //maybe should be ImageView?
     //Current view
     private View avatar;
+    private Avatar_Fragment avatar_fragment;
+
+
+
     //currentCategory numbers
     private final int BASE = 5;
 	private final int HAT = 0;
@@ -43,26 +39,21 @@ public class AvatarEditor {
      * Given the view of the avatar fragment it will locate the body parts to initialise itself
      * @param avatarFragment the View of the avatar fragment
      */
-    public AvatarEditor(View avatarFragment){
-        this.avatar = avatarFragment;
-        this.base = avatar.findViewById(R.id.base);
-		this.hat = avatar.findViewById(R.id.hat);
-        this.leftArm = avatar.findViewById(R.id.left_arm);
-        this.leftLeg = avatar.findViewById(R.id.left_leg);
-        this.rightLeg = avatar.findViewById(R.id.right_leg);
-        this.rightArm = avatar.findViewById(R.id.right_arm);
-        this.background = avatar.findViewById(R.id.avatar_container);
-
-        bodyParts = new HashMap<>();
-        bodyParts.put("base", R.id.base);
-        bodyParts.put("hat", R.id.hat);
-        bodyParts.put("leftArm", R.id.left_arm);
-        bodyParts.put("rightArm", R.id.right_arm);
-        bodyParts.put("leftLeg", R.id.left_leg);
-        bodyParts.put("rightLeg", R.id.right_leg);
-        bodyParts.put("background", R.id.avatar_container);
-
+    public AvatarEditor(Avatar_Fragment avatarFragment){
+		this.avatar_fragment = avatarFragment;
+        initBodyParts();
     }
+
+    private void initBodyParts() {
+		bodyParts = new HashMap<>();
+		bodyParts.put("base", R.id.base);
+		bodyParts.put("hat", R.id.hat);
+		bodyParts.put("leftArm", R.id.left_arm);
+		bodyParts.put("rightArm", R.id.right_arm);
+		bodyParts.put("leftLeg", R.id.left_leg);
+		bodyParts.put("rightLeg", R.id.right_leg);
+		bodyParts.put("background", R.id.avatar_container);
+	}
 
     /**
      * Modifies the avatar by changing the body part identified by category and item name
@@ -104,11 +95,11 @@ public class AvatarEditor {
     private void setBase(String itemSelected) {
     	switch(itemSelected) {
 			case "Surprised":
-				base.setImageResource(R.drawable.surprised);
+				avatar_fragment.setBase(R.drawable.surprised);
 				bodyParts.put("base", R.drawable.surprised);
 				break;
 			case "Silly":
-				base.setImageResource(R.drawable.base_red);
+				avatar_fragment.setBase(R.drawable.base_red);
 				bodyParts.put("base", R.drawable.base_red);
 				break;
 			default:
@@ -125,15 +116,15 @@ public class AvatarEditor {
     private void setLeftLeg(String itemSelected) {
     	switch(itemSelected){
 			case "Strong":
-				leftLeg.setImageResource(R.drawable.left_leg_muscly);
+				avatar_fragment.setLeftLeg(R.drawable.left_leg_muscly);
 				bodyParts.put("leftLeg", R.drawable.left_arm_muscly);
 				break;
 			case "Robot":
-				leftLeg.setImageResource(R.drawable.left_leg_robot);
+				avatar_fragment.setLeftLeg(R.drawable.left_leg_robot);
 				bodyParts.put("leftLeg", R.drawable.left_leg_robot);
 				break;
 			case "Cartoon":
-				leftLeg.setImageResource(R.drawable.left_leg);
+				avatar_fragment.setLeftLeg(R.drawable.left_leg);
 				bodyParts.put("leftLeg", R.drawable.left_leg);
 				break;
 			default:
@@ -149,20 +140,20 @@ public class AvatarEditor {
     private void setBackground(String itemSelected) {
     	switch(itemSelected){
 			case "Beach":
-				avatar.setBackgroundResource(R.drawable.beach);
+				avatar_fragment.setBackground(R.drawable.beach);
 				bodyParts.put("background", R.drawable.beach);
 				break;
 			case "Desert":
-				avatar.setBackgroundResource(R.drawable.desert);
+				avatar_fragment.setBackground(R.drawable.desert);
 				bodyParts.put("background", R.drawable.desert);
 				break;
 			case "Jungle":
-				avatar.setBackgroundResource(R.drawable.jungle);
+				avatar_fragment.setBackground(R.drawable.jungle);
 				bodyParts.put("background", R.drawable.jungle);
 				break;
 			case "White":
-				avatar.setBackgroundResource(R.drawable.base);
-				bodyParts.put("background", R.drawable.base);
+				avatar_fragment.setBackground(R.drawable.white);
+				bodyParts.put("background", R.drawable.white);
 				break;
 			default:
 				System.out.println("Error: Cannot set base to " + itemSelected + " because it does not exist");
@@ -178,15 +169,15 @@ public class AvatarEditor {
     private void setRightLeg(String itemSelected) {
     	switch(itemSelected){
 			case "Strong":
-				rightLeg.setImageResource(R.drawable.right_leg_muscly);
+				avatar_fragment.setRightLeg(R.drawable.right_leg_muscly);
 				bodyParts.put("rightLeg", R.drawable.right_leg_muscly);
 				break;
 			case "Robot":
-				rightLeg.setImageResource(R.drawable.right_leg_robot);
+				avatar_fragment.setRightLeg(R.drawable.right_leg_robot);
 				bodyParts.put("rightLeg", R.drawable.right_leg_robot);
 				break;
 			case "Cartoon":
-				rightLeg.setImageResource(R.drawable.right_leg);
+				avatar_fragment.setRightLeg(R.drawable.right_leg);
 				bodyParts.put("rightLeg", R.drawable.right_leg);
 				break;
 			default:
@@ -203,15 +194,15 @@ public class AvatarEditor {
     private void setRightArm(String itemSelected) {
 		switch(itemSelected){
 			case "Strong":
-				rightArm.setImageResource(R.drawable.right_arm_muscly);
+				avatar_fragment.setRightArm(R.drawable.right_arm_muscly);
 				bodyParts.put("rightArm", R.drawable.right_arm_muscly);
 				break;
 			case "Robot":
-				rightArm.setImageResource(R.drawable.right_arm_robot);
+				avatar_fragment.setRightArm(R.drawable.right_arm_robot);
 				bodyParts.put("rightArm", R.drawable.right_arm_robot);
 				break;
 			case "Cartoon":
-				rightArm.setImageResource(R.drawable.right_arm);
+				avatar_fragment.setRightArm(R.drawable.right_arm);
 				bodyParts.put("rightArm", R.drawable.right_arm);
 				break;
 			default:
@@ -227,15 +218,15 @@ public class AvatarEditor {
     private void setLeftArm(String itemSelected) {
     	switch(itemSelected){
 			case "Strong":
-				leftArm.setImageResource(R.drawable.left_arm_muscly);
+				avatar_fragment.setLeftArm(R.drawable.left_arm_muscly);
 				bodyParts.put("leftArm", R.drawable.left_arm_muscly);
 				break;
 			case "Robot":
-				leftArm.setImageResource(R.drawable.left_arm_robot);
+				avatar_fragment.setLeftArm(R.drawable.left_arm_robot);
 				bodyParts.put("leftArm", R.drawable.left_arm_robot);
 				break;
 			case "Cartoon":
-				leftArm.setImageResource(R.drawable.left_arm);
+				avatar_fragment.setLeftArm(R.drawable.left_arm);
 				bodyParts.put("leftArm", R.drawable.left_arm);
 				break;
 			default:
@@ -252,11 +243,11 @@ public class AvatarEditor {
     private void setHat(String itemSelected) {
 		switch(itemSelected){
 			case "Crown":
-				hat.setImageResource(R.drawable.hat_crown);
+				avatar_fragment.setHat(R.drawable.hat_crown);
 				bodyParts.put("hat", R.drawable.hat_crown);
 				break;
 			case "Pirate":
-				hat.setImageResource(R.drawable.hat_pirate);
+				avatar_fragment.setHat(R.drawable.hat_pirate);
 				bodyParts.put("hat", R.drawable.hat_pirate);
 				break;
 			default:
@@ -299,24 +290,5 @@ public class AvatarEditor {
 		return success;
     }
 */
-    /**
-     * Sets the avatar in the view based on the provided hashmap values
-     * @param bodyParts lit of body parts
-     */
-    public void setAvatar(HashMap<String, Integer> bodyParts){
-    	System.out.println("bodyParts: " + bodyParts);
-        base.setImageResource(bodyParts.get("base"));
-        hat.setImageResource(bodyParts.get("hat"));
-        leftArm.setImageResource(bodyParts.get("leftArm"));
-        rightArm.setImageResource(bodyParts.get("rightArm"));
-        leftLeg.setImageResource(bodyParts.get("leftLeg"));
-        rightLeg.setImageResource(bodyParts.get("rightLeg"));
-        //background.setImageResource(bodyParts.get("background"));
 
-		saveAvatar();
-    }
-
-    public HashMap<String, Integer> getBodyParts() {
-        return bodyParts;
-    }
 }

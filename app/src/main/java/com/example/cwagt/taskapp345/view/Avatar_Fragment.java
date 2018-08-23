@@ -2,21 +2,36 @@ package com.example.cwagt.taskapp345.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ImageView;
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.helper.AvatarEditor;
+
+import java.util.HashMap;
 
 /**
  * Reusable fragment used to display the Avatar in Main Activity and AvatarHome
  */
 
 public class Avatar_Fragment extends Fragment {
+    //Image Views used to display the Avatar
+    private ImageView base;
+    private ImageView hat;
+    private ImageView leftArm;
+    private ImageView rightArm;
+    private ImageView leftLeg;
+    private ImageView rightLeg;
+    private ConstraintLayout background;
+    private boolean avatarInit = false;
+
 
     @Override
     public void onAttach(Context context) {
@@ -31,29 +46,84 @@ public class Avatar_Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.avatar_fragment, container, false);
-
-        //persist(view);
-
+        avatarInit = initAvatar(view);
         openAvatarHome(view);
-
         return view;
     }
 
-    public static Avatar_Fragment newInstance() {
-        return new Avatar_Fragment();
-    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(avatarInit) {
+            Log.e("AVATAR TAG","AVATAR IS SET");
 
-    private void persist(View view) {
 
-        AvatarEditor editor = new AvatarEditor(view);
-        editor.setAvatar(editor.getBodyParts());
+        } else {
+            Log.e("AVATAR TAG","AVATAR IS NOT SET");
+
+        }
 
     }
 
     /**
-     * Function 2
+     * Initiate Avatar --> allows changes to ImageViews
+     *
      * */
-    //onClickListener for clicking avatar
+    private boolean initAvatar(View view) {
+        this.base = view.findViewById(R.id.base);
+        this.hat = view.findViewById(R.id.hat);
+        this.leftArm = view.findViewById(R.id.left_arm);
+        this.leftLeg = view.findViewById(R.id.left_leg);
+        this.rightLeg = view.findViewById(R.id.right_leg);
+        this.rightArm = view.findViewById(R.id.right_arm);
+        this.background = view.findViewById(R.id.avatar_container);
+        return true;
+    }
+
+    /**
+     * Set ImageViews to IDs passed by AvatarEditor when click on item within RecyclerView
+     *
+     * @param id
+     */
+    public void setRightLeg(int id) {
+        rightLeg.setImageResource(id);
+    }
+    public void setLeftLeg(int id) {
+        leftLeg.setImageResource(id);
+    }
+    public void setRightArm(int id) {
+        rightArm.setImageResource(id);
+    }
+    public void setLeftArm(int id) {
+        leftArm.setImageResource(id);
+    }
+    public void setBase(int id) {
+        base.setImageResource(id);
+    }
+    public void setHat(int id) {
+        hat.setImageResource(id);
+    }
+    public void setBackground(int id){
+        background.setBackgroundResource(id);
+    }
+
+
+
+    /**
+     * Creates and returns a new instance of Avatar Fragment
+     * @return avatar fragment instance
+     */
+    public static Avatar_Fragment newInstance() {
+        return new Avatar_Fragment();
+    }
+
+
+
+    /**
+     * onClickListener for clicking the avatar
+     * Takes a view, returns void
+     * */
+
     private void openAvatarHome(View view) {
 
         ConstraintLayout fragmentHolder = view.findViewById(R.id.avatar_container);
@@ -66,9 +136,7 @@ public class Avatar_Fragment extends Fragment {
                     startActivity(avatarIntent);
                 } //From AvatarHome, TODO add in animation instead here
                 else if (getActivity() instanceof AvatarHome){
-                    Intent avatarIntent = new Intent(getActivity(), AvatarHome.class);
-                    getActivity().finish();
-                    startActivity(avatarIntent);
+
                 }
 
             }

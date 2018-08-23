@@ -34,6 +34,7 @@ import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 public class AvatarHome extends AppCompatActivity {
     private RecyclerView bodyPartsRecyclerView;
     private AvatarEditor editor;
+    private Avatar_Fragment avatar_fragment;
     private Context context;
 
     @Override
@@ -46,9 +47,12 @@ public class AvatarHome extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
 
-        //find the avatar fragment
-        View avatarFragment = findViewById(R.id.avatar_fragment);
-        editor = new AvatarEditor(avatarFragment);
+        //display avatar fragment
+        displayAvatar();
+
+        //TODO HERE
+
+        editor = new AvatarEditor(avatar_fragment);
 
         //great the list of categories
         List<String> categoriesList = getCategories();
@@ -153,6 +157,22 @@ public class AvatarHome extends AppCompatActivity {
         }));
 
     }
+
+    /**
+     * Display the avatar fragment within the main activity
+     *
+     * */
+        private void displayAvatar(){
+
+            //create instance of avatar fragment
+            Avatar_Fragment avatar_home_avatar_fragment = Avatar_Fragment.newInstance();
+            //add fragment to main activity
+            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.add(R.id.avatar_home_fragment_container,avatar_home_avatar_fragment,"avatar_home_avatar_fragment").commit();
+            this.avatar_fragment = avatar_home_avatar_fragment;
+        }
+
+
 
     /**
      * This method updates the bodyPartsRecyclerView after the user clicks on a category,

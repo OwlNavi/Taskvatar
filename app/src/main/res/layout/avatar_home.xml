@@ -16,12 +16,14 @@
             android:orientation="vertical"
             android:weightSum="100"
     >
-        <fragment
+        <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="100"
-                android:id="@+id/avatar_fragment"
-                class="com.example.cwagt.taskapp345.view.Avatar_Fragment"/>
+                android:id="@+id/avatar_home_fragment_container"
+                class="com.example.cwagt.taskapp345.view.Avatar_Fragment"
+
+        />
 
     </LinearLayout>
 

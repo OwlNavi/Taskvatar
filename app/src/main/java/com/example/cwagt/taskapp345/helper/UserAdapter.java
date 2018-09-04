@@ -92,7 +92,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
 					//The current user is saved in SharedPreferences accessible from other classes
 					SharedPreferences preferences = getDefaultSharedPreferences(context);
 					SharedPreferences.Editor editor = preferences.edit();
-					editor.putLong("currentUser ", userID);
+					editor.putLong("currentUser", userID);
 					editor.apply();
 
 					//Change the current activity to the Main Activity

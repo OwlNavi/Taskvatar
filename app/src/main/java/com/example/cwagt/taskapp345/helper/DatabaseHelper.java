@@ -415,65 +415,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	}
 
 	public static User readUser(Context context, Long userID) {
-		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
-		SQLiteDatabase db = mDbHelper.getReadableDatabase();
-		ArrayList<User> users = new ArrayList<>();
-
 		String selection = _ID + " = ?";
 		String[] selectionArgs = new String[]{Long.toString(userID)};
 
-		User thisUser = new User("", "");
+		ArrayList<User> users = readUsers(context, selection, selectionArgs);
+		User thisUser = users.get(0);
 
-		if(checkDatabase(db)) {
-
-			Cursor cursor = db.query(
-					DatabaseColumnNames.User.TABLE_NAME,   // The table to query
-					null,             // The array of columns to return (pass null to get all)
-					selection,              // The columns for the WHERE clause
-					selectionArgs,          // The values for the WHERE clause
-					null,                   // don't group the rows
-					null,                   // don't filter by row groups
-					USER_NAME_NAME               // The sort order
-			);
-
-			Log.d("DatabaseHelper", "Reading user and avatar from table: " + DatabaseColumnNames.User.TABLE_NAME);
-			Log.d("DatabaseHelper", "Selection: " + selection);
-			Log.d("DatabaseHelper", "Arguments: " + Arrays.toString(selectionArgs));
-			Log.d("DatabaseHelper", "Number of users: " + cursor.getCount());
-
-			while (cursor.moveToNext()) {
-				HashMap<String, Integer> bodyParts = new HashMap<>();
-				bodyParts.put("base", cursor.getInt(cursor.getColumnIndexOrThrow(AVATAR_NAME_BASE)));
-				bodyParts.put("hat", cursor.getInt(cursor.getColumnIndexOrThrow(AVATAR_NAME_HAT)));
-				bodyParts.put("leftArm", cursor.getInt(cursor.getColumnIndexOrThrow(AVATAR_NAME_LEFT_ARM)));
-				bodyParts.put("rightArm", cursor.getInt(cursor.getColumnIndexOrThrow(AVATAR_NAME_RIGHT_ARM)));
-				bodyParts.put("leftLeg", cursor.getInt(cursor.getColumnIndexOrThrow(AVATAR_NAME_LEFT_LEG)));
-				bodyParts.put("rightLeg", cursor.getInt(cursor.getColumnIndexOrThrow(AVATAR_NAME_RIGHT_LEG)));
-				bodyParts.put("background", cursor.getInt(cursor.getColumnIndexOrThrow(AVATAR_NAME_BACKGROUND)));
-
-				Avatar avatar = new Avatar(
-						bodyParts,
-						cursor.getFloat(cursor.getColumnIndexOrThrow(AVATAR_NAME_LEFT_ARM_ROTATION)),
-						cursor.getFloat(cursor.getColumnIndexOrThrow(AVATAR_NAME_RIGHT_ARM_ROTATION)),
-						cursor.getFloat(cursor.getColumnIndexOrThrow(AVATAR_NAME_LEFT_LEG_ROTATION)),
-						cursor.getFloat(cursor.getColumnIndexOrThrow(AVATAR_NAME_RIGHT_LEG_ROTATION))
-				);
-
-				thisUser = new User(
-						cursor.getString(cursor.getColumnIndexOrThrow(USER_NAME_NAME)),
-						cursor.getString(cursor.getColumnIndexOrThrow(USER_NAME_DESCRIPTION)),
-						avatar
-				);
-				//long userID = cursor.getLong(cursor.getColumnIndexOrThrow(_ID));
-				thisUser.set_id(userID);
-
-				Log.d("DatabaseHelper", "User: " + thisUser);
-			}
-			cursor.close();
-
-		}else{
-			Log.e("DatabaseHelper", "Error: could not open database for reading");
-		}
 		return thisUser;
 	}
 

@@ -1,14 +1,15 @@
 package com.example.cwagt.taskapp345.helper;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.object.Avatar;
 import com.example.cwagt.taskapp345.object.User;
-import com.example.cwagt.taskapp345.view.AvatarHome;
 import com.example.cwagt.taskapp345.view.Avatar_Fragment;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -38,6 +39,8 @@ public class AvatarEditor {
 
     //a data structure linking the name of the body part with the R.drawable id describing the resource
     private HashMap<String, Integer> bodyParts;
+
+	public AvatarEditor(){}
 
     /**
      * Avatar Editer constructer
@@ -151,6 +154,7 @@ public class AvatarEditor {
 
         saveAvatar();
     }
+
     /**
      * Sets the background based on the item selected
      * @param itemSelected the name of the item selected
@@ -282,8 +286,19 @@ public class AvatarEditor {
 
 		Log.d("helper.AvatarEditor", "Saving avatar to database");
 
-		AvatarHome ah = new AvatarHome();
-		Context context = ah.getContext();
+		//AvatarEditor ae = new AvatarEditor();
+		Context context = null;
+		try {
+			context = (Application) Class.forName("android.app.AppGlobals").getMethod("getInitialApplication").invoke(null, (Object[]) null);
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 
 		//get current user
 		SharedPreferences preferences = getDefaultSharedPreferences(context); //TODO CRASHES HERE :(

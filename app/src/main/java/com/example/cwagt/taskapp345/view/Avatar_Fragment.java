@@ -2,7 +2,7 @@ package com.example.cwagt.taskapp345.view;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
@@ -10,19 +10,24 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.ImageView;
 import com.example.cwagt.taskapp345.R;
-import com.example.cwagt.taskapp345.helper.AvatarEditor;
+import com.example.cwagt.taskapp345.helper.DatabaseHelper;
+import com.example.cwagt.taskapp345.object.Avatar;
+import com.example.cwagt.taskapp345.object.User;
 
 import java.util.HashMap;
+
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 /**
  * Reusable fragment used to display the Avatar in Main Activity and AvatarHome
  */
 
 public class Avatar_Fragment extends Fragment {
-    //Image Views used to display the Avatar
+	private boolean avatarInit = false;
+	private View view;
+	//Image Views used to display the Avatar
     private ImageView base;
     private ImageView hat;
     private ImageView leftArm;
@@ -30,8 +35,11 @@ public class Avatar_Fragment extends Fragment {
     private ImageView leftLeg;
     private ImageView rightLeg;
     private ConstraintLayout background;
-    private boolean avatarInit = false;
 
+	private float leftArmRotation = 0;
+	private float rightArmRotation = 0;
+	private float leftLegRotation = 0;
+	private float rightLegRotation = 0;
 
     @Override
     public void onAttach(Context context) {
@@ -45,7 +53,7 @@ public class Avatar_Fragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.avatar_fragment, container, false);
+        view = inflater.inflate(R.layout.avatar_fragment, container, false);
         avatarInit = initAvatar(view);
         openAvatarHome(view);
         return view;
@@ -55,10 +63,40 @@ public class Avatar_Fragment extends Fragment {
     public void onResume() {
         super.onResume();
         if(avatarInit) {
-            Log.e("AVATAR TAG","AVATAR IS SET");
+            //Log.e("AVATAR TAG","AVATAR IS SET");
+			Log.d("Avatar_Fragment","Loading avatar from database");
 
+            //get avatar from database
+			Context context = this.getContext();
+			SharedPreferences preferences = getDefaultSharedPreferences(context);
+			Long userID = preferences.getLong("currentUser", 0);
+			User thisUser = DatabaseHelper.readUser(context, userID);
 
-        } else {
+			//replace current avatar with loaded avatar
+			//View view = findViewById(android.R.id.content);
+			Avatar avatar = thisUser.getAvatar();
+			HashMap<String, Integer> bodyParts = avatar.getBodyParts();
+
+			base = view.findViewById(bodyParts.get("base"));
+			hat = view.findViewById(bodyParts.get("hat"));
+			leftArm = view.findViewById(bodyParts.get("leftArm"));
+			rightArm = view.findViewById(bodyParts.get("rightArm"));
+			leftLeg = view.findViewById(bodyParts.get("leftLeg"));
+			rightLeg = view.findViewById(bodyParts.get("rightLeg"));
+			background = view.findViewById(bodyParts.get("background"));
+
+			//now for rotations
+			leftArmRotation = avatar.getLeftArmRotation();
+			rightArmRotation = avatar.getRightArmRotation();
+			leftLegRotation = avatar.getLeftLegRotation();
+			rightLegRotation = avatar.getRightLegRotation();
+
+			leftArm.setRotation(leftArmRotation);
+			rightArm.setRotation(rightArmRotation);
+			leftLeg.setRotation(leftLegRotation);
+			rightLeg.setRotation(rightLegRotation);
+
+		} else {
             Log.e("AVATAR TAG","AVATAR IS NOT SET");
 
         }
@@ -77,6 +115,7 @@ public class Avatar_Fragment extends Fragment {
         this.rightLeg = view.findViewById(R.id.right_leg);
         this.rightArm = view.findViewById(R.id.right_arm);
         this.background = view.findViewById(R.id.avatar_container);
+        //rotations are 0 degrees
         return true;
     }
 

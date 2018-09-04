@@ -60,7 +60,7 @@ public class AvatarHome extends AppCompatActivity {
         Long userID = preferences.getLong("currentUser", 0);
         ArrayList<User> avatars = DatabaseHelper.readUsers(context, _ID + " = ?", new String[]{Long.toString(userID)});
         if(avatars.isEmpty()){
-        	System.out.println("[view.AvatarHome] Could not get any user with id " + userID);
+            Log.d("AvatarHome", "Could not get any user with id " + userID);
 		}else{
 			user = avatars.get(0);
 			editor = new AvatarEditor(avatar_fragment, user.getAvatar());

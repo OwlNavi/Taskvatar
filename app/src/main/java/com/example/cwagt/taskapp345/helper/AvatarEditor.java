@@ -124,7 +124,7 @@ public class AvatarEditor {
 				bodyParts.put("base", R.drawable.base_red);
 				break;
 			default:
-				System.out.println("Error: Cannot set base to " + itemSelected + " because it does not exist");
+				Log.e("AvatarEditor", "Error: Cannot set base to " + itemSelected + " because it does not exist");
 		}
 
         saveAvatar();
@@ -149,7 +149,7 @@ public class AvatarEditor {
 				bodyParts.put("leftLeg", R.drawable.left_leg);
 				break;
 			default:
-				System.out.println("Error: Cannot set left leg to " + itemSelected + " because it does not exist");
+				Log.e("AvatarEditor", "Error: Cannot set left leg to " + itemSelected + " because it does not exist");
         }
 
         saveAvatar();
@@ -178,7 +178,7 @@ public class AvatarEditor {
 				bodyParts.put("background", R.drawable.white);
 				break;
 			default:
-				System.out.println("Error: Cannot set base to " + itemSelected + " because it does not exist");
+				Log.e("AvatarEditor", "Error: Cannot set base to " + itemSelected + " because it does not exist");
         }
 
         saveAvatar();
@@ -203,7 +203,7 @@ public class AvatarEditor {
 				bodyParts.put("rightLeg", R.drawable.right_leg);
 				break;
 			default:
-				System.out.println("Error: Cannot set right leg to " + itemSelected + " because it does not exist");
+				Log.e("AvatarEditor", "Error: Cannot set right leg to " + itemSelected + " because it does not exist");
         }
 
         saveAvatar();
@@ -228,7 +228,7 @@ public class AvatarEditor {
 				bodyParts.put("rightArm", R.drawable.right_arm);
 				break;
 			default:
-				System.out.println("Error: Cannot set right arm to " + itemSelected + " because it does not exist");
+				Log.e("AvatarEditor", "Error: Cannot set right arm to " + itemSelected + " because it does not exist");
 		}
 		saveAvatar();
     }
@@ -252,7 +252,7 @@ public class AvatarEditor {
 				bodyParts.put("leftArm", R.drawable.left_arm);
 				break;
 			default:
-				System.out.println("Error: Cannot set left arm to " + itemSelected + " because it does not exist");
+				Log.e("AvatarEditor", "Error: Cannot set left arm to " + itemSelected + " because it does not exist");
         }
 
         saveAvatar();

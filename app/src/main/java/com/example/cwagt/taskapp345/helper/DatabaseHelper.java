@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import com.example.cwagt.taskapp345.object.Avatar;
 import com.example.cwagt.taskapp345.object.Enums;
 import com.example.cwagt.taskapp345.object.Task;
@@ -120,13 +121,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 				e.printStackTrace();
 			}
 
-			System.out.println("[DatabaseHelper.createTask] Creating task in table: " + DatabaseColumnNames.Task.TABLE_NAME);
-			System.out.println("Task: " + task);
-			System.out.println("Values: " + values);
-			System.out.println(_ID + ": " + newRowId);
+			Log.d("DatabaseHelper", "Creating task in table: " + DatabaseColumnNames.Task.TABLE_NAME);
+			Log.d("DatabaseHelper", "Task: " + task);
+			Log.d("DatabaseHelper", "Values: " + values);
+			Log.d("DatabaseHelper", _ID + ": " + newRowId);
 
 		}else{
-			sout("Error: could not open database for writing");
+			Log.e("DatabaseHelper", "Error: could not open database for writing");
 		}
 		return newRowId;
 	}
@@ -154,10 +155,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 					sortOrder               // The sort order
 			);
 
-			System.out.println("[DatabaseHelper.readTasks] Reading tasks from table: " + DatabaseColumnNames.Task.TABLE_NAME);
-			System.out.println("Selection: " + selection);
-			System.out.println("Arguments: " + Arrays.toString(selectionArgs));
-			System.out.println("Number of tasks: " + cursor.getCount());
+			Log.d("DatabaseHelper", "Reading tasks from table: " + DatabaseColumnNames.Task.TABLE_NAME);
+			Log.d("DatabaseHelper", "Selection: " + selection);
+			Log.d("DatabaseHelper", "Arguments: " + Arrays.toString(selectionArgs));
+			Log.d("DatabaseHelper", "Number of tasks: " + cursor.getCount());
 
 			while (cursor.moveToNext()) {
 				Task thisTask = new Task(
@@ -174,20 +175,20 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 				thisTask.set_id(taskID);
 				tasks.add(thisTask);
 
-				System.out.println("Task: " + thisTask);
+				Log.d("DatabaseHelper", "Task: " + thisTask);
 
 			}
 
 			cursor.close();
 
 		}else{
-			sout("Error: could not open database for reading");
+			Log.e("DatabaseHelper", "Error: could not open database for reading");
 		}
 		return tasks;
 	}
 
 	public static ArrayList<Task> readAllTasks(Context context, Long userID) {
-		System.out.println("[DatabaseHelper.readAllTasks] Reading all tasks where userID = " + userID);
+		Log.d("DatabaseHelper", "Reading all tasks where userID = " + userID);
 		return readTasks(context, TASK_NAME_USER + " = ?", new String[]{String.valueOf(userID)});
 	}
 
@@ -217,16 +218,16 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			values.put(TASK_NAME_TIME, task.getTime());
 			values.put(TASK_NAME_USER, task.getUserId());
 
-			System.out.println("[DatabaseHelper.updateTask] Updating table: " + DatabaseColumnNames.Task.TABLE_NAME);
-			System.out.println("Task: " + task);
-			System.out.println("Values: " + values);
-			System.out.println("Where " + _ID + " = " + String.valueOf(Id));
+			Log.d("DatabaseHelper", "Updating table: " + DatabaseColumnNames.Task.TABLE_NAME);
+			Log.d("DatabaseHelper", "Task: " + task);
+			Log.d("DatabaseHelper", "Values: " + values);
+			Log.d("DatabaseHelper", "Where " + _ID + " = " + String.valueOf(Id));
 
 			try {
 				int count = db.update(DatabaseColumnNames.Task.TABLE_NAME, values, _ID + " = ?", new String[]{String.valueOf(Id)});
 				if(count == 1) success = true;
 				else{
-					//sout("[DatabaseHelper.updateTask] There were " + count + " rows affected");
+					//Log.e("DatabaseHelper", "[DatabaseHelper.updateTask] There were " + count + " rows affected");
 					throw new Exception("[DatabaseHelper.updateTask] There were " + count + " rows affected");
 				}
 			} catch (Exception e) {
@@ -234,7 +235,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			}
 
 		}else{
-			sout("Error: could not open database for writing");
+			Log.e("DatabaseHelper", "Error: could not open database for writing");
 			//throw new Exception("Error: could not open database for writing");
 			success = false;
 		}
@@ -257,9 +258,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			values[1] = task.getDescription();
 			values[2] = task.getTime();
 
-			System.out.println("[DatabaseHelper.deleteTask] Deleting task from table: " + DatabaseColumnNames.Task.TABLE_NAME);
-			System.out.println("Task: " + task);
-			System.out.println("Values: " + Arrays.toString(values));
+			Log.d("DatabaseHelper", "Deleting task from table: " + DatabaseColumnNames.Task.TABLE_NAME);
+			Log.d("DatabaseHelper", "Task: " + task);
+			Log.d("DatabaseHelper", "Values: " + Arrays.toString(values));
 
 			try {
 				rowsAffected = db.delete(
@@ -272,7 +273,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			}
 
 		}else{
-			sout("Error: could not open database for deleting");
+			Log.e("DatabaseHelper", "Error: could not open database for deleting");
 		}
 		return rowsAffected;
 	}
@@ -289,8 +290,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			String[] values = new String[1];
 			values[0] = String.valueOf(ID);
 
-			System.out.println("[DatabaseHelper.deleteTask] Deleting task from table: " + DatabaseColumnNames.Task.TABLE_NAME);
-			System.out.println("Where " + _ID + " = " + ID);
+			Log.d("DatabaseHelper", "Deleting task from table: " + DatabaseColumnNames.Task.TABLE_NAME);
+			Log.d("DatabaseHelper", "Where " + _ID + " = " + ID);
 
 			try {
 				rowsAffected = db.delete(
@@ -303,7 +304,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			}
 
 		}else{
-			sout("Error: could not open database for deleting");
+			Log.e("DatabaseHelper", "Error: could not open database for deleting");
 		}
 		return rowsAffected;
 	}
@@ -337,9 +338,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			values.put(AVATAR_NAME_LEFT_LEG_ROTATION, avatar.getLeftLegRotation());
 			values.put(AVATAR_NAME_RIGHT_LEG_ROTATION, avatar.getRightLegRotation());
 
-			System.out.println("[DatabaseHelper.createUser] Creating user and avatar in table: " + DatabaseColumnNames.User.TABLE_NAME);
-			System.out.println("User: " + user);
-			System.out.println("Values: " + values);
+			Log.d("DatabaseHelper", "Creating user and avatar in table: " + DatabaseColumnNames.User.TABLE_NAME);
+			Log.d("DatabaseHelper", "User: " + user);
+			Log.d("DatabaseHelper", "Values: " + values);
 
 			try {
 				newRowId = db.insert(DatabaseColumnNames.User.TABLE_NAME, null, values);
@@ -347,10 +348,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 				e.printStackTrace();
 			}
 
-			System.out.println(_ID + ": " + newRowId);
+			Log.d("DatabaseHelper", _ID + ": " + newRowId);
 
 		}else{
-			sout("Error: could not open database for writing");
+			Log.e("DatabaseHelper", "Error: could not open database for writing");
 		}
 		return newRowId;
 	}
@@ -371,10 +372,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 					USER_NAME_NAME               // The sort order
 			);
 
-			System.out.println("[DatabaseHelper.readUsers] Reading user and avatar from table: " + DatabaseColumnNames.User.TABLE_NAME);
-			System.out.println("Selection: " + selection);
-			System.out.println("Arguments: " + Arrays.toString(selectionArgs));
-			System.out.println("Number of users: " + cursor.getCount());
+			Log.d("DatabaseHelper", "Reading user and avatar from table: " + DatabaseColumnNames.User.TABLE_NAME);
+			Log.d("DatabaseHelper", "Selection: " + selection);
+			Log.d("DatabaseHelper", "Arguments: " + Arrays.toString(selectionArgs));
+			Log.d("DatabaseHelper", "Number of users: " + cursor.getCount());
 
 			while (cursor.moveToNext()) {
 				HashMap<String, Integer> bodyParts = new HashMap<>();
@@ -403,18 +404,18 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 				thisUser.set_id(userID);
 				users.add(thisUser);
 
-				System.out.println("User: " + thisUser);
+				Log.d("DatabaseHelper", "User: " + thisUser);
 			}
 			cursor.close();
 
 		}else{
-			sout("Error: could not open database for reading");
+			Log.e("DatabaseHelper", "Error: could not open database for reading");
 		}
 		return users;
 	}
 
 	public static ArrayList<User> readAllUsers(Context context) {
-		System.out.println("[DatabaseHelper.readAllUsers] Reading all users");
+		Log.d("DatabaseHelper", "Reading all users");
 		return readUsers(context, "", new String[]{});
 	}
 
@@ -444,10 +445,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			values.put(AVATAR_NAME_LEFT_LEG, bodyParts.get("leftLeg"));
 			values.put(AVATAR_NAME_RIGHT_LEG, bodyParts.get("rightLeg"));
 
-			System.out.println("[DatabaseHelper.updateUser] Updating table: " + DatabaseColumnNames.User.TABLE_NAME);
-			System.out.println("User: " + user);
-			System.out.println("Values: " + values);
-			System.out.println("Where " + _ID + " = " + String.valueOf(Id));
+			Log.d("DatabaseHelper", "Updating table: " + DatabaseColumnNames.User.TABLE_NAME);
+			Log.d("DatabaseHelper", "User: " + user);
+			Log.d("DatabaseHelper", "Values: " + values);
+			Log.d("DatabaseHelper", "Where " + _ID + " = " + String.valueOf(Id));
 
 			try {
 				count = db.update(DatabaseColumnNames.User.TABLE_NAME, values,_ID + " = ?", new String[]{String.valueOf(Id)});
@@ -458,7 +459,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			}
 
 		}else{
-			sout("Error: could not open database for writing");
+			Log.e("DatabaseHelper", "Error: could not open database for writing");
 		}
 		closeDatabase(context);
 		return success;
@@ -482,9 +483,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			values[i++] = user.getUserName();
 			values[i] = user.getUserDescription();
 
-			System.out.println("[DatabaseHelper.deleteUser] Deleting user from table: " + DatabaseColumnNames.User.TABLE_NAME);
-			System.out.println("User: " + user);
-			System.out.println("Values: " + Arrays.toString(values));
+			Log.d("DatabaseHelper", "Deleting user from table: " + DatabaseColumnNames.User.TABLE_NAME);
+			Log.d("DatabaseHelper", "User: " + user);
+			Log.d("DatabaseHelper", "Values: " + Arrays.toString(values));
 
 			try {
 				success = db.delete(
@@ -497,7 +498,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			}
 
 		}else{
-			sout("Error: could not open database for deleting");
+			Log.e("DatabaseHelper", "Error: could not open database for deleting");
 		}
 		return success;
 	}
@@ -514,8 +515,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			String[] values = new String[1];
 			values[0] = String.valueOf(ID);
 
-			System.out.println("[DatabaseHelper.deleteUser] Deleting user from table: " + DatabaseColumnNames.User.TABLE_NAME);
-			System.out.println("Where " + _ID + " = " + ID);
+			Log.d("DatabaseHelper", "Deleting user from table: " + DatabaseColumnNames.User.TABLE_NAME);
+			Log.d("DatabaseHelper", "Where " + _ID + " = " + ID);
 
 			try {
 				success = db.delete(
@@ -528,7 +529,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			}
 
 		}else{
-			sout("Error: could not open database for deleting");
+			Log.e("DatabaseHelper", "Error: could not open database for deleting");
 		}
 		return success;
 	}
@@ -537,7 +538,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 	private static boolean checkDatabase(SQLiteDatabase db) {
 		if(db == null){
-			sout("Error: could not open database");
+			Log.e("DatabaseHelper", "Error: could not open database");
 			return false;
 		}else {
 			return true;
@@ -547,10 +548,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	public static void closeDatabase(Context context) {
 		DatabaseHelper mDbHelper = new DatabaseHelper(context);
 		mDbHelper.close(); //close database connection
-	}
-
-	private static void sout(String string) {
-		System.out.println(string);
 	}
 
 }

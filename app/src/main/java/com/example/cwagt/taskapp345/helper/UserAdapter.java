@@ -85,7 +85,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
                 User user = userList.get(position);
                 //find the userID that identifies them
                 Long userID = user.get_id();
-				System.out.println("[UserAdapter] You clicked on user " + userID);
+				Log.d("UserAdapter", "You clicked on user " + userID);
                 if(userID>0) {
 
 					//Set the current user to the user selected
@@ -96,11 +96,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
 					editor.apply();
 
 					//Change the current activity to the Main Activity
-					System.out.println("[UserAdapter] Starting MainActivity class for user " + userID);
+					Log.d("UserAdapter", "Starting MainActivity class for user " + userID);
 					context.startActivity(new Intent(context, MainActivity.class));
 
 				}else{
-                	System.out.println("[UserAdapter] Error: User ID is null. You get the user ID from the createUser method");
+					Log.e("UserAdapter", "Error: User ID is null. You get the user ID from the createUser method");
 				}
             }
 
@@ -129,13 +129,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
         User user = userList.get(position);
         holder.username.setText(user.getUserName());
         holder.userDescription.setText(user.getUserDescription());
-        System.out.println("User: " + user);
+		Log.d("UserAdapter", "User: " + user);
         if(user.get_id() > 0) {
-        	System.out.println("UserID: " + user.get_id().intValue());
+			Log.d("UserAdapter", "UserID: " + user.get_id().intValue());
         	//TODO: Apparently "holder.userID" doesn't exist???
 			//holder.userID.setText(user.get_id().intValue());
 		}else{
-        	System.out.println("[UserAdapter] ERROR: User ID is null. Have you got the users from the database?");
+			Log.e("UserAdapter", "ERROR: User ID is null. Have you got the users from the database?");
 		}
     }
 

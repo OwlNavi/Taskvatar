@@ -8,11 +8,11 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.*;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import com.example.cwagt.taskapp345.R;
-import com.example.cwagt.taskapp345.helper.AvatarEditor;
 import com.example.cwagt.taskapp345.helper.DatabaseHelper;
 import com.example.cwagt.taskapp345.helper.TaskAdapter;
 import com.example.cwagt.taskapp345.object.Enums;
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity  {
 		//if the preference is not set go back to user page
 		SharedPreferences preferences = getDefaultSharedPreferences(context);
 		Long userID = preferences.getLong("currentUser", 0);
-		System.out.println("[MainActivity] Current User " + Long.toString(userID));
+		Log.d("MainActivity", "Current User " + Long.toString(userID));
 
 
 		/*

@@ -63,7 +63,7 @@ public class UserHome extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //Go to the add user activity
-                System.out.println("[UserHome] Starting AddUser activity");
+                Log.d("UserHome", "Starting AddUser activity");
                 Intent addUserIntent = new Intent(context, AddUser.class);
                 startActivity(addUserIntent);
             }

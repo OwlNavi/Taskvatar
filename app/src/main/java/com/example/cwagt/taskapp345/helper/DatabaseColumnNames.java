@@ -37,6 +37,9 @@ public final class DatabaseColumnNames {
 		public static final String USER_TYPE_NAME = "TEXT";
 		public static final String USER_NAME_DESCRIPTION = "description";
 		public static final String USER_TYPE_DESCRIPTION = "TEXT";
+		public static final String USER_NAME_POINTS = "points";
+		public static final String USER_TYPE_POINTS = "INTEGER";
+
 
 		public static final String AVATAR_NAME_BASE = "base";
 		public static final String AVATAR_TYPE_BASE = "INTEGER";

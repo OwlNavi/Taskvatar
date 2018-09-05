@@ -34,7 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 	//https://developer.android.com/training/data-storage/sqlite
 
-	private static final int DATABASE_VERSION = 9;
+	private static final int DATABASE_VERSION = 10;
 	private static final String DATABASE_NAME = "Taskvatar.db";
 
 	private static final String SQL_CREATE_TASK_TABLE =
@@ -56,6 +56,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 					DatabaseColumnNames.User._ID + " INTEGER PRIMARY KEY" +
 					"," + USER_NAME_NAME + " " + USER_TYPE_NAME +
 					"," + USER_NAME_DESCRIPTION + " " + USER_TYPE_DESCRIPTION +
+					"," + USER_NAME_POINTS + " " + USER_TYPE_POINTS +
 
 					", " + AVATAR_NAME_BASE + " " + AVATAR_TYPE_BASE +
 					", " + AVATAR_NAME_HAT + " " + AVATAR_TYPE_HAT +
@@ -321,6 +322,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 			values.put(USER_NAME_NAME, user.getUserName());
 			values.put(USER_NAME_DESCRIPTION, user.getUserDescription());
+			values.put(USER_NAME_POINTS, user.getPoints());
 
 			Avatar avatar = user.getAvatar();
 			HashMap<String, Integer> bodyParts = avatar.getBodyParts();
@@ -398,6 +400,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 				User thisUser = new User(
 						cursor.getString(cursor.getColumnIndexOrThrow(USER_NAME_NAME)),
 						cursor.getString(cursor.getColumnIndexOrThrow(USER_NAME_DESCRIPTION)),
+						cursor.getInt(cursor.getColumnIndexOrThrow(USER_NAME_POINTS)),
 						avatar
 				);
 				long userID = cursor.getLong(cursor.getColumnIndexOrThrow(_ID));
@@ -419,9 +422,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		String[] selectionArgs = new String[]{Long.toString(userID)};
 
 		ArrayList<User> users = readUsers(context, selection, selectionArgs);
-		User thisUser = users.get(0);
-
-		return thisUser;
+		return users.get(0);
 	}
 
 	public static ArrayList<User> readAllUsers(Context context) {
@@ -429,17 +430,18 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return readUsers(context, "", new String[]{});
 	}
 
-	public static boolean updateUser(Context context, Long Id, User user){
+	public static boolean updateUser(Context context, Long userID, User user){
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
 		boolean success = false;
-		int count;
+
 		if(checkDatabase(db)) {
 
 			ContentValues values = new ContentValues();
 			values.put(_ID, user.get_id());
 			values.put(USER_NAME_NAME, user.getUserName());
 			values.put(USER_NAME_DESCRIPTION, user.getUserDescription());
+			values.put(USER_NAME_POINTS, user.getPoints());
 
 			Avatar avatar = user.getAvatar();
 			values.put(AVATAR_NAME_LEFT_ARM_ROTATION, avatar.getLeftArmRotation());
@@ -454,14 +456,15 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			values.put(AVATAR_NAME_RIGHT_ARM, bodyParts.get("rightArm"));
 			values.put(AVATAR_NAME_LEFT_LEG, bodyParts.get("leftLeg"));
 			values.put(AVATAR_NAME_RIGHT_LEG, bodyParts.get("rightLeg"));
+			values.put(AVATAR_NAME_BACKGROUND, bodyParts.get("background"));
 
 			Log.d("DatabaseHelper", "Updating table: " + DatabaseColumnNames.User.TABLE_NAME);
 			Log.d("DatabaseHelper", "User: " + user);
 			Log.d("DatabaseHelper", "Values: " + values);
-			Log.d("DatabaseHelper", "Where " + _ID + " = " + String.valueOf(Id));
+			Log.d("DatabaseHelper", "Where " + _ID + " = " + String.valueOf(userID));
 
 			try {
-				count = db.update(DatabaseColumnNames.User.TABLE_NAME, values,_ID + " = ?", new String[]{String.valueOf(Id)});
+				int count = db.update(DatabaseColumnNames.User.TABLE_NAME, values,_ID + " = ?", new String[]{String.valueOf(userID)});
 				if(count == 1) success = true;
 				else throw new Exception("[DatabaseHelper.updateUser] db.update method returned " + count + " rows");
 			} catch (Exception e) {
@@ -485,13 +488,15 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			String whereClause = _ID + " = ?"
 					+ " AND " + USER_NAME_NAME + " = ?"
 					+ " AND " + USER_NAME_DESCRIPTION + " = ?"
+					+ " AND " + USER_NAME_POINTS + " = ?"
 			;
 
-			String[] values = new String[3];
+			String[] values = new String[4];
 			int i = 0;
 			values[i++] = "" + user.get_id();
 			values[i++] = user.getUserName();
-			values[i] = user.getUserDescription();
+			values[i++] = user.getUserDescription();
+			values[i] = "" + user.getPoints();
 
 			Log.d("DatabaseHelper", "Deleting user from table: " + DatabaseColumnNames.User.TABLE_NAME);
 			Log.d("DatabaseHelper", "User: " + user);
@@ -513,7 +518,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return success;
 	}
 
-	public static int deleteUser(Context context, Long ID){
+	public static int deleteUser(Context context, Long userID){
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
 		int success = -1;
@@ -523,10 +528,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			String whereClause = _ID + " = ?";
 
 			String[] values = new String[1];
-			values[0] = String.valueOf(ID);
+			values[0] = String.valueOf(userID);
 
 			Log.d("DatabaseHelper", "Deleting user from table: " + DatabaseColumnNames.User.TABLE_NAME);
-			Log.d("DatabaseHelper", "Where " + _ID + " = " + ID);
+			Log.d("DatabaseHelper", "Where " + _ID + " = " + userID);
 
 			try {
 				success = db.delete(

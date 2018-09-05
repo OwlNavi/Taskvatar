@@ -12,7 +12,9 @@ public class User {
 	private String userName;
 	//A description for the user, currently their full name
 	private String userDescription;
-	//Each user has their own avatar
+	//Point accumulation
+	private Integer points;
+	//Each user has their own avatar (1:1 map)
 	private Avatar avatar;
 
 	/**
@@ -24,6 +26,7 @@ public class User {
 		this._id = null;
 		this.userName = userName;
 		this.userDescription = userDescription;
+		this.points = 0;
 		this.avatar = new Avatar();
 	}
 
@@ -31,6 +34,15 @@ public class User {
 		this._id = null;
 		this.userName = userName;
 		this.userDescription = userDescription;
+		this.points = 0;
+		this.avatar = avatar;
+	}
+
+	public User(String userName, String userDescription, Integer points, Avatar avatar) {
+		this._id = null;
+		this.userName = userName;
+		this.userDescription = userDescription;
+		this.points = points;
 		this.avatar = avatar;
 	}
 
@@ -50,6 +62,10 @@ public class User {
 		return userName;
 	}
 
+	public Integer getPoints() {
+		return points;
+	}
+
 	public Avatar getAvatar() {
 		return avatar;
 	}
@@ -64,6 +80,7 @@ public class User {
 				"_id=" + _id +
 				", userName='" + userName + '\'' +
 				", userDescription='" + userDescription + '\'' +
+				", points='" + points + '\'' +
 				", avatar=" + avatar +
 		'}';
 	}

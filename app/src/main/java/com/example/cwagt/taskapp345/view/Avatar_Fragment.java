@@ -26,7 +26,6 @@ import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 public class Avatar_Fragment extends Fragment {
 	private boolean avatarInit = false;
-	private View view;
 	//Image Views used to display the Avatar
     private ImageView base;
     private ImageView hat;
@@ -36,12 +35,7 @@ public class Avatar_Fragment extends Fragment {
     private ImageView rightLeg;
     private ConstraintLayout background;
 
-	private float leftArmRotation = 0;
-	private float rightArmRotation = 0;
-	private float leftLegRotation = 0;
-	private float rightLegRotation = 0;
-
-    @Override
+	@Override
     public void onAttach(Context context) {
 
         super.onAttach(context);
@@ -53,7 +47,7 @@ public class Avatar_Fragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.avatar_fragment, container, false);
+		View view = inflater.inflate(R.layout.avatar_fragment, container, false);
         avatarInit = initAvatar(view);
         openAvatarHome(view);
         return view;
@@ -86,10 +80,10 @@ public class Avatar_Fragment extends Fragment {
 			setBackground(bodyParts.get("background"));
 
 			//now for rotations
-			leftArmRotation = avatar.getLeftArmRotation();
-			rightArmRotation = avatar.getRightArmRotation();
-			leftLegRotation = avatar.getLeftLegRotation();
-			rightLegRotation = avatar.getRightLegRotation();
+			float leftArmRotation = avatar.getLeftArmRotation();
+			float rightArmRotation = avatar.getRightArmRotation();
+			float leftLegRotation = avatar.getLeftLegRotation();
+			float rightLegRotation = avatar.getRightLegRotation();
 
 			leftArm.setRotation(leftArmRotation);
 			rightArm.setRotation(rightArmRotation);
@@ -122,25 +116,25 @@ public class Avatar_Fragment extends Fragment {
     /**
      * Set ImageViews to IDs passed by AvatarEditor when click on item within RecyclerView
      *
-     * @param id
+     * @param id the ID of the item
      */
+	public void setBase(int id) {
+		base.setImageResource(id);
+	}
+	public void setHat(int id) {
+		hat.setImageResource(id);
+	}
+	public void setLeftArm(int id) {
+		leftArm.setImageResource(id);
+	}
+	public void setRightArm(int id) {
+		rightArm.setImageResource(id);
+	}
+	public void setLeftLeg(int id) {
+		leftLeg.setImageResource(id);
+	}
     public void setRightLeg(int id) {
         rightLeg.setImageResource(id);
-    }
-    public void setLeftLeg(int id) {
-        leftLeg.setImageResource(id);
-    }
-    public void setRightArm(int id) {
-        rightArm.setImageResource(id);
-    }
-    public void setLeftArm(int id) {
-        leftArm.setImageResource(id);
-    }
-    public void setBase(int id) {
-        base.setImageResource(id);
-    }
-    public void setHat(int id) {
-        hat.setImageResource(id);
     }
     public void setBackground(int id){
         background.setBackgroundResource(id);

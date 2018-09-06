@@ -40,6 +40,14 @@ public class AvatarHome extends AppCompatActivity {
     private Context context;
     private User user;
 
+	private final int BASE = 0;
+	private final int HAT = 1;
+	private final int LEFT_ARM = 2;
+	private final int RIGHT_ARM = 3;
+	private final int LEFT_LEG = 4;
+	private final int RIGHT_LEG = 5;
+	private final int BACKGROUND = 6;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -178,7 +186,7 @@ public class AvatarHome extends AppCompatActivity {
      * Display the avatar fragment within the main activity
      *
      * */
-        private void displayAvatar(){
+    private void displayAvatar(){
 
             //create instance of avatar fragment
             Avatar_Fragment avatar_home_avatar_fragment = Avatar_Fragment.newInstance();
@@ -187,8 +195,6 @@ public class AvatarHome extends AppCompatActivity {
             fragmentTransaction.add(R.id.avatar_home_fragment_container,avatar_home_avatar_fragment,"avatar_home_avatar_fragment").commit();
             this.avatar_fragment = avatar_home_avatar_fragment;
         }
-
-
 
     /**
      * This method updates the bodyPartsRecyclerView after the user clicks on a category,
@@ -212,33 +218,30 @@ public class AvatarHome extends AppCompatActivity {
         ArrayList<String> result = new ArrayList<>();
 
         switch (categoryID){
-            case 0: //HAT
+			case BASE:
+				result.add("Silly");
+				result.add("Surprised");
+				break;
+            case HAT:
                 result.add("Crown");
                 result.add("Pirate");
                 break;
-            case 1: //LEFT ARM
-            case 2: //RIGHT ARM
+            case LEFT_ARM:
+            case RIGHT_ARM:
+			case LEFT_LEG:
+			case RIGHT_LEG:
                 result.add("Strong");
                 result.add("Robot");
                 result.add("Cartoon");
                 break;
-            case 3:
-            case 4:
-                result.add("Strong");
-                result.add("Robot");
-                result.add("Cartoon");
-                break;
-            case 5: //BASE
-                result.add("Silly");
-                result.add("Surprised");
-                break;
-            case 6:
+            case BACKGROUND:
                 result.add("Beach");
                 result.add("Desert");
                 result.add("Jungle");
                 result.add("White");
                 break;
             default:
+            	//TODO: What are these for?
                 result.add("Head 1");
                 result.add("Head 2");
                 result.add("Head 3");
@@ -257,13 +260,14 @@ public class AvatarHome extends AppCompatActivity {
      */
     public ArrayList<String> getCategories(){
         ArrayList<String> result = new ArrayList<>();
-        result.add("HAT");
-        result.add("LEFT ARM");
-        result.add("RIGHT ARM");
-        result.add("LEFT LEG");
-        result.add("RIGHT LEG");
-        result.add("BASE");
-        result.add("BACKGROUND");
+        //TODO: Consider having these as images instead of text
+		result.add("Head");
+        result.add("Hat");
+        result.add("Left arm");
+        result.add("Right arm");
+        result.add("Left leg");
+        result.add("Right leg");
+        result.add("Background");
         return result;
     }
     /**

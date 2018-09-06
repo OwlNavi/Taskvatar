@@ -129,11 +129,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
         User user = userList.get(position);
         holder.username.setText(user.getUserName());
         holder.userDescription.setText(user.getUserDescription());
-		Log.d("UserAdapter", "User: " + user);
+
         if(user.get_id() > 0) {
-			Log.d("UserAdapter", "UserID: " + user.get_id().intValue());
-        	//TODO: Apparently "holder.userID" doesn't exist???
-			//holder.userID.setText(user.get_id().intValue());
+			Log.d("UserAdapter", "User: " + user);
 		}else{
 			Log.e("UserAdapter", "ERROR: User ID is null. Have you got the users from the database?");
 		}

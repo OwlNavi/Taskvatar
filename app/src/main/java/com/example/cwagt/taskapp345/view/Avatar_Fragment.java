@@ -77,13 +77,13 @@ public class Avatar_Fragment extends Fragment {
 			Avatar avatar = thisUser.getAvatar();
 			HashMap<String, Integer> bodyParts = avatar.getBodyParts();
 
-			base = view.findViewById(R.id.base);
-			hat = view.findViewById(R.id.hat);
-			leftArm = view.findViewById(R.id.left_arm);
-			rightArm = view.findViewById(R.id.right_arm);
-			leftLeg = view.findViewById(R.id.left_leg);
-			rightLeg = view.findViewById(R.id.right_leg);
-			background = view.findViewById(R.id.avatar_container);
+			setBase(bodyParts.get("base"));
+			setHat(bodyParts.get("hat"));
+			setLeftArm(bodyParts.get("leftArm"));
+			setRightArm(bodyParts.get("rightArm"));
+			setLeftLeg(bodyParts.get("leftLeg"));
+			setRightLeg(bodyParts.get("rightLeg"));
+			setBackground(bodyParts.get("background"));
 
 			//now for rotations
 			leftArmRotation = avatar.getLeftArmRotation();

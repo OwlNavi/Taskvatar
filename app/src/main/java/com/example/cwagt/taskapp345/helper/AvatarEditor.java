@@ -46,31 +46,10 @@ public class AvatarEditor {
     public AvatarEditor(Avatar_Fragment avatarFragment, Avatar avatar){
 		this.avatar_fragment = avatarFragment;
 		this.avatar = avatar;
-		/*
-		if(avatar.getBodyParts().isEmpty()) { //crashes here
-			//if avatar doesnt have default values, initialise them
-			initBodyParts();
-		}
-		*/
+		this.bodyParts = avatar.getBodyParts();
 
-		//overwrites whatevers in the avatar with default values
-		initBodyParts();
     }
 
-	/**
-	 * Initialises the bodyParts hash map to default values
-	 */
-    private void initBodyParts() {
-		bodyParts = new HashMap<>();
-		bodyParts.put("base", R.drawable.base);
-		bodyParts.put("hat", R.drawable.hat_crown);
-		bodyParts.put("leftArm", R.drawable.left_arm);
-		bodyParts.put("rightArm", R.drawable.right_arm);
-		bodyParts.put("leftLeg", R.drawable.left_leg);
-		bodyParts.put("rightLeg", R.drawable.right_leg);
-		bodyParts.put("background", R.drawable.white);
-		avatar.setBodyParts(bodyParts);
-	}
 
     /**
      * Modifies the avatar by changing the body part identified by category and item name
@@ -204,7 +183,7 @@ public class AvatarEditor {
     	switch(itemSelected){
 			case "Strong":
 				avatar_fragment.setLeftLeg(R.drawable.left_leg_muscly);
-				bodyParts.put("leftLeg", R.drawable.left_arm_muscly);
+				bodyParts.put("leftLeg", R.drawable.left_leg_muscly);
 				break;
 			case "Robot":
 				avatar_fragment.setLeftLeg(R.drawable.left_leg_robot);

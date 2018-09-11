@@ -219,8 +219,20 @@ public class AvatarHome extends AppCompatActivity {
                 result.add("Pirate");
                 break;
             case LEFT_ARM:
+				result.add("Strong");
+				result.add("Robot");
+				result.add("Cartoon");
+				break;
             case RIGHT_ARM:
+				result.add("Strong");
+				result.add("Robot");
+				result.add("Cartoon");
+				break;
 			case LEFT_LEG:
+				result.add("Strong");
+				result.add("Robot");
+				result.add("Cartoon");
+				break;
 			case RIGHT_LEG:
                 result.add("Strong");
                 result.add("Robot");
@@ -233,13 +245,6 @@ public class AvatarHome extends AppCompatActivity {
                 result.add("White");
                 break;
             default:
-            	//TODO: What are these for?
-                result.add("Head 1");
-                result.add("Head 2");
-                result.add("Head 3");
-                result.add("Head 4");
-                result.add("Head 5");
-                result.add("Head 6");
                 break;
         }
         return result;

@@ -66,20 +66,26 @@ public class Avatar_Fragment extends Fragment {
 			Long userID = preferences.getLong("currentUser", 0);
 			User thisUser = DatabaseHelper.readUser(context, userID);
 
+			/**debug stuff*/
+			Log.e("Current user", userID +" help");
+
 			//replace current avatar with loaded avatar
 			//View view = findViewById(android.R.id.content);
 			Avatar avatar = thisUser.getAvatar();
 			HashMap<String, Integer> bodyParts = avatar.getBodyParts();
+			try {
+				setBase(bodyParts.get("base"));
+				setHat(bodyParts.get("hat"));
+				setLeftArm(bodyParts.get("leftArm"));
+				setRightArm(bodyParts.get("rightArm"));
+				setLeftLeg(bodyParts.get("leftLeg"));
+				setRightLeg(bodyParts.get("rightLeg"));
+				setBackground(bodyParts.get("background"));
+			} catch (Exception e) {
+				Log.e("error","something didnt load");
 
-			setBase(bodyParts.get("base"));
-			setHat(bodyParts.get("hat"));
-			setLeftArm(bodyParts.get("leftArm"));
-			setRightArm(bodyParts.get("rightArm"));
-			setLeftLeg(bodyParts.get("leftLeg"));
-			setRightLeg(bodyParts.get("rightLeg"));
-			setBackground(bodyParts.get("background"));
-
-			//now for rotations
+			}
+			/*//now for rotations
 			float leftArmRotation = avatar.getLeftArmRotation();
 			float rightArmRotation = avatar.getRightArmRotation();
 			float leftLegRotation = avatar.getLeftLegRotation();
@@ -88,7 +94,7 @@ public class Avatar_Fragment extends Fragment {
 			leftArm.setRotation(leftArmRotation);
 			rightArm.setRotation(rightArmRotation);
 			leftLeg.setRotation(leftLegRotation);
-			rightLeg.setRotation(rightLegRotation);
+			rightLeg.setRotation(rightLegRotation);*/
 
 		} else {
             Log.e("AVATAR TAG","AVATAR IS NOT SET");

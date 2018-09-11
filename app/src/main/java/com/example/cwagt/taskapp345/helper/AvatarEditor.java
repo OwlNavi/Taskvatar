@@ -10,11 +10,9 @@ import com.example.cwagt.taskapp345.object.User;
 import com.example.cwagt.taskapp345.view.Avatar_Fragment;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
-import static android.provider.BaseColumns._ID;
 
 /**
  * Created by cwagt on 9/08/2018.
@@ -299,19 +297,13 @@ public class AvatarEditor {
 		}
 
 		//get current user
-		SharedPreferences preferences = getDefaultSharedPreferences(context); //TODO CRASHES HERE :(
+		SharedPreferences preferences = getDefaultSharedPreferences(context);
 		Long userID = preferences.getLong("currentUser", 0);
-		ArrayList<User> users = DatabaseHelper.readUsers(context, _ID + " = ?", new String[]{Long.toString(userID)});
-		if(users.isEmpty()){
-			Log.e("helper.AvatarEditor", "There are 0 users in database with ID " + userID);
-			return false;
-		}else {
-			User user = users.get(0); //gets the name, descr, etc
-			avatar.setBodyParts(bodyParts);
-			user.setAvatar(avatar);
-			return DatabaseHelper.updateUser(context, userID, user);
+		User user = DatabaseHelper.readUser(context, userID);
 
-		}
+		avatar.setBodyParts(bodyParts);
+		user.setAvatar(avatar);
+		return DatabaseHelper.updateUser(context, userID, user);
 
     }
 

@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Objects;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
-import static android.provider.BaseColumns._ID;
 
 /**
  * User interacts with the avatar here.
@@ -61,18 +60,11 @@ public class AvatarHome extends AppCompatActivity {
         //display avatar fragment
         displayAvatar();
 
-        //TODO HERE
-
         //avatar = new Avatar();
         SharedPreferences preferences = getDefaultSharedPreferences(context);
         Long userID = preferences.getLong("currentUser", 0);
-        ArrayList<User> avatars = DatabaseHelper.readUsers(context, _ID + " = ?", new String[]{Long.toString(userID)});
-        if(avatars.isEmpty()){
-            Log.d("AvatarHome", "Could not get any user with id " + userID);
-		}else{
-			user = avatars.get(0);
-			editor = new AvatarEditor(avatar_fragment, user.getAvatar());
-		}
+        User user = DatabaseHelper.readUser(context, userID);
+        editor = new AvatarEditor(avatar_fragment, user.getAvatar());
 
         //great the list of categories
         List<String> categoriesList = getCategories();

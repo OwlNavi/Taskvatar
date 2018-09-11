@@ -130,6 +130,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		}else{
 			Log.e("DatabaseHelper", "Error: could not open database for writing");
 		}
+		closeDatabase(context);
 		return newRowId;
 	}
 
@@ -185,6 +186,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		}else{
 			Log.e("DatabaseHelper", "Error: could not open database for reading");
 		}
+		closeDatabase(context);
 		return tasks;
 	}
 
@@ -240,6 +242,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			//throw new Exception("Error: could not open database for writing");
 			success = false;
 		}
+		closeDatabase(context);
 		return success;
 	}
 
@@ -276,6 +279,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		}else{
 			Log.e("DatabaseHelper", "Error: could not open database for deleting");
 		}
+		closeDatabase(context);
 		return rowsAffected;
 	}
 
@@ -307,6 +311,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		}else{
 			Log.e("DatabaseHelper", "Error: could not open database for deleting");
 		}
+		closeDatabase(context);
 		return rowsAffected;
 	}
 
@@ -355,6 +360,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		}else{
 			Log.e("DatabaseHelper", "Error: could not open database for writing");
 		}
+		closeDatabase(context);
 		return newRowId;
 	}
 
@@ -414,6 +420,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		}else{
 			Log.e("DatabaseHelper", "Error: could not open database for reading");
 		}
+		closeDatabase(context);
 		return users;
 	}
 
@@ -515,6 +522,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		}else{
 			Log.e("DatabaseHelper", "Error: could not open database for deleting");
 		}
+		closeDatabase(context);
 		return success;
 	}
 
@@ -546,6 +554,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		}else{
 			Log.e("DatabaseHelper", "Error: could not open database for deleting");
 		}
+		closeDatabase(context);
 		return success;
 	}
 

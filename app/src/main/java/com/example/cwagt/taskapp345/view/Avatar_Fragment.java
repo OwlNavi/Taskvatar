@@ -118,29 +118,13 @@ public class Avatar_Fragment extends Fragment {
      *
      * @param id the ID of the item
      */
-	public void setBase(int id) {
-		base.setImageResource(id);
-	}
-	public void setHat(int id) {
-		hat.setImageResource(id);
-	}
-	public void setLeftArm(int id) {
-		leftArm.setImageResource(id);
-	}
-	public void setRightArm(int id) {
-		rightArm.setImageResource(id);
-	}
-	public void setLeftLeg(int id) {
-		leftLeg.setImageResource(id);
-	}
-    public void setRightLeg(int id) {
-        rightLeg.setImageResource(id);
-    }
-    public void setBackground(int id){
-        background.setBackgroundResource(id);
-    }
-
-
+	public void setBase(int id) { base.setImageResource(id); }
+	public void setHat(int id) { hat.setImageResource(id); }
+	public void setLeftArm(int id) { leftArm.setImageResource(id); }
+	public void setRightArm(int id) { rightArm.setImageResource(id); }
+	public void setLeftLeg(int id) { leftLeg.setImageResource(id); }
+    public void setRightLeg(int id) { rightLeg.setImageResource(id); }
+    public void setBackground(int id){ background.setBackgroundResource(id); }
 
     /**
      * Creates and returns a new instance of Avatar Fragment
@@ -150,13 +134,10 @@ public class Avatar_Fragment extends Fragment {
         return new Avatar_Fragment();
     }
 
-
-
     /**
      * onClickListener for clicking the avatar
      * Takes a view, returns void
      * */
-
     private void openAvatarHome(View view) {
 
         ConstraintLayout fragmentHolder = view.findViewById(R.id.avatar_container);

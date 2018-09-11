@@ -13,13 +13,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import com.example.cwagt.taskapp345.R;
-import com.example.cwagt.taskapp345.helper.DatabaseColumnNames;
 import com.example.cwagt.taskapp345.helper.DatabaseHelper;
 import com.example.cwagt.taskapp345.helper.TaskAdapter;
 import com.example.cwagt.taskapp345.object.Task;
 import com.example.cwagt.taskapp345.object.User;
-import java.util.ArrayList;
+
 import java.util.List;
+
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 
@@ -64,16 +64,9 @@ public class EditTask extends AppCompatActivity {
         List<Task> taskList = DatabaseHelper.readAllTasks(context, userID);
 
         //get the current user from the database
-        String selection = DatabaseColumnNames.User._ID + "=?";
-        String[] selectionArgs = new String[]{Long.toString(userID)};
-        ArrayList<User> users = DatabaseHelper.readUsers(context, selection, selectionArgs);
-        if(users.size() > 1){
-            throw new RuntimeException(context + "There should only be one or zero users with the same id: " + userID);
-        }
-        if(users.size() != 0){
-            User currentUser = users.get(0);
-            Log.d("Current User", currentUser.getUserName());
-        }
+        User currentUser = DatabaseHelper.readUser(context, userID);
+        Log.d("Current User", currentUser.getUserName());
+        //TODO: What are we doing with currentUser? Do we need this snippet?
 
         //Populate the recycler view with the list of tasks we just retrieved for the user
         RecyclerView taskRecyclerView = findViewById(R.id.taskList);

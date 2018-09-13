@@ -11,7 +11,6 @@
     <ImageView
         android:id="@+id/base"
         android:contentDescription="@string/base"
-        app:srcCompat="@drawable/base_red"
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,9 +21,8 @@
     />
 
     <ImageView
-        android:id="@+id/right_arm"
-        android:contentDescription="@string/right_arm"
-        app:srcCompat="@drawable/right_arm_robot"
+        android:id="@+id/hat"
+        android:contentDescription="@string/hat"
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -38,7 +36,19 @@
     <ImageView
         android:id="@+id/left_arm"
         android:contentDescription="@string/left_arm"
-        app:srcCompat="@drawable/left_arm_muscly"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+    />
+
+    <ImageView
+        android:id="@+id/right_arm"
+        android:contentDescription="@string/right_arm"
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -52,7 +62,6 @@
     <ImageView
         android:id="@+id/left_leg"
         android:contentDescription="@string/left_leg"
-        app:srcCompat="@drawable/left_leg_robot"
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -66,7 +75,6 @@
     <ImageView
         android:id="@+id/right_leg"
         android:contentDescription="@string/right_leg"
-        app:srcCompat="@drawable/right_leg_muscly"
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -75,20 +83,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-    />
-
-    <ImageView
-            android:id="@+id/hat"
-            android:contentDescription="@string/hat"
-            app:srcCompat="@drawable/hat_crown"
-
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
     />
 
 </android.support.constraint.ConstraintLayout>

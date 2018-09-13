@@ -66,7 +66,7 @@ public class Avatar_Fragment extends Fragment {
 			Long userID = preferences.getLong("currentUser", 0);
 			User thisUser = DatabaseHelper.readUser(context, userID);
 
-			/**debug stuff*/
+			/*debug stuff*/
 			Log.e("Current user", userID +" help");
 
 			//replace current avatar with loaded avatar
@@ -74,13 +74,12 @@ public class Avatar_Fragment extends Fragment {
 			Avatar avatar = thisUser.getAvatar();
 			HashMap<String, Integer> bodyParts = avatar.getBodyParts();
 
-			try{setBase(bodyParts.get("base"));
-
-
-       		 } catch (Exception e) {
-			Log.e("error","base");
-
+			try{
+				setBase(bodyParts.get("base"));
+       		} catch (Exception e) {
+				Log.e("error","base");
 			}
+
 			try{
 				setHat(bodyParts.get("hat"));
 			} catch(Exception e) {
@@ -90,24 +89,38 @@ public class Avatar_Fragment extends Fragment {
 					startActivity(avatarIntent);
 				}
 			}
-			try{setLeftArm(bodyParts.get("leftArm")); } catch (Exception e) {
+
+			try{
+				setLeftArm(bodyParts.get("leftArm"));
+			} catch (Exception e) {
 				Log.e("error","left arm");
 			}
-			try{setRightArm(bodyParts.get("rightArm")); } catch (Exception e) {
+
+			try{
+				setRightArm(bodyParts.get("rightArm"));
+			} catch (Exception e) {
 				Log.e("error","right arm");
 			}
-			try{setLeftLeg(bodyParts.get("leftLeg")); } catch (Exception e) {
+
+			try{
+				setLeftLeg(bodyParts.get("leftLeg"));
+			} catch (Exception e) {
 				Log.e("error","left leg");
 			}
-			try{setRightLeg(bodyParts.get("rightLeg")); } catch (Exception e) {
-				Log.e("error","rightleg");
+
+			try{
+				setRightLeg(bodyParts.get("rightLeg"));
+			} catch (Exception e) {
+				Log.e("error","right leg");
 			}
+
 			try {
 				setBackground(bodyParts.get("background"));
 			} catch (Exception e) {
 				Log.e("error","background");
 			}
-			/*//now for rotations
+
+			//now for rotations
 			float leftArmRotation = avatar.getLeftArmRotation();
 			float rightArmRotation = avatar.getRightArmRotation();
 			float leftLegRotation = avatar.getLeftLegRotation();
@@ -116,7 +129,7 @@ public class Avatar_Fragment extends Fragment {
 			leftArm.setRotation(leftArmRotation);
 			rightArm.setRotation(rightArmRotation);
 			leftLeg.setRotation(leftLegRotation);
-			rightLeg.setRotation(rightLegRotation);*/
+			rightLeg.setRotation(rightLegRotation);
 
 		} else {
             Log.e("AVATAR TAG","AVATAR IS NOT SET");

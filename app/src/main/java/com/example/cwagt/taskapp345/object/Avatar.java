@@ -44,8 +44,15 @@ public class Avatar {
 	 * @param bodyPartsNew the list of bodyparts
 	 */
 	public Avatar(HashMap<String, Integer> bodyPartsNew){
-		if(bodyPartsNew.size() < 5){
-			Log.d("Avatar", "Avatar needs at least 5 bodyParts");
+		if(bodyPartsNew.size() != 7){
+			Log.d("Avatar", "Avatar needs 7 bodyParts, has " + bodyPartsNew.size());
+			Log.d("Avatar", " base: " + bodyPartsNew.get("base"));
+			Log.d("Avatar", " hat: " + bodyPartsNew.get("hat"));
+			Log.d("Avatar", " leftArm: " + bodyPartsNew.get("leftArm"));
+			Log.d("Avatar", " rightArm: " + bodyPartsNew.get("rightArm"));
+			Log.d("Avatar", " leftLeg: " + bodyPartsNew.get("leftLeg"));
+			Log.d("Avatar", " rightLeg: " + bodyPartsNew.get("rightLeg"));
+			Log.d("Avatar", " background: " + bodyPartsNew.get("background"));
 			throw new IndexOutOfBoundsException();
 		}
 		bodyParts = bodyPartsNew;
@@ -60,8 +67,15 @@ public class Avatar {
 	 * Avatar full constructor
 	 */
 	public Avatar(HashMap<String, Integer> bodyPartsNew, float leftArmRotation, float rightArmRotation, float leftLegRotation, float rightLegRotation) {
-		if(bodyPartsNew.size() < 5){
-			Log.d("Avatar", "Avatar needs at least 5 bodyParts");
+		if(bodyPartsNew.size() != 7){
+			Log.d("Avatar", "Avatar needs 7 bodyParts, has " + bodyPartsNew.size());
+			Log.d("Avatar", " base: " + bodyPartsNew.get("base"));
+			Log.d("Avatar", " hat: " + bodyPartsNew.get("hat"));
+			Log.d("Avatar", " leftArm: " + bodyPartsNew.get("leftArm"));
+			Log.d("Avatar", " rightArm: " + bodyPartsNew.get("rightArm"));
+			Log.d("Avatar", " leftLeg: " + bodyPartsNew.get("leftLeg"));
+			Log.d("Avatar", " rightLeg: " + bodyPartsNew.get("rightLeg"));
+			Log.d("Avatar", " background: " + bodyPartsNew.get("background"));
 			throw new IndexOutOfBoundsException();
 		}
 		this.bodyParts = bodyPartsNew;

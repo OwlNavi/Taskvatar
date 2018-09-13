@@ -67,6 +67,7 @@ public class AddTask extends AppCompatActivity {
 
 				// Once the task has been added go back to the edit task activity
 				Intent addUserIntent = new Intent(context, EditTask.class);
+				finish();
 				startActivity(addUserIntent);
             }
         });

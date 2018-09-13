@@ -188,6 +188,7 @@ public class MainActivity extends AppCompatActivity  {
 			//Got to select/change user activity
 			case R.id.menu_user:
 				Intent userIntent = new Intent(this, UserHome.class);
+				finish();
 				startActivity(userIntent);
 				break;
 
@@ -200,6 +201,7 @@ public class MainActivity extends AppCompatActivity  {
 			//Go to edit task screen
 			case R.id.menu_tasks:
 				Intent editTaskIntent = new Intent(this, EditTask.class);
+				finish();
 				startActivity(editTaskIntent);
 				break;
 			case android.R.id.home:

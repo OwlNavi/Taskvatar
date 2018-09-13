@@ -84,7 +84,9 @@ public class EditTask extends AppCompatActivity {
         taskButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //Got to add task activity
+                finish();
                 startActivity(new Intent(context, AddTask.class));
+
             }
         });
 
@@ -93,7 +95,9 @@ public class EditTask extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //return to main activity
+                finish();
                 startActivity(new Intent(context, MainActivity.class));
+
             }
         });
     }

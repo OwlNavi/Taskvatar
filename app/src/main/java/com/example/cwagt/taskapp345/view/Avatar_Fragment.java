@@ -73,17 +73,39 @@ public class Avatar_Fragment extends Fragment {
 			//View view = findViewById(android.R.id.content);
 			Avatar avatar = thisUser.getAvatar();
 			HashMap<String, Integer> bodyParts = avatar.getBodyParts();
-			try {
-				setBase(bodyParts.get("base"));
+
+			try{setBase(bodyParts.get("base"));
+
+
+       		 } catch (Exception e) {
+			Log.e("error","base");
+
+			}
+			try{
 				setHat(bodyParts.get("hat"));
-				setLeftArm(bodyParts.get("leftArm"));
-				setRightArm(bodyParts.get("rightArm"));
-				setLeftLeg(bodyParts.get("leftLeg"));
-				setRightLeg(bodyParts.get("rightLeg"));
+			} catch(Exception e) {
+				Log.e("error","hat");
+				if(getActivity() instanceof MainActivity) {
+					Intent avatarIntent = new Intent(getActivity(), AvatarHome.class);
+					startActivity(avatarIntent);
+				}
+			}
+			try{setLeftArm(bodyParts.get("leftArm")); } catch (Exception e) {
+				Log.e("error","left arm");
+			}
+			try{setRightArm(bodyParts.get("rightArm")); } catch (Exception e) {
+				Log.e("error","right arm");
+			}
+			try{setLeftLeg(bodyParts.get("leftLeg")); } catch (Exception e) {
+				Log.e("error","left leg");
+			}
+			try{setRightLeg(bodyParts.get("rightLeg")); } catch (Exception e) {
+				Log.e("error","rightleg");
+			}
+			try {
 				setBackground(bodyParts.get("background"));
 			} catch (Exception e) {
-				Log.e("error","something didnt load");
-
+				Log.e("error","background");
 			}
 			/*//now for rotations
 			float leftArmRotation = avatar.getLeftArmRotation();

@@ -15,6 +15,7 @@
             android:name=".view.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTask"
             
         >
 
@@ -22,7 +23,8 @@
 
         <activity
             android:name=".view.AvatarHome"
-            android:label="AvatarHome">
+            android:label="AvatarHome"
+            android:launchMode="singleTask">
         </activity>
         <activity
             android:name=".view.AddTask"

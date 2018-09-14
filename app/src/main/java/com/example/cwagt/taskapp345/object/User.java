@@ -47,7 +47,8 @@ public class User {
 	}
 
 	public Long get_id() {
-		return _id;
+		if(this._id == null) return 0L;
+		else return _id;
 	}
 
 	public void set_id(Long _id) {

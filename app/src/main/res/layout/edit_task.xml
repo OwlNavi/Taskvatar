@@ -15,13 +15,19 @@
 
     <Button
     android:id="@+id/buttonAddTask"
-    android:text="Add Task"
+    android:text="New Task"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" />
 
     <Button
+        android:id="@+id/buttonDeleteTasks"
+        android:text="Delete Selected"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
         android:id="@+id/submitTaskButton"
-        android:text="Submit Changes"
+        android:text="Finish"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

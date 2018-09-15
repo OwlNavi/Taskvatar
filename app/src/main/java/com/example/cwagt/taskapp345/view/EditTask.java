@@ -1,6 +1,8 @@
 package com.example.cwagt.taskapp345.view;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,10 +16,12 @@ import android.view.View;
 import android.widget.Button;
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.helper.DatabaseHelper;
+import com.example.cwagt.taskapp345.helper.EditingTaskAdapter;
 import com.example.cwagt.taskapp345.helper.TaskAdapter;
 import com.example.cwagt.taskapp345.object.Task;
 import com.example.cwagt.taskapp345.object.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
@@ -63,6 +67,9 @@ public class EditTask extends AppCompatActivity {
         //Retrieve the list of tasks from the database to display on the recycler list
         List<Task> taskList = DatabaseHelper.readAllTasks(context, userID);
 
+        //keep track of which tasks have been selected
+        final List<Task> selectedList = new ArrayList<Task>();
+
         //get the current user from the database
         User currentUser = DatabaseHelper.readUser(context, userID);
         Log.d("Current User", currentUser.getUserName());
@@ -70,7 +77,7 @@ public class EditTask extends AppCompatActivity {
 
         //Populate the recycler view with the list of tasks we just retrieved for the user
         RecyclerView taskRecyclerView = findViewById(R.id.taskList);
-        TaskAdapter mAdapter = new TaskAdapter(context, taskList);
+        EditingTaskAdapter mAdapter = new EditingTaskAdapter(context, taskList, selectedList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         taskRecyclerView.setLayoutManager(mLayoutManager);
         taskRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -87,6 +94,41 @@ public class EditTask extends AppCompatActivity {
                 finish();
                 startActivity(new Intent(context, AddTask.class));
 
+            }
+        });
+
+        //Delete selected button
+        final Button deleteButton = findViewById(R.id.buttonDeleteTasks);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //Got to add task activity
+                //show the user a message to let them know they must complete validation
+                AlertDialog.Builder builder = new AlertDialog.Builder(EditTask.this);
+                builder.setMessage("Are you sure?")
+                        .setTitle("Delete Tasks");
+                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button
+
+                        //delete tasks
+                        for(Task task: selectedList){
+                            DatabaseHelper.deleteTask(context, task);
+                        }
+
+
+                        finish();
+                        startActivity(new Intent(context, EditTask.class));
+
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked NO button
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
 

@@ -1,6 +1,8 @@
 package com.example.cwagt.taskapp345.view;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import com.example.cwagt.taskapp345.R;
+import com.example.cwagt.taskapp345.helper.AddUserInputValidator;
 import com.example.cwagt.taskapp345.helper.DatabaseHelper;
 import com.example.cwagt.taskapp345.object.User;
 
@@ -48,13 +51,35 @@ public class AddUser extends AppCompatActivity {
 
                 //Create the new user
                 User newUser = new User(username, fullName);
-                //Save them to the database
-                long userID = DatabaseHelper.createUser(context, newUser);
-                newUser.set_id(userID);
 
-                //Go back to the choose user page now the user has been saved
-                Intent addUserIntent = new Intent(context, UserHome.class);
-                startActivity(addUserIntent);
+                String validationMessage = AddUserInputValidator.validateTask(newUser.getUserName(),
+                        newUser.getUserDescription());
+
+                if(validationMessage.equals("")){
+                    //Save them to the database
+                    long userID = DatabaseHelper.createUser(context, newUser);
+                    newUser.set_id(userID);
+
+                    //Go back to the choose user page now the user has been saved
+                    Intent addUserIntent = new Intent(context, UserHome.class);
+                    startActivity(addUserIntent);
+                } else {
+                    //failed to validate
+
+                    //show the user a message to let them know they must complete validation
+                    AlertDialog.Builder builder = new AlertDialog.Builder(AddUser.this);
+                    builder.setMessage(validationMessage)
+                            .setTitle("Input Errors");
+                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User clicked OK button
+
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+
             }
         });
     }

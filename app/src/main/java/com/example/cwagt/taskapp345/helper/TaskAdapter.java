@@ -90,65 +90,61 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 		//find the view item that we display the tasks on
 		final RecyclerView recyclerView = parent.findViewById(R.id.taskList);
 
-		//add onclick listeners to the task items so they can be clicked on
-		recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(recyclerView.getContext(),
-				recyclerView, new RecyclerItemClickListener.ClickListener() {
+		itemView.setOnClickListener(new View.OnClickListener() {
 
-			/**
-			 * When a task is clicked on
-			 * @param view the current task's view
-			 * @param position the position in the list identifying the task
-			 */
-			@SuppressLint("SetTextI18n")
 			@Override
-			public void onClick(View view, int position) {
+			public void onClick(View view) {
+				//The current task
+				Task task = null;
 
-                //The current task
-                Task task = taskList.get(position);
-                //The status of the task so we can check if it is already completed
-                Enums.Status status = task.getStatus();
+				//get the name of the task clicked on
+				TextView taskNameTextView = itemView.findViewById(R.id.title);
+				String taskName = taskNameTextView.getText().toString();
 
-                //If the task is clicked on it should toggle the colour between:
+				System.out.println("Clicked on " + taskName);
+
+				for(Task task_temp: taskList){
+					if(task_temp.getName().equals(taskName)){
+						task = task_temp;
+					}
+				}
+				if(task == null) System.err.println("Clicked tasks name not found in task list");
+
+				//The status of the task so we can check if it is already completed
+				assert task != null;
+				Enums.Status status = task.getStatus();
+
+				//If the task is clicked on it should toggle the colour between:
 				//Green for completed and White for incomplete
-                if(status == Enums.Status.COMPLETED){
-                	//clicked on a completed task -> set incomplete
+				if(status == Enums.Status.COMPLETED){
+					//clicked on a completed task -> set incomplete
 					task.setStatus(Enums.Status.INCOMPLETE);
 					view.setBackgroundColor(Color.WHITE);
 				} else if (status == Enums.Status.INCOMPLETE){
-                	//clicked on an incomplete task -> set complete
+					//clicked on an incomplete task -> set complete
 					task.setStatus(Enums.Status.COMPLETED);
 					view.setBackgroundColor(Color.GREEN);
 				}
 
 				//Update task in database
-                if(DatabaseHelper.updateTask(context, task.get_id(), task)){
-                	//the task was updated
+				if(DatabaseHelper.updateTask(context, task.get_id(), task)){
+					//the task was updated
 					Log.d("TaskAdapter", "Task with ID:" + task.get_id() + " was updated. New data: " + task);
 				}else{
-                	//the task was not updated
+					//the task was not updated
 					Log.e("TaskAdapter", "ERROR: Task with ID:" + task.get_id() + " Could not be updated. Tried updating with: " + task);
 				}
 
 				//update display of tasks completed
-                if(textTasksCompleted != null){
-                    int completed = 0;
-                    for(Task local_task: taskList){
-                        if(local_task.getStatus() == Enums.Status.COMPLETED) completed++;
-                    }
-                    textTasksCompleted.setText(Integer.toString(completed));
-                }
+				if(textTasksCompleted != null){
+					int completed = 0;
+					for(Task local_task: taskList){
+						if(local_task.getStatus() == Enums.Status.COMPLETED) completed++;
+					}
+					textTasksCompleted.setText(Integer.toString(completed));
+				}
 			}
-
-			/**
-			 * Debug method
-			 */
-			@Override
-			public void onLongClick(View view, int position) {
-				Log.d("debug", "long click");
-
-                view.setBackgroundColor(Color.RED);
-			}
-		}));
+		});
 
 		return new MyViewHolder(itemView);
 	}

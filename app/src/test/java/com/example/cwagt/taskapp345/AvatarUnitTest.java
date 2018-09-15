@@ -39,7 +39,8 @@ public class AvatarUnitTest {
 		bodyParts.put("leftArm", intVal++);
 		bodyParts.put("rightArm", intVal++);
 		bodyParts.put("leftLeg", intVal++);
-		bodyParts.put("rightLeg", intVal);
+		bodyParts.put("rightLeg", intVal++);
+		bodyParts.put("background", intVal);
 
 		Avatar testAvatar2 = new Avatar(bodyParts, leftArmRotation, rightArmRotation, leftLegRotation, rightLegRotation);
 		assertEquals(leftArmRotation, testAvatar2.getLeftArmRotation(), 0.1);
@@ -75,7 +76,8 @@ public class AvatarUnitTest {
 		bodyParts.put("leftArm", intVal++);
 		bodyParts.put("rightArm", intVal++);
 		bodyParts.put("leftLeg", intVal++);
-		bodyParts.put("rightLeg", intVal);
+		bodyParts.put("rightLeg", intVal++);
+		bodyParts.put("background", intVal);
 
 		Avatar testAvatar4 = new Avatar(bodyParts, leftArmRotation, rightArmRotation, leftLegRotation, rightLegRotation);
 

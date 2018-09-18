@@ -2,6 +2,7 @@ package com.example.cwagt.taskapp345.helper;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,8 +13,11 @@ import android.widget.TextView;
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.object.Enums;
 import com.example.cwagt.taskapp345.object.Task;
+import com.example.cwagt.taskapp345.object.User;
 
 import java.util.List;
+
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 /**
  * This class manages the Task RecyclerView list.
@@ -92,6 +96,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 
 		itemView.setOnClickListener(new View.OnClickListener() {
 
+			@SuppressLint("SetTextI18n")
 			@Override
 			public void onClick(View view) {
 				//The current task
@@ -124,6 +129,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 					//clicked on an incomplete task -> set complete
 					task.setStatus(Enums.Status.COMPLETED);
 					view.setBackgroundColor(Color.GREEN);
+
+					//update total points in db
+					SharedPreferences preferences = getDefaultSharedPreferences(context);
+					Long userID = preferences.getLong("currentUser", 0);
+					User user = DatabaseHelper.readUser(context, userID);
+					int newPoints = user.getPoints() + 1;
+					user.setPoints(newPoints);
+					Log.d("TaskAdapter", "User " + userID + " now has " + newPoints + " points");
+					DatabaseHelper.updateUser(context, userID, user);
 				}
 
 				//Update task in database

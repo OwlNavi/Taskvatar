@@ -67,6 +67,8 @@ public class User {
 		return points;
 	}
 
+	public void setPoints(int points) { this.points = points; }
+
 	public Avatar getAvatar() {
 		return avatar;
 	}
@@ -85,4 +87,5 @@ public class User {
 				", avatar=" + avatar +
 		'}';
 	}
+
 }

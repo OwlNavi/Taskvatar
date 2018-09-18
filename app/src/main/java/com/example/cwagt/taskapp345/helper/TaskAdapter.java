@@ -138,6 +138,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 					user.setPoints(newPoints);
 					Log.d("TaskAdapter", "User " + userID + " now has " + newPoints + " points");
 					DatabaseHelper.updateUser(context, userID, user);
+
+					//update display of tasks completed
+					if(textTasksCompleted != null){
+						textTasksCompleted.setText(Integer.toString(user.getPoints()));
+					}
 				}
 
 				//Update task in database
@@ -149,14 +154,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 					Log.e("TaskAdapter", "ERROR: Task with ID:" + task.get_id() + " Could not be updated. Tried updating with: " + task);
 				}
 
-				//update display of tasks completed
-				if(textTasksCompleted != null){
-					int completed = 0;
-					for(Task local_task: taskList){
-						if(local_task.getStatus() == Enums.Status.COMPLETED) completed++;
-					}
-					textTasksCompleted.setText(Integer.toString(completed));
-				}
 			}
 		});
 

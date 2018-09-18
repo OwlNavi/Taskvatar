@@ -82,7 +82,7 @@ public class EditingTaskAdapter extends RecyclerView.Adapter<EditingTaskAdapter.
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.task_list_row, parent, false);
+                .inflate(R.layout.edit_task_row, parent, false);
 
         //default color of the tasks displayed is white
         int DEFAULT_TASK_COLOUR = Color.WHITE;

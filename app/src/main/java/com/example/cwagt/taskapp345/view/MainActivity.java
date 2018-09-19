@@ -1,6 +1,8 @@
 package com.example.cwagt.taskapp345.view;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,15 +15,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import com.example.cwagt.taskapp345.R;
+import com.example.cwagt.taskapp345.helper.AlarmReceiver;
 import com.example.cwagt.taskapp345.helper.DatabaseHelper;
 import com.example.cwagt.taskapp345.helper.TaskAdapter;
 import com.example.cwagt.taskapp345.object.Enums;
 import com.example.cwagt.taskapp345.object.Task;
 import com.example.cwagt.taskapp345.object.User;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
@@ -95,6 +96,14 @@ public class MainActivity extends AppCompatActivity  {
 		User user = DatabaseHelper.readUser(context, userID);
 		textTasksCompleted.setText("" + user.getPoints());
 
+		for(Task task: taskList){
+			System.out.println("Setting alarm for " + task.getName() + " " + task.getTime());
+			String time = task.getTime();
+			setRecurringAlarm(context,
+					Integer.parseInt(time.split(":")[0]),
+					Integer.parseInt(time.split(":")[1]));
+		}
+
 		//use the time to reset completed tasks
 /*
 		Timer timer = new Timer();
@@ -115,6 +124,32 @@ public class MainActivity extends AppCompatActivity  {
 */
 
     }
+
+    //see https://code.tutsplus.com/tutorials/android-fundamentals-scheduling-recurring-tasks--mobile-5788
+
+	/**
+	 * This section of code sets up alarms for each task to remind users they need to complete the task
+	 * @param context
+	 * @param hour
+	 * @param minutes
+	 */
+	private void setRecurringAlarm(Context context, int hour, int minutes) {
+
+		Calendar updateTime = Calendar.getInstance();
+		updateTime.setTimeZone(TimeZone.getTimeZone("GMT"));
+		updateTime.set(Calendar.HOUR_OF_DAY, hour);
+		updateTime.set(Calendar.MINUTE, minutes);
+		Intent alarm = new Intent(context, AlarmReceiver.class);
+		PendingIntent ringAlarm = PendingIntent.getBroadcast(context,
+				0, alarm, PendingIntent.FLAG_CANCEL_CURRENT);
+		AlarmManager alarms = (AlarmManager) context.getSystemService(
+				Context.ALARM_SERVICE);
+		//alarms.setInexactRepeating(AlarmManager.RTC_WAKEUP,
+		//		updateTime.getTimeInMillis(),
+		//		AlarmManager.INTERVAL_FIFTEEN_MINUTES, ringAlarm);
+		alarms.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, updateTime.getTimeInMillis(), ringAlarm);
+
+	}
 
     @Override
 	protected void onResume() {

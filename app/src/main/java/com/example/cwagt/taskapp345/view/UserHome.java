@@ -1,6 +1,8 @@
 package com.example.cwagt.taskapp345.view;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,11 +14,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import com.example.cwagt.taskapp345.R;
+import com.example.cwagt.taskapp345.helper.AlarmReceiver;
 import com.example.cwagt.taskapp345.helper.DatabaseHelper;
 import com.example.cwagt.taskapp345.helper.UserAdapter;
 import com.example.cwagt.taskapp345.object.User;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.TimeZone;
+
+import static android.app.PendingIntent.getActivity;
 
 /**
  * Created by cwagt on 15/07/2018.

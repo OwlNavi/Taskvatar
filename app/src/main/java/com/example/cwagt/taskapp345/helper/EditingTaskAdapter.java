@@ -155,6 +155,9 @@ public class EditingTaskAdapter extends RecyclerView.Adapter<EditingTaskAdapter.
                 Intent editIntent = new Intent(context, AddTask.class);
                 System.out.println("task id: " + task.get_id());
                 editIntent.putExtra("taskID", task.get_id());
+
+                editIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
                 context.startActivity(editIntent);
             }
         });

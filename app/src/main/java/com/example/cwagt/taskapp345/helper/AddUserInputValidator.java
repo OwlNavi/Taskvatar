@@ -30,7 +30,7 @@ public class AddUserInputValidator {
         //Check length
         if(name.length() > 32) return "User name must be less than 32 characters.\n";
 
-        String patternString = "[a-zA-Z0-9'?!]+";
+        String patternString = "[a-zA-Z0-9']+";
 
         Pattern pattern = Pattern.compile(patternString);
         Matcher matcher = pattern.matcher(name);
@@ -49,7 +49,7 @@ public class AddUserInputValidator {
         //Check length
         if(description.length() > 32) return "First and Last name must together be less than 32 characters.\n";
 
-        String patternString = "[a-zA-Z']";
+        String patternString = "[a-zA-Z' ]+";
 
         Pattern pattern = Pattern.compile(patternString);
         Matcher matcher = pattern.matcher(description);

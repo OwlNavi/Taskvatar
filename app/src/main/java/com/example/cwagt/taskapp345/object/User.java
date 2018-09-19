@@ -77,6 +77,14 @@ public class User {
 		this.avatar = avatar;
 	}
 
+	public void setUserName(String userName){
+		this.userName = userName;
+	}
+
+	public void setUserDescription(String userDescription){
+		this.userDescription = userDescription;
+	}
+
 	@Override
 	public String toString() {
 		return "User{" +

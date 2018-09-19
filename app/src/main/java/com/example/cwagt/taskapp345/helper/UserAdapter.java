@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.object.User;
+import com.example.cwagt.taskapp345.view.AddUser;
 import com.example.cwagt.taskapp345.view.MainActivity;
 
 import java.util.List;
@@ -76,6 +77,24 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
 			@Override
 			public void onClick(View view) {
 				Log.d("userAdapter", "Clicked edit button");
+				//Get the reference to the User that was clicked on
+				User user = null;
+				//find the userID that identifies them
+
+				TextView usernameTextField = itemView.findViewById(R.id.username);
+				String username = usernameTextField.getText().toString();
+				//Log.d("UserAdapter item view onclick", "clicked on " + username);
+				for (User user_temp : userList) {
+					if (user_temp.getUserName().equals(username)) {
+						user = user_temp;
+					}
+				}
+				assert user != null;//shouldve found user by now
+
+				Long userID = user.get_id();
+				Intent editUserIntent = new Intent(context, AddUser.class);
+				editUserIntent.putExtra("userID", userID);
+				context.startActivity(editUserIntent);
 			}
 		});
 

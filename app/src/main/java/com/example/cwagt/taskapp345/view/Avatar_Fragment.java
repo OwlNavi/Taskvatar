@@ -1,6 +1,8 @@
 package com.example.cwagt.taskapp345.view;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -33,11 +35,10 @@ public class Avatar_Fragment extends Fragment {
     private ImageView rightArm;
     private ImageView leftLeg;
     private ImageView rightLeg;
-    private ConstraintLayout background;
+    private ConstraintLayout background; //should this be an ImageView?
 
 	@Override
     public void onAttach(Context context) {
-
         super.onAttach(context);
     }
 
@@ -52,6 +53,21 @@ public class Avatar_Fragment extends Fragment {
         openAvatarHome(view);
         return view;
     }
+
+    private void showMessage(String message){
+		//show the user a message to let them know they must complete validation
+		AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+		builder.setMessage(message)
+				.setTitle("Missing body part");
+		builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				// User clicked OK button
+
+			}
+		});
+		AlertDialog dialog = builder.create();
+		dialog.show();
+	}
 
     @Override
     public void onResume() {
@@ -78,12 +94,14 @@ public class Avatar_Fragment extends Fragment {
 				setBase(bodyParts.get("base"));
        		} catch (Exception e) {
 				Log.e("error","base");
+				showMessage("Avatar is missing a face!");
 			}
 
 			try{
 				setHat(bodyParts.get("hat"));
 			} catch(Exception e) {
 				Log.e("error","hat");
+				showMessage("Avatar is missing a hat!");
 				if(getActivity() instanceof MainActivity) {
 					Intent avatarIntent = new Intent(getActivity(), AvatarHome.class);
 					startActivity(avatarIntent);
@@ -94,30 +112,35 @@ public class Avatar_Fragment extends Fragment {
 				setLeftArm(bodyParts.get("leftArm"));
 			} catch (Exception e) {
 				Log.e("error","left arm");
+				showMessage("Avatar is missing a left arm!");
 			}
 
 			try{
 				setRightArm(bodyParts.get("rightArm"));
 			} catch (Exception e) {
 				Log.e("error","right arm");
+				showMessage("Avatar is missing a right arm!");
 			}
 
 			try{
 				setLeftLeg(bodyParts.get("leftLeg"));
 			} catch (Exception e) {
 				Log.e("error","left leg");
+				showMessage("Avatar is missing a left leg!");
 			}
 
 			try{
 				setRightLeg(bodyParts.get("rightLeg"));
 			} catch (Exception e) {
 				Log.e("error","right leg");
+				showMessage("Avatar is missing a right leg!");
 			}
 
 			try {
 				setBackground(bodyParts.get("background"));
 			} catch (Exception e) {
 				Log.e("error","background");
+				showMessage("Avatar is missing a background!");
 			}
 
 			//now for rotations

@@ -190,6 +190,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return tasks;
 	}
 
+	public static Task readTask(Context context, Long taskID) {
+		Log.d("DatabaseHelper", "Reading task where taskID = " + taskID);
+		ArrayList<Task> tasks = readTasks(context, _ID + " = ?", new String[]{String.valueOf(taskID)});
+		return tasks.get(0);
+	}
+
 	public static ArrayList<Task> readAllTasks(Context context, Long userID) {
 		Log.d("DatabaseHelper", "Reading all tasks where userID = " + userID);
 		return readTasks(context, TASK_NAME_USER + " = ?", new String[]{String.valueOf(userID)});

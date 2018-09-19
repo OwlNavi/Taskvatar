@@ -1,6 +1,8 @@
 package com.example.cwagt.taskapp345.view;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -42,11 +44,20 @@ public class UserHome extends AppCompatActivity {
 
         //If there are no users in the database create a default dummy list
         if(userList.size() == 0){
-            for(User user: defaultUserlist()){
-                DatabaseHelper.createUser(context, user);
-            }
-            userList = defaultUserlist();
-            Log.d("UserHome", "No users found, wrote default list to database");
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setMessage("Please create an account to continue")
+                    .setTitle("Welcome");
+            builder.setPositiveButton("Create account", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // User clicked OK button
+                    Intent newUserIntent = new Intent(context, AddUser.class);
+                    finish();
+                    startActivity(newUserIntent);
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
         }
 
         //Set up the recycler view to display the users
@@ -68,23 +79,5 @@ public class UserHome extends AppCompatActivity {
                 startActivity(addUserIntent);
             }
         });
-    }
-
-    /**
-     * Creates a default userList if the database is found empty
-     * for testing purposes
-     * @return an ArrayList of users
-     */
-    private ArrayList<User> defaultUserlist(){
-        ArrayList<User> userList = new ArrayList<>();
-        User user1 = new User("Alex", "Alexander Example");
-        User user2 = new User("Ben", "Benjamen Default");
-        User user3 = new User("Chris", "Christopher Template");
-        User user4 = new User("Dave", "David Standard");
-        userList.add(user1);
-        userList.add(user2);
-        userList.add(user3);
-        userList.add(user4);
-        return userList;
     }
 }

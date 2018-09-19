@@ -16,8 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.helper.*;
-import com.example.cwagt.taskapp345.object.Enums;
-import com.example.cwagt.taskapp345.object.Task;
 import com.example.cwagt.taskapp345.object.User;
 
 import java.util.ArrayList;
@@ -33,19 +31,13 @@ import static android.preference.PreferenceManager.getDefaultSharedPreferences;
  * Authors: Josh April, Shaun Henderson, Craig Thomas
  */
 public class AvatarHome extends AppCompatActivity {
+
+	private int pointsNeeded = 10;
+
     private RecyclerView bodyPartsRecyclerView;
     private AvatarEditor editor;
     private Avatar_Fragment avatar_fragment;
     private Context context;
-    private User user;
-
-	private final int BASE = 0;
-	private final int HAT = 1;
-	private final int LEFT_ARM = 2;
-	private final int RIGHT_ARM = 3;
-	private final int LEFT_LEG = 4;
-	private final int RIGHT_LEG = 5;
-	private final int BACKGROUND = 6;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -124,21 +116,13 @@ public class AvatarHome extends AppCompatActivity {
                 //get current user
                 SharedPreferences preferences = getDefaultSharedPreferences(context);
                 Long userID = preferences.getLong("currentUser", 0);
-                final List<Task> taskList = DatabaseHelper.readAllTasks(context, userID);
-                //Check the number of compelted tasks and update tasksCompleted
-                int completed = 0;
-                if(taskList.size() > 0) {
-                    for (Task task : taskList) {
-                        if (task.getStatus() == Enums.Status.COMPLETED) {
-                            completed++;
-                        }
-                    }
-                }
-                if(completed < 0){
+
+                User user = DatabaseHelper.readUser(context, userID);
+                if(user.getPoints() != 0 && user.getPoints() < pointsNeeded){ // the 0 is for newly created users that havent completed any tasks yet
                     //NOT ENOUGH TASKS COMPLETED
                     //show the user a message to let them know they must complete tasks first
                     AlertDialog.Builder builder = new AlertDialog.Builder(AvatarHome.this);
-                    builder.setMessage("You must complete a task before changing your avatar!")
+                    builder.setMessage("You must complete at least " + pointsNeeded + " tasks before changing your avatar!")
                             .setTitle("Task Check");
                     builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
@@ -209,7 +193,15 @@ public class AvatarHome extends AppCompatActivity {
     private ArrayList<String> getCategoryItems(int categoryID){
         ArrayList<String> result = new ArrayList<>();
 
-        switch (categoryID){
+		final int BASE = 0;
+		final int HAT = 1;
+		final int LEFT_ARM = 2;
+		final int RIGHT_ARM = 3;
+		final int LEFT_LEG = 4;
+		final int RIGHT_LEG = 5;
+		final int BACKGROUND = 6;
+
+		switch (categoryID){
 			case BASE:
 				result.add("Silly");
 				result.add("Surprised");

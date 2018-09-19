@@ -1,16 +1,19 @@
 package com.example.cwagt.taskapp345.helper;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.object.Enums;
 import com.example.cwagt.taskapp345.object.Task;
+import com.example.cwagt.taskapp345.view.AddTask;
 
 import java.util.List;
 
@@ -91,6 +94,10 @@ public class EditingTaskAdapter extends RecyclerView.Adapter<EditingTaskAdapter.
         //find the view item that we display the tasks on
         final RecyclerView recyclerView = parent.findViewById(R.id.taskList);
 
+        final Button editButton = itemView.findViewById(R.id.edit_task_button);
+
+
+
         itemView.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -126,6 +133,29 @@ public class EditingTaskAdapter extends RecyclerView.Adapter<EditingTaskAdapter.
                 }
 
 
+            }
+        });
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //The current task
+                Task task = null;
+                //get the name of the task clicked on
+                TextView taskNameTextView = itemView.findViewById(R.id.title);
+                String taskName = taskNameTextView.getText().toString();
+                for(Task task_temp: taskList){
+                    if(task_temp.getName().equals(taskName)){
+                        task = task_temp;
+                    }
+                }
+                if(task == null) System.err.println("Clicked tasks name not found in task list");
+                //The status of the task so we can check if it is already completed
+                assert task != null;
+                System.out.print("Clicked edit on " + task.getName() + " ");
+                Intent editIntent = new Intent(context, AddTask.class);
+                System.out.println("task id: " + task.get_id());
+                editIntent.putExtra("taskID", task.get_id());
+                context.startActivity(editIntent);
             }
         });
 

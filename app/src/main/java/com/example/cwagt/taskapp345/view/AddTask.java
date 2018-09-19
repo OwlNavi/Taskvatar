@@ -15,6 +15,8 @@ import com.example.cwagt.taskapp345.helper.AddTaskInputValidator;
 import com.example.cwagt.taskapp345.helper.DatabaseHelper;
 import com.example.cwagt.taskapp345.object.Task;
 
+import java.util.ArrayList;
+
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 /**
@@ -37,6 +39,29 @@ public class AddTask extends AppCompatActivity {
         context = getApplicationContext();
         //Set the layout based on the xml file
         setContentView(R.layout.add_task);
+
+        //check and see if we are editing a task
+		String taskID = getIntent().getStringExtra("taskID");
+		if(taskID != null && !taskID.equals("")){
+			//we have a task
+			SharedPreferences preferences = getDefaultSharedPreferences(context);
+			Long userID = preferences.getLong("currentUser", 0);
+			ArrayList<Task> taskList = DatabaseHelper.readAllTasks(context, userID);
+			Task task = null;
+			for(Task temp_task: taskList){
+				if(temp_task.get_id() == Integer.parseInt(taskID)){
+					task = temp_task;
+				}
+			}
+			assert task != null;
+			TextView taskNameField = findViewById(R.id.edittextTaskName);
+			TextView taskDescriptionField = findViewById(R.id.edittextTaskDescription);
+			TextView taskTimeField = findViewById(R.id.edittextTaskTime);
+			taskNameField.setText(task.getName());
+			taskDescriptionField.setText(task.getDescription());
+			taskTimeField.setText(task.getTime());
+		}
+
 
         //Button code once the user has finished editing the text fields
         final Button button = findViewById(R.id.submitButton);

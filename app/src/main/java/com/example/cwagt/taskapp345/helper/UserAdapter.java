@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.object.User;
@@ -63,30 +64,42 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
      */
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.user_list_layout, parent, false);
+		final View itemView = LayoutInflater.from(parent.getContext())
+				.inflate(R.layout.user_list_layout, parent, false);
 
-        //Reference to the RecyclerView the tasks are displayed in
-        final RecyclerView recyclerView = parent.findViewById(R.id.userList);
+		//Reference to the RecyclerView the tasks are displayed in
+		final RecyclerView recyclerView = parent.findViewById(R.id.userList);
 
-        //add onclick listener to each item in the list
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(recyclerView.getContext(),
-                recyclerView, new RecyclerItemClickListener.ClickListener() {
-            /**
-             * On click method called when this list item is clicked
-             * When a user is clicked on from the user select page we want to
-             * set them as the current user in the shared preferences
-             * @param view the item clicked on
-             * @param position the position of the item clicked on
-             */
-            @Override
-            public void onClick(View view, int position) {
-                //Get the reference to the User that was clicked on
-                User user = userList.get(position);
-                //find the userID that identifies them
-                Long userID = user.get_id();
+		//add onclick listener for the edit button
+		final Button editButton = itemView.findViewById(R.id.edit_user_button);
+		editButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Log.d("userAdapter", "Clicked edit button");
+			}
+		});
+
+		//add onclick listener to each item in the list
+		itemView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				//Get the reference to the User that was clicked on
+				User user = null;
+				//find the userID that identifies them
+
+				TextView usernameTextField = itemView.findViewById(R.id.username);
+				String username = usernameTextField.getText().toString();
+				//Log.d("UserAdapter item view onclick", "clicked on " + username);
+				for (User user_temp : userList) {
+					if (user_temp.getUserName().equals(username)) {
+						user = user_temp;
+					}
+				}
+				assert user != null;//shouldve found user by now
+
+				Long userID = user.get_id();
 				Log.d("UserAdapter", "You clicked on user " + userID);
-                if(userID>0) {
+				if (userID > 0) {
 
 					//Set the current user to the user selected
 					//The current user is saved in SharedPreferences accessible from other classes
@@ -99,22 +112,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
 					Log.d("UserAdapter", "Starting MainActivity class for user " + userID);
 					context.startActivity(new Intent(context, MainActivity.class));
 
-				}else{
+				} else {
 					Log.e("UserAdapter", "Error: User ID is null. You get the user ID from the createUser method");
 				}
-            }
+			}
+		});
 
-            /**
-             * Debug method
-             * @param view The item clicked on
-             * @param position the position of the item clicked on
-             */
-            @Override
-            public void onLongClick(View view, int position) {
-                Log.d("debug", "long click");
-
-            }
-        }));
 
         return new MyViewHolder(itemView);
     }

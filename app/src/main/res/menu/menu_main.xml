@@ -2,12 +2,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.cwagt.taskapp345.view.MainActivity">
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
 
+    <item
+        android:id="@+id/menu_home"
+        android:title="Home"
+        app:showAsAction="always"/>
     <item
         android:id="@+id/menu_refresh"
         android:title="Refresh"
@@ -16,15 +15,15 @@
     <item
         android:id="@+id/menu_avatar"
         android:title="Avatar"
-        app:showAsAction="always" />
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/menu_user"
-        android:title="Change User"
+        android:title="Users"
         app:showAsAction="never" />
     <item
         android:id="@+id/menu_tasks"
-        android:title="Edit Tasks"
+        android:title="Tasks"
         app:showAsAction="never" />
 
 </menu>

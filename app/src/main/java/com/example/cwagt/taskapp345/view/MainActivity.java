@@ -197,6 +197,10 @@ public class MainActivity extends AppCompatActivity  {
 				finish();
 				startActivity(editTaskIntent);
 				break;
+			case R.id.menu_home:
+				Intent homeIntent = new Intent(this, MainActivity.class);
+				finish();
+				startActivity(homeIntent);
 			case android.R.id.home:
 				//onDestroy();
 				finish();

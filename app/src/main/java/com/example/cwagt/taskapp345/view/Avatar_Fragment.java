@@ -90,18 +90,19 @@ public class Avatar_Fragment extends Fragment {
 			Avatar avatar = thisUser.getAvatar();
 			HashMap<String, Integer> bodyParts = avatar.getBodyParts();
 
+			String message = "";
 			try{
 				setBase(bodyParts.get("base"));
        		} catch (Exception e) {
 				Log.e("error","base");
-				showMessage("Avatar is missing a face!");
+				message += "A face!\n";
 			}
 
 			try{
 				setHat(bodyParts.get("hat"));
 			} catch(Exception e) {
 				Log.e("error","hat");
-				showMessage("Avatar is missing a hat!");
+				message += "A hat!\n";
 				if(getActivity() instanceof MainActivity) {
 					Intent avatarIntent = new Intent(getActivity(), AvatarHome.class);
 					startActivity(avatarIntent);
@@ -112,38 +113,39 @@ public class Avatar_Fragment extends Fragment {
 				setLeftArm(bodyParts.get("leftArm"));
 			} catch (Exception e) {
 				Log.e("error","left arm");
-				showMessage("Avatar is missing a left arm!");
+				message += "A left arm!\n";
 			}
 
 			try{
 				setRightArm(bodyParts.get("rightArm"));
 			} catch (Exception e) {
 				Log.e("error","right arm");
-				showMessage("Avatar is missing a right arm!");
-			}
+				message += "A right arm!\n";			}
 
 			try{
 				setLeftLeg(bodyParts.get("leftLeg"));
 			} catch (Exception e) {
 				Log.e("error","left leg");
-				showMessage("Avatar is missing a left leg!");
-			}
+				message += "A left leg!\n";			}
 
 			try{
 				setRightLeg(bodyParts.get("rightLeg"));
 			} catch (Exception e) {
 				Log.e("error","right leg");
-				showMessage("Avatar is missing a right leg!");
-			}
+				message += "A right leg!\n";			}
 
 			try {
 				setBackground(bodyParts.get("background"));
 			} catch (Exception e) {
 				Log.e("error","background");
-				showMessage("Avatar is missing a background!");
-			}
+				message += "A face!\n";			}
 
-			//now for rotations
+			if(!message.equals("")){
+				//errors found
+				//showMessage("Avatar is missing: \n" + message);
+				message = "";
+			}
+				//now for rotations
 			float leftArmRotation = avatar.getLeftArmRotation();
 			float rightArmRotation = avatar.getRightArmRotation();
 			float leftLegRotation = avatar.getLeftLegRotation();

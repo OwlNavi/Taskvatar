@@ -49,7 +49,7 @@ public class AddTaskInputValidator {
         //Check length
         if(time.length() > 5) return "Task time must in the format HH:MM\n";
 
-        String patternString = "[0-2][0-9]:[0-5][0-9]";
+        String patternString = "[0-2]?[0-9]:[0-5][0-9]";
 
         Pattern pattern = Pattern.compile(patternString);
         Matcher matcher = pattern.matcher(time);

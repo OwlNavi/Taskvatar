@@ -14,6 +14,7 @@ import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.object.User;
 import com.example.cwagt.taskapp345.view.AddUser;
 import com.example.cwagt.taskapp345.view.MainActivity;
+import com.example.cwagt.taskapp345.view.UserHome;
 
 import java.util.List;
 
@@ -70,6 +71,29 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
 
 		//Reference to the RecyclerView the tasks are displayed in
 		final RecyclerView recyclerView = parent.findViewById(R.id.userList);
+
+		final Button deleteButton = itemView.findViewById(R.id.delete_user_button);
+		deleteButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Log.d("userAdapter", "Clicked delete button");
+				//Get the reference to the User that was clicked on
+				User user = null;
+				//find the userID that identifies them
+
+				TextView usernameTextField = itemView.findViewById(R.id.username);
+				String username = usernameTextField.getText().toString();
+				//Log.d("UserAdapter item view onclick", "clicked on " + username);
+				for (User user_temp : userList) {
+					if (user_temp.getUserName().equals(username)) {
+						user = user_temp;
+					}
+				}
+				assert user != null;//shouldve found user by now
+				DatabaseHelper.deleteUser(context, user.get_id());
+				context.startActivity(new Intent(context, UserHome.class));
+			}
+		});
 
 		//add onclick listener for the edit button
 		final Button editButton = itemView.findViewById(R.id.edit_user_button);

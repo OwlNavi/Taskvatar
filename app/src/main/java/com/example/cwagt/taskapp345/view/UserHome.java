@@ -44,7 +44,7 @@ public class UserHome extends AppCompatActivity {
 
         //If there are no users in the database create a default dummy list
         if(userList.size() == 0){
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Please create an account to continue")
                     .setTitle("Welcome");
             builder.setPositiveButton("Create account", new DialogInterface.OnClickListener() {

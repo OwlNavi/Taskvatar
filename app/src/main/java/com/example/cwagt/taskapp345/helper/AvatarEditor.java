@@ -144,6 +144,10 @@ public class AvatarEditor {
 				avatar_fragment.setLeftArm(R.drawable.left_arm);
 				bodyParts.put("leftArm", R.drawable.left_arm);
 				break;
+			case "Princess":
+				avatar_fragment.setLeftArm(R.drawable.left_arm_princess);
+				bodyParts.put("leftArm", R.drawable.left_arm_princess);
+				break;
 			default:
 				Log.e("AvatarEditor", "Error: Cannot set left arm to " + itemSelected + " because it does not exist");
 		}
@@ -169,6 +173,10 @@ public class AvatarEditor {
 				avatar_fragment.setRightArm(R.drawable.right_arm);
 				bodyParts.put("rightArm", R.drawable.right_arm);
 				break;
+			case "Princess":
+				avatar_fragment.setRightArm(R.drawable.right_arm_princess);
+				bodyParts.put("rightArm", R.drawable.right_arm_princess);
+				break;
 			default:
 				Log.e("AvatarEditor", "Error: Cannot set right arm to " + itemSelected + " because it does not exist");
 		}
@@ -192,6 +200,10 @@ public class AvatarEditor {
 			case "Cartoon":
 				avatar_fragment.setLeftLeg(R.drawable.left_leg);
 				bodyParts.put("leftLeg", R.drawable.left_leg);
+				break;
+			case "Princess":
+				avatar_fragment.setLeftLeg(R.drawable.left_leg_princess);
+				bodyParts.put("leftLeg", R.drawable.left_leg_princess);
 				break;
 			default:
 				Log.e("AvatarEditor", "Error: Cannot set left leg to " + itemSelected + " because it does not exist");
@@ -217,6 +229,10 @@ public class AvatarEditor {
 			case "Cartoon":
 				avatar_fragment.setRightLeg(R.drawable.right_leg);
 				bodyParts.put("rightLeg", R.drawable.right_leg);
+				break;
+			case "Princess":
+				avatar_fragment.setRightLeg(R.drawable.right_leg_princess);
+				bodyParts.put("rightLeg", R.drawable.right_leg_princess);
 				break;
 			default:
 				Log.e("AvatarEditor", "Error: Cannot set right leg to " + itemSelected + " because it does not exist");

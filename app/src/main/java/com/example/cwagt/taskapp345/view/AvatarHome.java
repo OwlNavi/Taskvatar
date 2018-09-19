@@ -214,21 +214,25 @@ public class AvatarHome extends AppCompatActivity {
 				result.add("Strong");
 				result.add("Robot");
 				result.add("Cartoon");
+				result.add("Princess");
 				break;
             case RIGHT_ARM:
 				result.add("Strong");
 				result.add("Robot");
 				result.add("Cartoon");
-				break;
+                result.add("Princess");
+                break;
 			case LEFT_LEG:
 				result.add("Strong");
 				result.add("Robot");
 				result.add("Cartoon");
-				break;
+                result.add("Princess");
+                break;
 			case RIGHT_LEG:
                 result.add("Strong");
                 result.add("Robot");
                 result.add("Cartoon");
+                result.add("Princess");
                 break;
             case BACKGROUND:
                 result.add("Beach");

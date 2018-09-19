@@ -91,16 +91,9 @@ public class MainActivity extends AppCompatActivity  {
 		taskRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 		taskRecyclerView.setAdapter(mAdapter);
 
-		//Check the number of completed tasks and update tasksCompleted
-		if(taskList.size() > 0){
-			int completed = 0;
-			for(Task task: taskList){
-				if(task.getStatus() == Enums.Status.COMPLETED){
-					completed++;
-				}
-			}
-			textTasksCompleted.setText("" + completed);
-		}
+		//update tasksCompleted
+		User user = DatabaseHelper.readUser(context, userID);
+		textTasksCompleted.setText("" + user.getPoints());
 
 		//use the time to reset completed tasks
 /*

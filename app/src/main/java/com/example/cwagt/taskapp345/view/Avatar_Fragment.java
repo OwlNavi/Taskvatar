@@ -67,7 +67,7 @@ public class Avatar_Fragment extends Fragment {
 			User thisUser = DatabaseHelper.readUser(context, userID);
 
 			/*debug stuff*/
-			Log.e("Current user", userID +" help");
+			Log.d("AvatarFragment", "Current user: " + userID);
 
 			//replace current avatar with loaded avatar
 			//View view = findViewById(android.R.id.content);

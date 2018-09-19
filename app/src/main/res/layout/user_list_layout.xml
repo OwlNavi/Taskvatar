@@ -36,4 +36,11 @@
         android:text=""
         />
 
+    <Button
+            android:id="@+id/edit_user_button"
+            android:text="Edit"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
 </RelativeLayout>

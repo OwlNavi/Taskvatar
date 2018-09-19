@@ -1,6 +1,8 @@
 package com.example.cwagt.taskapp345.view;
 
 import android.app.AlertDialog;
+import android.app.DialogFragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -84,7 +86,8 @@ public class EditTask extends AppCompatActivity {
         taskRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         taskRecyclerView.setAdapter(mAdapter);
 
-        //Button code
+
+
 
         //Add task button
         final Button taskButton = findViewById(R.id.buttonAddTask);

@@ -60,4 +60,11 @@
         android:text="@string/submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    <Button
+            android:text="Time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/timeButton"
+            android:onClick="showTimePicker"
+    />
 </LinearLayout>

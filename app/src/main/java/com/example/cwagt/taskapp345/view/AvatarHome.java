@@ -73,6 +73,7 @@ public class AvatarHome extends AppCompatActivity {
         //populate body parts
         ArrayList<String> bodyPartsList = getCategoryItems(0); //default is zero
 
+
         //create the bodyparts recyclerview
         bodyPartsRecyclerView = findViewById(R.id.bodyPartsRecyclerView);
         BodyPartsAdapter bodyPartsAdapter = new BodyPartsAdapter(this, bodyPartsList); //body part list list
@@ -81,6 +82,10 @@ public class AvatarHome extends AppCompatActivity {
         bodyPartsRecyclerView.setLayoutManager(bodyPartsLayoutManager);
         bodyPartsRecyclerView.setItemAnimator(new DefaultItemAnimator());
         bodyPartsRecyclerView.setAdapter(bodyPartsAdapter);
+        setBodyPartList(bodyPartsRecyclerView, bodyPartsList);
+
+        //reset the list to the first item in categories
+        resetCusomisation(bodyPartsRecyclerView);
 
         //define the behavior of the two recycler view on click events
         categoryRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(),
@@ -322,6 +327,16 @@ public class AvatarHome extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    //reset
+    private void resetCusomisation(RecyclerView view){
+        ArrayList<String> currentBodyPartList = getCategoryItems(0);
+        setBodyPartList(view, currentBodyPartList);
+        SharedPreferences preferences = getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putLong("currentCategory", 0);
+        editor.apply();
     }
 }
 

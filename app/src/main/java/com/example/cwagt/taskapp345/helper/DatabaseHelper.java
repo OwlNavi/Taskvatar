@@ -34,7 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 	//https://developer.android.com/training/data-storage/sqlite
 
-	private static final int DATABASE_VERSION = 10;
+	private static final int DATABASE_VERSION = 11;
 	private static final String DATABASE_NAME = "Taskvatar.db";
 
 	private static final String SQL_CREATE_TASK_TABLE =

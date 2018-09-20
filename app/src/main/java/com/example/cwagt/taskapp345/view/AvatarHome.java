@@ -209,6 +209,7 @@ public class AvatarHome extends AppCompatActivity {
             case HAT:
                 result.add("Crown");
                 result.add("Pirate");
+                result.add("Roses");
                 break;
             case LEFT_ARM:
 				result.add("Strong");

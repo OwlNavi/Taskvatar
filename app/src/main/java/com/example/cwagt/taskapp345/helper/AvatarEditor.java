@@ -119,6 +119,10 @@ public class AvatarEditor {
 				avatar_fragment.setHat(R.drawable.hat_pirate);
 				bodyParts.put("hat", R.drawable.hat_pirate);
 				break;
+			case "Roses":
+				avatar_fragment.setHat(R.drawable.hat_rose);
+				bodyParts.put("hat", R.drawable.hat_rose);
+				break;
 			default:
 				Log.e("helper.AvatarEditor", "Error: Cannot set hat to " + itemSelected + " because it does not exist");
 		}

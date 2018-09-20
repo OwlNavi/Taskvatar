@@ -146,7 +146,8 @@ public class Avatar_Fragment extends Fragment {
 				showMessage("Avatar is missing: \n" + message);
 				message = "";
 			}
-				//now for rotations
+
+			//now for rotations
 			float leftArmRotation = avatar.getLeftArmRotation();
 			float rightArmRotation = avatar.getRightArmRotation();
 			float leftLegRotation = avatar.getLeftLegRotation();

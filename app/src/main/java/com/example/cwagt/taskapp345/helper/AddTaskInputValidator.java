@@ -11,11 +11,13 @@ import java.util.regex.Pattern;
 
 public class AddTaskInputValidator {
 
-    //returns a string containing errors in validation, or an emptpy string if it validates correctly
-    // params
-    // String taskName, the name of the task should be a string of characters
-    // String taskDescription, a description of the task, a string of characters
-    // String time, the time, in valid HH:MM format
+    /**
+     * returns a string containing errors in validation, or an emptpy string if it validates correctly
+     * @param taskName the name of the task should be a string of characters
+     * @param taskDescription a description of the task, a string of characters
+     * @param time the time, in valid HH:MM format
+     * @return the validation message, or "" on success
+     */
     public static String validateTask(String taskName, String taskDescription, String time){
         String message = "";
 
@@ -26,7 +28,11 @@ public class AddTaskInputValidator {
         return message;
     }
 
-    //validates a task name
+    /**
+     * validates a task name
+     * @param name the persons name
+     * @return error message, or "" for successful validation
+     */
     private static String validateName(String name){
         //Check length
         if(name.length() > 32) return "Task name must be less than 32 characters.\n";
@@ -44,8 +50,13 @@ public class AddTaskInputValidator {
         //passes
         return "";
     }
-    //validates a task name
-    private static String validateTime(String time){
+
+	/**
+	 * validates a task name
+	 * @param time the time of the task
+	 * @return "" on success, error message on failure
+	 */
+	private static String validateTime(String time){
         //Check length
         if(time.length() > 5) return "Task time must in the format HH:MM\n";
 
@@ -54,7 +65,7 @@ public class AddTaskInputValidator {
         Pattern pattern = Pattern.compile(patternString);
         Matcher matcher = pattern.matcher(time);
 
-        //fauled validation
+        //failed validation
         if(!matcher.matches()){
             return "Task time must in the format HH:MM\n";
         }
@@ -62,8 +73,13 @@ public class AddTaskInputValidator {
         //passes
         return "";
     }
-    //validates a task name
-    private static String validateDescription(String description){
+
+	/**
+	 * validates a task description
+	 * @param description description of the task
+	 * @return "" on success, error message on failure
+	 */
+	private static String validateDescription(String description){
         //Check length
         if(description.length() > 32) return "Task description must be less than 32 characters.\n";
 

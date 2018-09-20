@@ -68,7 +68,7 @@ public class AddUser extends AppCompatActivity {
                     String lastName = lastNameField.getText().toString();
                     String fullName = firstName + " " + lastName;
 
-                    String validationMessage = AddUserInputValidator.validateTask(username,
+                    String validationMessage = AddUserInputValidator.validateUser(username,
                             fullName);
 
                     if(validationMessage.equals("")){
@@ -117,8 +117,10 @@ public class AddUser extends AppCompatActivity {
                     //Create the new user
                     User newUser = new User(username, fullName);
 
-                    String validationMessage = AddUserInputValidator.validateTask(newUser.getUserName(),
-                            newUser.getUserDescription());
+                    String validationMessage = AddUserInputValidator.validateUser(
+                            newUser.getUserName(),
+                            newUser.getUserDescription()
+					);
 
                     if(validationMessage.equals("")){
                         //Save them to the database

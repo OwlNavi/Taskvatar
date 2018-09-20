@@ -11,22 +11,27 @@ import java.util.regex.Pattern;
 
 public class AddUserInputValidator {
 
-    //returns a string containing errors in validation, or an emptpy string if it validates correctly
-    // params
-    // String taskName, the name of the task should be a string of characters
-    // String taskDescription, a description of the task, a string of characters
-    // String time, the time, in valid HH:MM format
-    public static String validateTask(String userName, String userDescription){
+    /**
+     * returns a string containing errors in validation, or an emptpy string if it validates correctly
+     * @param userName the name of the user should be a string of characters
+     * @param userDescription a description of the user, a string of characters
+     * @return "" on success, error on failure
+     */
+    public static String validateUser(String userName, String userDescription){
         String message = "";
 
         message += validateName(userName);
-        message += validateDescription(userName);
+        message += validateDescription(userDescription);
 
         return message;
     }
 
-    //validates a task name
-    private static String validateName(String name){
+	/**
+	 * Validates a user name
+	 * @param name the name of the user
+	 * @return
+	 */
+	private static String validateName(String name){
         //Check length
         if(name.length() > 32) return "User name must be less than 32 characters.\n";
 
@@ -44,8 +49,12 @@ public class AddUserInputValidator {
         return "";
     }
 
-    //validates a task name
-    private static String validateDescription(String description){
+	/**
+	 * Validates a user description
+	 * @param description the description of the user
+	 * @return
+	 */
+	private static String validateDescription(String description){
         //Check length
         if(description.length() > 32) return "First and Last name must together be less than 32 characters.\n";
 
@@ -54,7 +63,7 @@ public class AddUserInputValidator {
         Pattern pattern = Pattern.compile(patternString);
         Matcher matcher = pattern.matcher(description);
 
-        //fauled validation
+        //failed validation
         if(!matcher.matches()){
             return "First and Last must contain only valid characters\n";
         }

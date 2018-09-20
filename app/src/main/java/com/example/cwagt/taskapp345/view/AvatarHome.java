@@ -85,7 +85,7 @@ public class AvatarHome extends AppCompatActivity {
         setBodyPartList(bodyPartsRecyclerView, bodyPartsList);
 
         //reset the list to the first item in categories
-        resetCusomisation(bodyPartsRecyclerView);
+        resetCustomisation(bodyPartsRecyclerView);
 
         //define the behavior of the two recycler view on click events
         categoryRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(),
@@ -330,7 +330,7 @@ public class AvatarHome extends AppCompatActivity {
     }
 
     //reset
-    private void resetCusomisation(RecyclerView view){
+    private void resetCustomisation(RecyclerView view){
         ArrayList<String> currentBodyPartList = getCategoryItems(0);
         setBodyPartList(view, currentBodyPartList);
         SharedPreferences preferences = getDefaultSharedPreferences(getApplicationContext());

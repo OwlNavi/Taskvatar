@@ -95,7 +95,7 @@ public class Avatar_Fragment extends Fragment {
 				setBase(bodyParts.get("base"));
        		} catch (Exception e) {
 				Log.e("error","base");
-				message += "A face!\n";
+				message += "A base!\n";
 			}
 
 			try{
@@ -138,7 +138,8 @@ public class Avatar_Fragment extends Fragment {
 				setBackground(bodyParts.get("background"));
 			} catch (Exception e) {
 				Log.e("error","background");
-				message += "A face!\n";			}
+				message += "A background!\n";
+			}
 
 			if(!message.equals("")){
 				//errors found

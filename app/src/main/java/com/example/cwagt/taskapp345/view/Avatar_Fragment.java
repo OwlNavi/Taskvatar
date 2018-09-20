@@ -142,7 +142,7 @@ public class Avatar_Fragment extends Fragment {
 
 			if(!message.equals("")){
 				//errors found
-				//showMessage("Avatar is missing: \n" + message);
+				showMessage("Avatar is missing: \n" + message);
 				message = "";
 			}
 				//now for rotations

@@ -254,7 +254,7 @@ public class AvatarHome extends AppCompatActivity {
     public ArrayList<String> getCategories(){
         ArrayList<String> result = new ArrayList<>();
         //TODO: Consider having these as images instead of text
-		result.add("Head");
+		result.add("Face");
         result.add("Hat");
         result.add("Left arm");
         result.add("Right arm");

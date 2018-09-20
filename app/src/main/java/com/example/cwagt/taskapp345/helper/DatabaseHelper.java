@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.AppData.APP_NAME_LASTOPENED;
+import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.AppData.APP_TYPE_LASTOPENED;
 import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.Task.*;
 import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.Task._ID;
 import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.User.*;
@@ -72,11 +74,25 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 					", " + AVATAR_NAME_BACKGROUND + " " + AVATAR_TYPE_BACKGROUND +
 			")";
 
+
+	private static final String SQL_CREATE_APPDATA_TABLE =
+			"CREATE TABLE " + DatabaseColumnNames.AppData.TABLE_NAME + " (" +
+					DatabaseColumnNames.Task._ID + " INTEGER PRIMARY KEY" +
+					", " + APP_NAME_LASTOPENED + " " + APP_TYPE_LASTOPENED +
+			")";
+
 	private static final String SQL_DELETE_TASK_TABLE =
 			"DROP TABLE IF EXISTS " + DatabaseColumnNames.Task.TABLE_NAME;
 
 	private static final String SQL_DELETE_USER_TABLE =
 			"DROP TABLE IF EXISTS " + DatabaseColumnNames.User.TABLE_NAME;
+
+	private static final String SQL_DELETE_APPDATA_TABLE =
+			"DROP TABLE IF EXISTS " + DatabaseColumnNames.AppData.TABLE_NAME;
+
+	private static final int CURRENT_TIME = (int) (System.currentTimeMillis() / 1000);
+	private static final String SQL_INSERT_APPDATA_TABLE =
+			"INSERT INTO " + DatabaseColumnNames.AppData.TABLE_NAME + " (" + APP_NAME_LASTOPENED + ") VALUES (" + CURRENT_TIME + ")";
 
 	private DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -86,6 +102,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(SQL_CREATE_TASK_TABLE);
 		db.execSQL(SQL_CREATE_USER_TABLE);
+		db.execSQL(SQL_CREATE_APPDATA_TABLE);
+		db.execSQL(SQL_INSERT_APPDATA_TABLE);
 	}
 
 	@Override
@@ -93,6 +111,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		//delete old database
 		db.execSQL(SQL_DELETE_TASK_TABLE);
 		db.execSQL(SQL_DELETE_USER_TABLE);
+		db.execSQL(SQL_DELETE_APPDATA_TABLE);
+
 		//create new database
 		onCreate(db);
 	}
@@ -559,6 +579,73 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 		}else{
 			Log.e("DatabaseHelper", "Error: could not open database for deleting");
+		}
+		closeDatabase(context);
+		return success;
+	}
+
+	/* App data */
+
+	public static int getLastOpened(Context context){
+		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
+		SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+		int dateTime = 0;
+		String selection = _ID + " = ?";
+		String[] selectionArgs = new String[]{String.valueOf(1)};
+
+		if(checkDatabase(db)) {
+			Cursor cursor = db.query(
+					DatabaseColumnNames.User.TABLE_NAME,   // The table to query
+					null,             // The array of columns to return (pass null to get all)
+					selection,              // The columns for the WHERE clause
+					selectionArgs,          // The values for the WHERE clause
+					null,                   // don't group the rows
+					null,                   // don't filter by row groups
+					_ID               // The sort order
+			);
+
+			Log.d("DatabaseHelper", "Reading from table: " + DatabaseColumnNames.AppData.TABLE_NAME);
+			Log.d("DatabaseHelper", "Selection: " + selection);
+			Log.d("DatabaseHelper", "Arguments: " + Arrays.toString(selectionArgs));
+			Log.d("DatabaseHelper", "Number of items: " + cursor.getCount());
+
+			while (cursor.moveToNext()) {
+				dateTime = cursor.getInt(cursor.getColumnIndexOrThrow(APP_NAME_LASTOPENED));
+			}
+			cursor.close();
+
+		}else{
+			Log.e("DatabaseHelper", "Error: could not open database for reading");
+		}
+		closeDatabase(context);
+		return dateTime; //number of seconds since 1970-01-01 00:00:00
+	}
+
+	public Boolean setLastOpened(Context context, int dateTime){
+		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
+		SQLiteDatabase db = mDbHelper.getWritableDatabase();
+		boolean success = false;
+
+		if(checkDatabase(db)) {
+			ContentValues values = new ContentValues();
+			values.put(_ID, 1);
+			values.put(APP_NAME_LASTOPENED, dateTime);
+
+			Log.d("DatabaseHelper", "Updating table: " + DatabaseColumnNames.AppData.TABLE_NAME);
+			Log.d("DatabaseHelper", "Values: " + values);
+			Log.d("DatabaseHelper", "Where " + _ID + " = 1");
+
+			try {
+				int count = db.update(DatabaseColumnNames.AppData.TABLE_NAME, values,_ID + " = ?", new String[]{String.valueOf(1)});
+				if(count == 1) success = true;
+				else throw new Exception("[DatabaseHelper.updateUser] db.update method returned " + count + " rows");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}else{
+			Log.e("DatabaseHelper", "Error: could not open database for writing");
 		}
 		closeDatabase(context);
 		return success;

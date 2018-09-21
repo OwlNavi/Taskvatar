@@ -1,33 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="100">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:weightSum="100">
 
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/taskList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="60" />
+        android:layout_weight="90" />
 
     <Button
     android:id="@+id/buttonAddTask"
-    android:text="New Task"
+    android:text="@string/new_task"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/buttonDeleteTasks"
-        android:text="Delete Selected"
+        android:text="@string/delete_selected"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/submitTaskButton"
-        android:text="Finish"
+        android:text="@string/finish"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

@@ -40,7 +40,6 @@ public final class DatabaseColumnNames {
 		public static final String USER_NAME_POINTS = "points";
 		public static final String USER_TYPE_POINTS = "INTEGER";
 
-
 		public static final String AVATAR_NAME_BASE = "base";
 		public static final String AVATAR_TYPE_BASE = "INTEGER";
 		public static final String AVATAR_NAME_HAT = "hat";
@@ -64,6 +63,12 @@ public final class DatabaseColumnNames {
 		public static final String AVATAR_TYPE_LEFT_LEG_ROTATION = "INTEGER";
 		public static final String AVATAR_NAME_RIGHT_LEG_ROTATION = "rightLegRotation";
 		public static final String AVATAR_TYPE_RIGHT_LEG_ROTATION = "INTEGER";
-
 	}
+
+	public static class AppData implements BaseColumns {
+		public static final String TABLE_NAME = "appdata";
+		public static final String APP_NAME_LASTOPENED = "lastOpened";
+		public static final String APP_TYPE_LASTOPENED = "INTEGER";
+	}
+
 }

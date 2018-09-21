@@ -39,6 +39,10 @@ public class MainActivity extends AppCompatActivity  {
     //the current context
 	private Context context = MainActivity.this;
 
+	//alarm times
+	private long currentTime;
+	private Calendar updateTime = Calendar.getInstance();;
+
 	/**
 	 * Code executed when the main activity is loaded
 	 * @param savedInstanceState the savedInstanceState
@@ -99,9 +103,10 @@ public class MainActivity extends AppCompatActivity  {
 		for(Task task: taskList){
 			System.out.println("Setting alarm for " + task.getName() + " " + task.getTime());
 			String time = task.getTime();
-			setRecurringAlarm(context,
-					Integer.parseInt(time.split(":")[0]),
-					Integer.parseInt(time.split(":")[1]));
+			//setRecurringAlarm(context,
+			//		task.getName(),
+			//		Integer.parseInt(time.split(":")[0]),
+			//		Integer.parseInt(time.split(":")[1]));
 		}
 
 		//use the time to reset completed tasks
@@ -133,21 +138,37 @@ public class MainActivity extends AppCompatActivity  {
 	 * @param hour
 	 * @param minutes
 	 */
-	private void setRecurringAlarm(Context context, int hour, int minutes) {
+	private void setRecurringAlarm(Context context, String taskName, int hour, int minutes) {
 
-		Calendar updateTime = Calendar.getInstance();
 		updateTime.setTimeZone(TimeZone.getTimeZone("GMT"));
-		updateTime.set(Calendar.HOUR_OF_DAY, hour);
+		updateTime.set(Calendar.HOUR, hour);
 		updateTime.set(Calendar.MINUTE, minutes);
 		Intent alarm = new Intent(context, AlarmReceiver.class);
 		PendingIntent ringAlarm = PendingIntent.getBroadcast(context,
 				0, alarm, PendingIntent.FLAG_CANCEL_CURRENT);
 		AlarmManager alarms = (AlarmManager) context.getSystemService(
 				Context.ALARM_SERVICE);
-		//alarms.setInexactRepeating(AlarmManager.RTC_WAKEUP,
-		//		updateTime.getTimeInMillis(),
-		//		AlarmManager.INTERVAL_FIFTEEN_MINUTES, ringAlarm);
-		alarms.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, updateTime.getTimeInMillis(), ringAlarm);
+		alarms.setInexactRepeating(AlarmManager.RTC_WAKEUP,
+				updateTime.getTimeInMillis(),
+				AlarmManager.INTERVAL_FIFTEEN_MINUTES, ringAlarm);
+		//alarms.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, updateTime.getTimeInMillis(), ringAlarm);
+
+		//debug
+		long currentTime = Calendar.getInstance().getTimeInMillis();
+		System.out.println("Time remaining on " + taskName + " alarm: " + (updateTime.getTimeInMillis() - currentTime)/1000);
+
+		final Timer timer = new Timer(taskName);
+
+		timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+
+				long currentTime = Calendar.getInstance().getTimeInMillis();
+				System.out.println("Time remaining on " + Thread.currentThread().getName() + " alarm: " + (updateTime.getTimeInMillis() - currentTime)/1000);
+				if(updateTime.getTimeInMillis() - currentTime + 10000 < 0) timer.cancel();
+
+			}
+		}, 3000, 3*1000); //1000 is one second
 
 	}
 

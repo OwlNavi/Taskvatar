@@ -53,6 +53,8 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/textTaskTime"
                 android:hint="@string/task_time"
+                android:onClick="showTimePicker"
+                android:focusable="false"
                 android:inputType="time"/>
     </RelativeLayout>
     <Button
@@ -60,11 +62,4 @@
         android:text="@string/submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-    <Button
-            android:text="Time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/timeButton"
-            android:onClick="showTimePicker"
-    />
 </LinearLayout>

@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
@@ -16,8 +15,6 @@ import com.example.cwagt.taskapp345.R;
 import com.example.cwagt.taskapp345.helper.AddTaskInputValidator;
 import com.example.cwagt.taskapp345.helper.DatabaseHelper;
 import com.example.cwagt.taskapp345.object.Task;
-
-import java.util.ArrayList;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
@@ -57,6 +54,8 @@ public class AddTask extends FragmentActivity {
 			taskNameField.setText(task.getName());
 			taskDescriptionField.setText(task.getDescription());
 			taskTimeField.setText(task.getTime());
+
+
 
 			//Button code once the user has finished editing the text fields
 			final Button button = findViewById(R.id.submitButton);

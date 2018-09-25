@@ -201,7 +201,7 @@ public class MainActivity extends AppCompatActivity  {
 			ArrayList<Task> taskList = DatabaseHelper.readAllTasks(context, user.get_id());
 			for(Task task: taskList){
 				task.setStatus(Enums.Status.INCOMPLETE);
-				DatabaseHelper.updateTask(context, user.get_id(), task);
+				DatabaseHelper.updateTask(context, task.get_id(), task);
 			}
 		}
 	}

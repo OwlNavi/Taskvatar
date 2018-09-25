@@ -221,12 +221,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return readTasks(context, TASK_NAME_USER + " = ?", new String[]{String.valueOf(userID)});
 	}
 
-	public static boolean updateTask(Context context, Long Id, Task task) {
+	public static boolean updateTask(Context context, Long taskId, Task task) {
 
 		try{
-			if(Id == null) {
+			if(taskId == null) {
 				//return false;
-				throw new Exception("[DatabaseHelper.updateTask] Id is null. Task: " + task);
+				throw new Exception("[DatabaseHelper.updateTask] taskId is null. Task: " + task);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -250,10 +250,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			Log.d("DatabaseHelper", "Updating table: " + DatabaseColumnNames.Task.TABLE_NAME);
 			Log.d("DatabaseHelper", "Task: " + task);
 			Log.d("DatabaseHelper", "Values: " + values);
-			Log.d("DatabaseHelper", "Where " + _ID + " = " + String.valueOf(Id));
+			Log.d("DatabaseHelper", "Where " + _ID + " = " + String.valueOf(taskId));
 
 			try {
-				int count = db.update(DatabaseColumnNames.Task.TABLE_NAME, values, _ID + " = ?", new String[]{String.valueOf(Id)});
+				int count = db.update(DatabaseColumnNames.Task.TABLE_NAME, values, _ID + " = ?", new String[]{String.valueOf(taskId)});
 				if(count == 1) success = true;
 				else{
 					//Log.e("DatabaseHelper", "[DatabaseHelper.updateTask] There were " + count + " rows affected");

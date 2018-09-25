@@ -323,6 +323,7 @@ public class AvatarHome extends AppCompatActivity {
                 startActivity(homeIntent);
                 //Go to main Activity
             case android.R.id.home:
+
                 finish();
         }
 

@@ -61,7 +61,8 @@ public class Avatar_Fragment extends Fragment {
 				.setTitle("Missing body part");
 		builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
-				// User clicked OK button
+
+
 
 			}
 		});
@@ -103,10 +104,6 @@ public class Avatar_Fragment extends Fragment {
 			} catch(Exception e) {
 				Log.e("error","hat");
 				message += "A hat!\n";
-				if(getActivity() instanceof MainActivity) {
-					Intent avatarIntent = new Intent(getActivity(), AvatarHome.class);
-					startActivity(avatarIntent);
-				}
 			}
 
 			try{
@@ -143,8 +140,16 @@ public class Avatar_Fragment extends Fragment {
 
 			if(!message.equals("")){
 				//errors found
-				showMessage("Avatar is missing: \n" + message);
+				if(getActivity() instanceof MainActivity) {
+					Intent avatarIntent = new Intent(getActivity(), AvatarHome.class);
+					startActivity(avatarIntent);
+				} else {
+					showMessage("Avatar is missing: \n" + message);
+
+				}
 				message = "";
+
+
 			}
 
 			//now for rotations

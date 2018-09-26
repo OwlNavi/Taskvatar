@@ -103,10 +103,10 @@ public class MainActivity extends AppCompatActivity  {
 		for(Task task: taskList){
 			System.out.println("Setting alarm for " + task.getName() + " " + task.getTime());
 			String time = task.getTime();
-			//setRecurringAlarm(context,
-			//		task.getName(),
-			//		Integer.parseInt(time.split(":")[0]),
-			//		Integer.parseInt(time.split(":")[1]));
+			setRecurringAlarm(context,
+					task.getName(),
+					Integer.parseInt(time.split(":")[0]),
+					Integer.parseInt(time.split(":")[1]));
 		}
 
 		//use the time to reset completed tasks
@@ -140,9 +140,16 @@ public class MainActivity extends AppCompatActivity  {
 	 */
 	private void setRecurringAlarm(Context context, String taskName, int hour, int minutes) {
 
-		updateTime.setTimeZone(TimeZone.getTimeZone("GMT"));
+		updateTime.setTimeZone(TimeZone.getTimeZone("Pacific/Auckland"));
+
+		hour -= 12;
+		System.out.println("hour: " + hour);
 		updateTime.set(Calendar.HOUR, hour);
 		updateTime.set(Calendar.MINUTE, minutes);
+		if(updateTime.getTimeInMillis() - currentTime + 60*60*1000 < 0){
+			hour+=24;
+			updateTime.set(Calendar.HOUR, hour);
+		}
 		Intent alarm = new Intent(context, AlarmReceiver.class);
 		PendingIntent ringAlarm = PendingIntent.getBroadcast(context,
 				0, alarm, PendingIntent.FLAG_CANCEL_CURRENT);
@@ -150,7 +157,7 @@ public class MainActivity extends AppCompatActivity  {
 				Context.ALARM_SERVICE);
 		alarms.setInexactRepeating(AlarmManager.RTC_WAKEUP,
 				updateTime.getTimeInMillis(),
-				AlarmManager.INTERVAL_FIFTEEN_MINUTES, ringAlarm);
+				AlarmManager.INTERVAL_DAY, ringAlarm);
 		//alarms.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, updateTime.getTimeInMillis(), ringAlarm);
 
 		//debug
@@ -165,10 +172,10 @@ public class MainActivity extends AppCompatActivity  {
 
 				long currentTime = Calendar.getInstance().getTimeInMillis();
 				System.out.println("Time remaining on " + Thread.currentThread().getName() + " alarm: " + (updateTime.getTimeInMillis() - currentTime)/1000);
-				if(updateTime.getTimeInMillis() - currentTime + 10000 < 0) timer.cancel();
+				if(updateTime.getTimeInMillis() - currentTime + 60000 < 0) timer.cancel();
 
 			}
-		}, 3000, 3*1000); //1000 is one second
+		}, 3000, 1*1000); //1000 is one second
 
 	}
 

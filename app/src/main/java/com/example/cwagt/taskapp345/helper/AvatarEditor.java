@@ -89,19 +89,19 @@ public class AvatarEditor {
      * @param itemSelected the name of the item selected
      */
     private void setBase(String itemSelected) {
+    	Integer bodyPart = 0;
     	switch(itemSelected) {
 			case "Surprised":
-				avatar_fragment.setBase(R.drawable.surprised);
-				bodyParts.put("base", R.drawable.surprised);
+				bodyPart = R.drawable.surprised;
 				break;
 			case "Silly":
-				avatar_fragment.setBase(R.drawable.base_red);
-				bodyParts.put("base", R.drawable.base_red);
+				bodyPart = R.drawable.base_red;
 				break;
 			default:
 				Log.e("AvatarEditor", "Error: Cannot set base to " + itemSelected + " because it does not exist");
 		}
-
+		avatar_fragment.setBase(bodyPart);
+		bodyParts.put("base", bodyPart);
         saveAvatar();
     }
 
@@ -110,23 +110,22 @@ public class AvatarEditor {
 	 * @param itemSelected the name of the item selected
 	 */
 	private void setHat(String itemSelected) {
+		Integer bodyPart = 0;
 		switch(itemSelected){
 			case "Crown":
-				avatar_fragment.setHat(R.drawable.hat_crown);
-				bodyParts.put("hat", R.drawable.hat_crown);
+				bodyPart = R.drawable.hat_crown;
 				break;
 			case "Pirate":
-				avatar_fragment.setHat(R.drawable.hat_pirate);
-				bodyParts.put("hat", R.drawable.hat_pirate);
+				bodyPart = R.drawable.hat_pirate;
 				break;
 			case "Roses":
-				avatar_fragment.setHat(R.drawable.hat_rose);
-				bodyParts.put("hat", R.drawable.hat_rose);
+				bodyPart = R.drawable.hat_rose;
 				break;
 			default:
 				Log.e("helper.AvatarEditor", "Error: Cannot set hat to " + itemSelected + " because it does not exist");
 		}
-
+		avatar_fragment.setHat(bodyPart);
+		bodyParts.put("hat", bodyPart);
 		saveAvatar();
 	}
 
@@ -135,27 +134,25 @@ public class AvatarEditor {
 	 * @param itemSelected the name of the item selected
 	 */
 	private void setLeftArm(String itemSelected) {
+		Integer bodyPart = 0;
 		switch(itemSelected){
 			case "Strong":
-				avatar_fragment.setLeftArm(R.drawable.left_arm_muscly);
-				bodyParts.put("leftArm", R.drawable.left_arm_muscly);
+				bodyPart = R.drawable.left_arm_muscly;
 				break;
 			case "Robot":
-				avatar_fragment.setLeftArm(R.drawable.left_arm_robot);
-				bodyParts.put("leftArm", R.drawable.left_arm_robot);
+				bodyPart = R.drawable.left_arm_robot;
 				break;
 			case "Cartoon":
-				avatar_fragment.setLeftArm(R.drawable.left_arm);
-				bodyParts.put("leftArm", R.drawable.left_arm);
+				bodyPart = R.drawable.left_arm;
 				break;
 			case "Princess":
-				avatar_fragment.setLeftArm(R.drawable.left_arm_princess);
-				bodyParts.put("leftArm", R.drawable.left_arm_princess);
+				bodyPart = R.drawable.left_arm_princess;
 				break;
 			default:
 				Log.e("AvatarEditor", "Error: Cannot set left arm to " + itemSelected + " because it does not exist");
 		}
-
+		avatar_fragment.setLeftArm(bodyPart);
+		bodyParts.put("leftArm", bodyPart);
 		saveAvatar();
 	}
 
@@ -164,26 +161,25 @@ public class AvatarEditor {
 	 * @param itemSelected the item selected's name
 	 */
 	private void setRightArm(String itemSelected) {
+		Integer bodyPart = 0;
 		switch(itemSelected){
 			case "Strong":
-				avatar_fragment.setRightArm(R.drawable.right_arm_muscly);
-				bodyParts.put("rightArm", R.drawable.right_arm_muscly);
+				bodyPart = R.drawable.right_arm_muscly;
 				break;
 			case "Robot":
-				avatar_fragment.setRightArm(R.drawable.right_arm_robot);
-				bodyParts.put("rightArm", R.drawable.right_arm_robot);
+				bodyPart = R.drawable.right_arm_robot;
 				break;
 			case "Cartoon":
-				avatar_fragment.setRightArm(R.drawable.right_arm);
-				bodyParts.put("rightArm", R.drawable.right_arm);
+				bodyPart = R.drawable.right_arm;
 				break;
 			case "Princess":
-				avatar_fragment.setRightArm(R.drawable.right_arm_princess);
-				bodyParts.put("rightArm", R.drawable.right_arm_princess);
+				bodyPart = R.drawable.right_arm_princess;
 				break;
 			default:
 				Log.e("AvatarEditor", "Error: Cannot set right arm to " + itemSelected + " because it does not exist");
 		}
+		avatar_fragment.setRightArm(bodyPart);
+		bodyParts.put("rightArm", bodyPart);
 		saveAvatar();
 	}
 
@@ -192,27 +188,25 @@ public class AvatarEditor {
      * @param itemSelected the name of the item selected
      */
     private void setLeftLeg(String itemSelected) {
+		Integer bodyPart = 0;
     	switch(itemSelected){
 			case "Strong":
-				avatar_fragment.setLeftLeg(R.drawable.left_leg_muscly);
-				bodyParts.put("leftLeg", R.drawable.left_leg_muscly);
+				bodyPart = R.drawable.left_leg_muscly;
 				break;
 			case "Robot":
-				avatar_fragment.setLeftLeg(R.drawable.left_leg_robot);
-				bodyParts.put("leftLeg", R.drawable.left_leg_robot);
+				bodyPart = R.drawable.left_leg_robot;
 				break;
 			case "Cartoon":
-				avatar_fragment.setLeftLeg(R.drawable.left_leg);
-				bodyParts.put("leftLeg", R.drawable.left_leg);
+				bodyPart = R.drawable.left_leg;
 				break;
 			case "Princess":
-				avatar_fragment.setLeftLeg(R.drawable.left_leg_princess);
-				bodyParts.put("leftLeg", R.drawable.left_leg_princess);
+				bodyPart = R.drawable.left_leg_princess;
 				break;
 			default:
 				Log.e("AvatarEditor", "Error: Cannot set left leg to " + itemSelected + " because it does not exist");
         }
-
+		avatar_fragment.setLeftLeg(bodyPart);
+		bodyParts.put("leftLeg", bodyPart);
         saveAvatar();
     }
 
@@ -221,27 +215,25 @@ public class AvatarEditor {
      * @param itemSelected the name of the item selected
      */
     private void setRightLeg(String itemSelected) {
+		Integer bodyPart = 0;
     	switch(itemSelected){
 			case "Strong":
-				avatar_fragment.setRightLeg(R.drawable.right_leg_muscly);
-				bodyParts.put("rightLeg", R.drawable.right_leg_muscly);
+				bodyPart = R.drawable.right_leg_muscly;
 				break;
 			case "Robot":
-				avatar_fragment.setRightLeg(R.drawable.right_leg_robot);
-				bodyParts.put("rightLeg", R.drawable.right_leg_robot);
+				bodyPart = R.drawable.right_leg_robot;
 				break;
 			case "Cartoon":
-				avatar_fragment.setRightLeg(R.drawable.right_leg);
-				bodyParts.put("rightLeg", R.drawable.right_leg);
+				bodyPart = R.drawable.right_leg;
 				break;
 			case "Princess":
-				avatar_fragment.setRightLeg(R.drawable.right_leg_princess);
-				bodyParts.put("rightLeg", R.drawable.right_leg_princess);
+				bodyPart = R.drawable.right_leg_princess;
 				break;
 			default:
 				Log.e("AvatarEditor", "Error: Cannot set right leg to " + itemSelected + " because it does not exist");
         }
-
+		avatar_fragment.setRightLeg(bodyPart);
+		bodyParts.put("rightLeg", bodyPart);
         saveAvatar();
     }
 
@@ -250,27 +242,25 @@ public class AvatarEditor {
 	 * @param itemSelected the name of the item selected
 	 */
 	private void setBackground(String itemSelected) {
+		Integer bodyPart = 0;
 		switch(itemSelected){
 			case "Beach":
-				avatar_fragment.setBackground(R.drawable.beach);
-				bodyParts.put("background", R.drawable.beach);
+				bodyPart = R.drawable.beach;
 				break;
 			case "Desert":
-				avatar_fragment.setBackground(R.drawable.desert);
-				bodyParts.put("background", R.drawable.desert);
+				bodyPart = R.drawable.desert;
 				break;
 			case "Jungle":
-				avatar_fragment.setBackground(R.drawable.jungle);
-				bodyParts.put("background", R.drawable.jungle);
+				bodyPart = R.drawable.jungle;
 				break;
 			case "White":
-				avatar_fragment.setBackground(R.drawable.white);
-				bodyParts.put("background", R.drawable.white);
+				bodyPart = R.drawable.white;
 				break;
 			default:
 				Log.e("AvatarEditor", "Error: Cannot set base to " + itemSelected + " because it does not exist");
 		}
-
+		avatar_fragment.setBackground(bodyPart);
+		bodyParts.put("background", bodyPart);
 		saveAvatar();
 	}
 

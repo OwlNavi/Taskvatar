@@ -23,8 +23,11 @@ import java.util.HashMap;
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 /**
- * Reusable fragment used to display the Avatar in Main Activity and AvatarHome
+ * Reusable fragment used to display the Avatar in Main Activity and AvatarHome.'
+ *
  */
+
+
 
 public class Avatar_Fragment extends Fragment {
 	private boolean avatarInit = false;
@@ -41,10 +44,21 @@ public class Avatar_Fragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
     }
-
+	/**
+	 * Default constructor for the fragment class
+	 *
+	 */
     public Avatar_Fragment() {
 
     }
+
+	/**
+	 * Code executed when the activity which contains the fragment loads.
+	 * @param inflater class reading the xml file.
+	 * @param container view fragment is inserted into.
+	 * @param savedInstanceState the savedInstanceState.
+	 * @return view
+	 */
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -53,6 +67,12 @@ public class Avatar_Fragment extends Fragment {
         openAvatarHome(view);
         return view;
     }
+	/**
+	 * Alerts the user to which bodyparts they are missing.
+	 * @param message String message assoicated with the missing body
+	 *                part.
+	 *
+	 */
 
     private void showMessage(String message){
 		//show the user a message to let them know they must complete validation
@@ -69,7 +89,11 @@ public class Avatar_Fragment extends Fragment {
 		AlertDialog dialog = builder.create();
 		dialog.show();
 	}
-
+	/**
+	 * Called when the fragment resumes focus.
+	 * Sets the avatar display and checks for missing parts.
+	 *
+	 */
     @Override
     public void onResume() {
         super.onResume();
@@ -171,8 +195,9 @@ public class Avatar_Fragment extends Fragment {
     }
 
     /**
-     * Initiate Avatar --> allows changes to ImageViews
-     *
+     * Defines references to the ImageViews associated
+	 * with bodyParts.
+     * @param view view
      * */
     private boolean initAvatar(View view) {
         this.base = view.findViewById(R.id.base);
@@ -182,7 +207,6 @@ public class Avatar_Fragment extends Fragment {
         this.rightLeg = view.findViewById(R.id.right_leg);
         this.rightArm = view.findViewById(R.id.right_arm);
         this.background = view.findViewById(R.id.avatar_container);
-        //rotations are 0 degrees
         return true;
     }
 
@@ -208,8 +232,8 @@ public class Avatar_Fragment extends Fragment {
     }
 
     /**
-     * onClickListener for clicking the avatar
-     * Takes a view, returns void
+     * Click Listener handler for avatar
+     * @param view view
      * */
     private void openAvatarHome(View view) {
 

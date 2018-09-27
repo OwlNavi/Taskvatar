@@ -1,2 +1,2 @@
-# 345_app
-COSC345 Application
+# Taskvatar
+Taskvatar Android Application for task managment

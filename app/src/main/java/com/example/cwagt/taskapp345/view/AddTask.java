@@ -177,6 +177,10 @@ public class AddTask extends FragmentActivity {
 
     }
 
+	/**
+	 * Displays a time picker to the user.
+	 * @param view the view
+	 */
     public void showTimePicker(View view) {
 		DialogFragment fragment = new TimePickerFragment();
 		fragment.show(getFragmentManager(),"hello");

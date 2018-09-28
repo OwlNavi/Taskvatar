@@ -119,6 +119,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 	/* Tasks */
 
+	/**
+	 * Adds a new task to the database
+	 * @param context App context
+	 * @param task Java object to create
+	 * @return The ID of the newly created item
+	 */
 	public static long createTask(Context context, Task task){
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
@@ -154,6 +160,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return newRowId;
 	}
 
+	/**
+	 * Gets existing tasks from the database
+	 * @param context App context
+	 * @param selection Column names with question mark placeholders for where clause e.g. _ID + " = ? AND " + TASK_NAME_TEXT + " = ?"
+	 * @param selectionArgs Values for where clause, will replace placeholders e.g. new String[]{String.valueOf(taskID), String.valueOf(taskName)}
+	 * @return Collection of tasks
+	 */
 	public static ArrayList<Task> readTasks(Context context, String selection, String[] selectionArgs) {
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getReadableDatabase();
@@ -210,23 +223,42 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return tasks;
 	}
 
+	/**
+	 * Gets existing tasks from the database
+	 * @param context App context
+	 * @param userID The unique ID of the user
+	 * @return Collection of tasks belonging to that user
+	 */
+	public static ArrayList<Task> readAllTasks(Context context, Long userID) {
+		Log.d("DatabaseHelper", "Reading all tasks where userID = " + userID);
+		return readTasks(context, TASK_NAME_USER + " = ?", new String[]{String.valueOf(userID)});
+	}
+
+	/**
+	 * Gets an existing task from the database
+	 * @param context App context
+	 * @param taskID The unique ID of the task
+	 * @return The task with the ID
+	 */
 	public static Task readTask(Context context, Long taskID) {
 		Log.d("DatabaseHelper", "Reading task where taskID = " + taskID);
 		ArrayList<Task> tasks = readTasks(context, _ID + " = ?", new String[]{String.valueOf(taskID)});
 		return tasks.get(0);
 	}
 
-	public static ArrayList<Task> readAllTasks(Context context, Long userID) {
-		Log.d("DatabaseHelper", "Reading all tasks where userID = " + userID);
-		return readTasks(context, TASK_NAME_USER + " = ?", new String[]{String.valueOf(userID)});
-	}
-
-	public static boolean updateTask(Context context, Long taskId, Task task) {
+	/**
+	 * Updates an existing task with new data
+	 * @param context App context
+	 * @param taskID Unique ID of task, immutable
+	 * @param task Task object containing new data
+	 * @return True on successful update, false on failure
+	 */
+	public static boolean updateTask(Context context, Long taskID, Task task) {
 
 		try{
-			if(taskId == null) {
+			if(taskID == null) {
 				//return false;
-				throw new Exception("[DatabaseHelper.updateTask] taskId is null. Task: " + task);
+				throw new Exception("[DatabaseHelper.updateTask] taskID is null. Task: " + task);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -250,10 +282,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			Log.d("DatabaseHelper", "Updating table: " + DatabaseColumnNames.Task.TABLE_NAME);
 			Log.d("DatabaseHelper", "Task: " + task);
 			Log.d("DatabaseHelper", "Values: " + values);
-			Log.d("DatabaseHelper", "Where " + _ID + " = " + String.valueOf(taskId));
+			Log.d("DatabaseHelper", "Where " + _ID + " = " + String.valueOf(taskID));
 
 			try {
-				int count = db.update(DatabaseColumnNames.Task.TABLE_NAME, values, _ID + " = ?", new String[]{String.valueOf(taskId)});
+				int count = db.update(DatabaseColumnNames.Task.TABLE_NAME, values, _ID + " = ?", new String[]{String.valueOf(taskID)});
 				if(count == 1) success = true;
 				else{
 					//Log.e("DatabaseHelper", "[DatabaseHelper.updateTask] There were " + count + " rows affected");
@@ -272,6 +304,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return success;
 	}
 
+	/**
+	 * Removes a task from the database
+	 * @param context App context
+	 * @param task The task to delete
+	 * @return The number of tasks deleted
+	 */
 	public static int deleteTask(Context context, Task task){
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
@@ -309,7 +347,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return rowsAffected;
 	}
 
-	public static int deleteTask(Context context, Long ID){
+	/**
+	 * Removes a task from the database
+	 * @param context App context
+	 * @param taskID The unique ID of the task to delete
+	 * @return The number of tasks deleted
+	 */
+	public static int deleteTask(Context context, Long taskID){
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
 		int rowsAffected = 0;
@@ -319,10 +363,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			String whereClause = _ID + " = ?";
 
 			String[] values = new String[1];
-			values[0] = String.valueOf(ID);
+			values[0] = String.valueOf(taskID);
 
 			Log.d("DatabaseHelper", "Deleting task from table: " + DatabaseColumnNames.Task.TABLE_NAME);
-			Log.d("DatabaseHelper", "Where " + _ID + " = " + ID);
+			Log.d("DatabaseHelper", "Where " + _ID + " = " + taskID);
 
 			try {
 				rowsAffected = db.delete(
@@ -341,8 +385,16 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return rowsAffected;
 	}
 
+
+
 	/* Users */
 
+	/**
+	 * Adds a new user to the database
+	 * @param context App context
+	 * @param user Java object to create
+	 * @return The ID of the newly created item
+	 */
 	public static long createUser(Context context, User user){
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
@@ -390,6 +442,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return newRowId;
 	}
 
+	/**
+	 * Gets existing tasks from the database
+	 * @param context App context
+	 * @param selection Column names with question mark placeholders for where clause e.g. _ID + " = ? AND " + USER_NAME_TEXT + " = ?"
+	 * @param selectionArgs Values for where clause, will replace placeholders e.g. new String[]{String.valueOf(userID), String.valueOf(userName)}
+	 * @return Collection of users
+	 */
 	public static ArrayList<User> readUsers(Context context, String selection, String[] selectionArgs) {
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getReadableDatabase();
@@ -450,6 +509,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return users;
 	}
 
+	/**
+	 * Gets an existing user from the database
+	 * @param context App context
+	 * @param userID The unique ID of the user
+	 * @return The user with the ID
+	 */
 	public static User readUser(Context context, Long userID) {
 		String selection = _ID + " = ?";
 		String[] selectionArgs = new String[]{Long.toString(userID)};
@@ -458,11 +523,23 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return users.get(0);
 	}
 
+	/**
+	 * Gets existing users and associated avatar from the database
+	 * @param context App context
+	 * @return Collection of users. Each user has an avatar
+	 */
 	public static ArrayList<User> readAllUsers(Context context) {
 		Log.d("DatabaseHelper", "Reading all users");
 		return readUsers(context, "", new String[]{});
 	}
 
+	/**
+	 * Updates an existing user with new data
+	 * @param context App context
+	 * @param userID Unique ID of user, immutable
+	 * @param user User object containing new data
+	 * @return True on successful update, false on failure
+	 */
 	public static boolean updateUser(Context context, Long userID, User user){
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
@@ -511,6 +588,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return success;
 	}
 
+	/**
+	 * Removes a task from the database
+	 * @param context App context
+	 * @param user The user object to delete
+	 * @return The number of users deleted
+	 */
 	public static int deleteUser(Context context, User user){
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
@@ -552,6 +635,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return success;
 	}
 
+	/**
+	 * Removes a task from the database
+	 * @param context App context
+	 * @param userID The unique ID of the user to delete
+	 * @return The number of users deleted
+	 */
 	public static int deleteUser(Context context, Long userID){
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
@@ -584,8 +673,15 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return success;
 	}
 
+
+
 	/* App data */
 
+	/**
+	 * Gets the time the app was last opened
+	 * @param context App context
+	 * @return The number of seconds since 1970-01-01 00:00:00
+	 */
 	public static int getLastOpened(Context context){
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getReadableDatabase();
@@ -622,7 +718,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return dateTime; //number of seconds since 1970-01-01 00:00:00
 	}
 
-	public Boolean setLastOpened(Context context, int dateTime){
+	/**
+	 * Saves the time when the app was last opened
+	 * @param context App context
+	 * @param dateTime The number of seconds since 1970-01-01 00:00:00
+	 * @return True on successful update, false on failure
+	 */
+	private Boolean setLastOpened(Context context, int dateTime){
 		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
 		boolean success = false;
@@ -649,6 +751,16 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		}
 		closeDatabase(context);
 		return success;
+	}
+
+	/**
+	 * Saves the current time when the app was last opened
+	 * @param context App context
+	 * @return True on successful update, false on failure
+	 */
+	public Boolean setLastOpened(Context context){
+		int dateTime = (int) (System.currentTimeMillis() / 1000);
+		return setLastOpened(context, dateTime);
 	}
 
 	/* Auxiliary */

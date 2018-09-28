@@ -759,8 +759,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	 * @return True on successful update, false on failure
 	 */
 	public Boolean setLastOpened(Context context){
-		int dateTime = (int) (System.currentTimeMillis() / 1000);
-		return setLastOpened(context, dateTime);
+		return setLastOpened(context, CURRENT_TIME);
 	}
 
 	/* Auxiliary */

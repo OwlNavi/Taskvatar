@@ -311,40 +311,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	 * @return The number of tasks deleted
 	 */
 	public static int deleteTask(Context context, Task task){
-		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
-		SQLiteDatabase db = mDbHelper.getWritableDatabase();
-		int rowsAffected = 0;
-
-		if(checkDatabase(db)) {
-
-			String whereClause = TASK_NAME_TEXT + " = ?" +
-					" AND " + TASK_NAME_DESCRIPTION + " = ?" +
-					" AND " + TASK_NAME_TIME + " = ?";
-
-			String[] values = new String[3];
-			values[0] = task.getName();
-			values[1] = task.getDescription();
-			values[2] = task.getTime();
-
-			Log.d("DatabaseHelper", "Deleting task from table: " + DatabaseColumnNames.Task.TABLE_NAME);
-			Log.d("DatabaseHelper", "Task: " + task);
-			Log.d("DatabaseHelper", "Values: " + Arrays.toString(values));
-
-			try {
-				rowsAffected = db.delete(
-						DatabaseColumnNames.Task.TABLE_NAME,
-						whereClause,
-						values
-				);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-		}else{
-			Log.e("DatabaseHelper", "Error: could not open database for deleting");
-		}
-		closeDatabase(context);
-		return rowsAffected;
+		return deleteTask(context, task.get_id());
 	}
 
 	/**
@@ -589,54 +556,17 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	}
 
 	/**
-	 * Removes a task from the database
+	 * Removes a user from the database
 	 * @param context App context
 	 * @param user The user object to delete
 	 * @return The number of users deleted
 	 */
 	public static int deleteUser(Context context, User user){
-		DatabaseHelper mDbHelper = new DatabaseHelper(context); //needs SQLiteOpenHelper
-		SQLiteDatabase db = mDbHelper.getWritableDatabase();
-		int success = -1;
-
-		if(checkDatabase(db)) {
-
-			String whereClause = _ID + " = ?"
-					+ " AND " + USER_NAME_NAME + " = ?"
-					+ " AND " + USER_NAME_DESCRIPTION + " = ?"
-					+ " AND " + USER_NAME_POINTS + " = ?"
-			;
-
-			String[] values = new String[4];
-			int i = 0;
-			values[i++] = "" + user.get_id();
-			values[i++] = user.getUserName();
-			values[i++] = user.getUserDescription();
-			values[i] = "" + user.getPoints();
-
-			Log.d("DatabaseHelper", "Deleting user from table: " + DatabaseColumnNames.User.TABLE_NAME);
-			Log.d("DatabaseHelper", "User: " + user);
-			Log.d("DatabaseHelper", "Values: " + Arrays.toString(values));
-
-			try {
-				success = db.delete(
-						DatabaseColumnNames.User.TABLE_NAME,
-						whereClause,
-						values
-				);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-		}else{
-			Log.e("DatabaseHelper", "Error: could not open database for deleting");
-		}
-		closeDatabase(context);
-		return success;
+		return deleteUser(context, user.get_id());
 	}
 
 	/**
-	 * Removes a task from the database
+	 * Removes a user from the database
 	 * @param context App context
 	 * @param userID The unique ID of the user to delete
 	 * @return The number of users deleted

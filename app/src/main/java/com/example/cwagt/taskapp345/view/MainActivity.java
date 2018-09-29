@@ -2,8 +2,10 @@ package com.example.cwagt.taskapp345.view;
 
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
@@ -84,6 +86,23 @@ public class MainActivity extends AppCompatActivity  {
 		*/
 		//Get a list of tasks for the current user
 		final List<Task> taskList = DatabaseHelper.readAllTasks(context, userID);
+
+		if(taskList.isEmpty()){
+			//show message
+			AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+			builder.setMessage("You don't have any tasks. I will now take you to the Add Tasks page")
+					.setTitle("Task Check");
+			builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					// User clicked OK button
+					Intent editTaskIntent = new Intent(MainActivity.this, AddTask.class);
+					finish();
+					startActivity(editTaskIntent);
+				}
+			});
+			AlertDialog dialog = builder.create();
+			dialog.show();
+		}
 
 		//display the task list in the recycler view
 		taskRecyclerView = findViewById(R.id.taskList);

@@ -24,3 +24,6 @@ Set it up in a way that it could be used for anyone who wants to manage their sc
 * When the child completes tasks, they earn points for unlocking new features for the avatar e.g. new eyes, mouth, clothes, etc
 * From the child's perspective, the main point of the app is to customise an avatar (it’s at the top of the app)
 * From the parent/caregivers perspective, the main point of the app is for the child to complete tasks, and the avatar is just a nice add-on to keep the child focused or entertained
+
+## Mock up:
+![Mock up](https://github.com/OwlNavi/Taskvatar/blob/master/mockup.png)

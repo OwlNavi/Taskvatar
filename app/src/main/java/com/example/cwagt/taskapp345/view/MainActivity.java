@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity  {
 
 	//alarm times
 	private long currentTime;
-	private Calendar updateTime = Calendar.getInstance();;
+	private Calendar updateTime = Calendar.getInstance();
 
 	/**
 	 * Code executed when the main activity is loaded
@@ -153,9 +153,9 @@ public class MainActivity extends AppCompatActivity  {
 
 	/**
 	 * This section of code sets up alarms for each task to remind users they need to complete the task
-	 * @param context
-	 * @param hour
-	 * @param minutes
+	 * @param context app context
+	 * @param hour the hour
+	 * @param minutes number of minutes
 	 */
 	private void setRecurringAlarm(Context context, String taskName, int hour, int minutes) {
 
@@ -174,10 +174,12 @@ public class MainActivity extends AppCompatActivity  {
 				0, alarm, PendingIntent.FLAG_CANCEL_CURRENT);
 		AlarmManager alarms = (AlarmManager) context.getSystemService(
 				Context.ALARM_SERVICE);
-		alarms.setInexactRepeating(AlarmManager.RTC_WAKEUP,
-				updateTime.getTimeInMillis(),
-				AlarmManager.INTERVAL_DAY, ringAlarm);
-		//alarms.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, updateTime.getTimeInMillis(), ringAlarm);
+		if (alarms != null) {
+			//alarms.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, updateTime.getTimeInMillis(), ringAlarm);
+			alarms.setInexactRepeating(AlarmManager.RTC_WAKEUP,
+					updateTime.getTimeInMillis(),
+					AlarmManager.INTERVAL_DAY, ringAlarm);
+		}
 
 		//debug
 		long currentTime = Calendar.getInstance().getTimeInMillis();
@@ -254,6 +256,7 @@ public class MainActivity extends AppCompatActivity  {
 		switch (item.getItemId()) {
 			//Check if user clicked on the refresh button
 			case R.id.menu_refresh:
+			case R.id.menu_home:
 				//go back to main activity
 				Intent refreshIntent = new Intent(this, MainActivity.class);
 				finish();
@@ -270,8 +273,9 @@ public class MainActivity extends AppCompatActivity  {
 			//Got to avatar screen
 			case R.id.menu_avatar:
 				Intent avatarIntent = new Intent(this, AvatarHome.class);
+				//finish();
 				startActivity(avatarIntent);
-			break;
+				break;
 
 			//Go to edit task screen
 			case R.id.menu_tasks:
@@ -279,10 +283,7 @@ public class MainActivity extends AppCompatActivity  {
 				finish();
 				startActivity(editTaskIntent);
 				break;
-			case R.id.menu_home:
-				Intent homeIntent = new Intent(this, MainActivity.class);
-				finish();
-				startActivity(homeIntent);
+
 			case android.R.id.home:
 				//onDestroy();
 				finish();

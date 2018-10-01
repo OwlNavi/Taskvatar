@@ -5,6 +5,14 @@ Taskvatar Android Application for task managment
 * Josh April miho19@hotmail.co.nz 4741712
 * Shaun Henderson kurdtpage@gmail.com 6484285
 
+# Application Overview
+* Generate a customisable task list
+* Users notified through an alarm system tailored to each task
+* Reoccurring tasks for convenience
+* Individuality through personal user accounts
+* Each user account is associated with a customisable Avatar
+
+
 # Project Idea - Home Based Daily Task Manager
 ## Initial idea:
 “I had an idea for our app. I'm a little older than most students, and I have 2 children. My son William has slight ADHD and autism. Think Sheldon from Big Bang Theory. One thing that I find for him is that he really needs a very regimented sand strict schedule (I'm not talking about a calendar app!). Everything needs to be spelled out, and minimal surprises (he just can't cope). So the app would be task based, have you eaten breakfast? have you brushed your teeth? have you put dirty clothes in the hamper? done homework etc etc. Tick off the ones that are complete (in a fun way) then maybe message another device that's owned by the parent/caregiver when tasks are completed or not completed. There could be a reward system for when tasks are done.”

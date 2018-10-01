@@ -7,10 +7,11 @@ Taskvatar Android Application for task managment
 
 # Appilcation Overview
 * Generate a customisable task list
-* Users notifed through an alarm system tailored to each task
-* Reoccurring tasks for convenience 
+* Users notified through an alarm system tailored to each task
+* Reoccurring tasks for convenience
 * Individuality through personal user accounts
-* Each user account is assoicated with a customisable Avatar
+* Each user account is associated with a customisable Avatar
+
 
 # Project Idea - Home Based Daily Task Manager
 ## Initial idea:

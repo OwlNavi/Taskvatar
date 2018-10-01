@@ -5,7 +5,7 @@ Taskvatar Android Application for task managment
 * Josh April miho19@hotmail.co.nz 4741712
 * Shaun Henderson kurdtpage@gmail.com 6484285
 
-# Appilcation Overview
+# Application Overview
 * Generate a customisable task list
 * Users notified through an alarm system tailored to each task
 * Reoccurring tasks for convenience

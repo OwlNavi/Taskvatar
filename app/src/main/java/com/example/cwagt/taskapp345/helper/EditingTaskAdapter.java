@@ -18,7 +18,7 @@ import com.example.cwagt.taskapp345.view.AddTask;
 import java.util.List;
 
 /**
- * This class manages the Task RecyclerView list.
+ * This class manages the Task RecyclerView list on the EditTask Activity
  * We use this class to populate and handle the list items.
  */
 public class EditingTaskAdapter extends RecyclerView.Adapter<EditingTaskAdapter.MyViewHolder> {
@@ -96,8 +96,8 @@ public class EditingTaskAdapter extends RecyclerView.Adapter<EditingTaskAdapter.
 
         final Button editButton = itemView.findViewById(R.id.edit_task_button);
 
-
-
+        //set the onclick event
+        //when we click on a task we want it to be 'selected' for deletion
         itemView.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -110,7 +110,7 @@ public class EditingTaskAdapter extends RecyclerView.Adapter<EditingTaskAdapter.
                 String taskName = taskNameTextView.getText().toString();
 
                 System.out.println("Clicked on " + taskName);
-
+                //find reference to the task clicked on
                 for(Task task_temp: taskList){
                     if(task_temp.getName().equals(taskName)){
                         task = task_temp;
@@ -129,12 +129,13 @@ public class EditingTaskAdapter extends RecyclerView.Adapter<EditingTaskAdapter.
                 } else {
                     selected.remove(task);
                     view.setBackgroundColor(Color.WHITE);
-
                 }
 
 
             }
         });
+
+        //set edit button onclick listener
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -151,13 +152,18 @@ public class EditingTaskAdapter extends RecyclerView.Adapter<EditingTaskAdapter.
                 if(task == null) System.err.println("Clicked tasks name not found in task list");
                 //The status of the task so we can check if it is already completed
                 assert task != null;
+
+                //if the task is found then we want to move to the AddTask activity but pre-fill
+                //the text fields with the current task information
+
                 System.out.print("Clicked edit on " + task.getName() + " ");
                 Intent editIntent = new Intent(context, AddTask.class);
                 System.out.println("task id: " + task.get_id());
+                //add the task id to the intent so we can retrieve the task info on the next activity
                 editIntent.putExtra("taskID", task.get_id());
-
                 editIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
+                //go to add task activity
                 context.startActivity(editIntent);
             }
         });

@@ -44,12 +44,20 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Av
 		return new AvatarViewHolder(view);
 	}
 
+	/**
+	 * This class is where the text is set for the recycler view list items
+	 * @param holder the view holder
+	 * @param position the position in the list we are setting
+	 */
 	@Override
 	public void onBindViewHolder(AvatarViewHolder holder, int position) {
 		String category = categories.get(position);
 		holder.categoryTextView.setText(category);
 	}
 
+	/**
+	 * Constructor finds the recycler view text field to modify
+	 */
 	class AvatarViewHolder extends RecyclerView.ViewHolder {
 		private TextView categoryTextView;
 

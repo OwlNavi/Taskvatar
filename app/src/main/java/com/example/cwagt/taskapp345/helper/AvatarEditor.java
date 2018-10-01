@@ -39,7 +39,7 @@ public class AvatarEditor {
 	public AvatarEditor(){}
 
     /**
-     * Avatar Editer constructer
+     * Avatar Editor constructor
      * Given the view of the avatar fragment it will locate the body parts to initialise itself
      * @param avatarFragment the View of the avatar fragment
      */
@@ -47,9 +47,7 @@ public class AvatarEditor {
 		this.avatar_fragment = avatarFragment;
 		this.avatar = avatar;
 		this.bodyParts = avatar.getBodyParts();
-
     }
-
 
     /**
      * Modifies the avatar by changing the body part identified by category and item name
@@ -89,6 +87,7 @@ public class AvatarEditor {
      * @param itemSelected the name of the item selected
      */
     private void setBase(String itemSelected) {
+    	//the id of the image resource for the body part
     	Integer bodyPart = 0;
     	switch(itemSelected) {
 			case "Surprised":
@@ -100,8 +99,11 @@ public class AvatarEditor {
 			default:
 				Log.e("AvatarEditor", "Error: Cannot set base to " + itemSelected + " because it does not exist");
 		}
+		//change the displayed image
 		avatar_fragment.setBase(bodyPart);
+    	//record which image is set
 		bodyParts.put("base", bodyPart);
+		//update database
         saveAvatar();
     }
 
@@ -110,6 +112,7 @@ public class AvatarEditor {
 	 * @param itemSelected the name of the item selected
 	 */
 	private void setHat(String itemSelected) {
+		//the id of the image resource for the body part
 		Integer bodyPart = 0;
 		switch(itemSelected){
 			case "Crown":
@@ -124,8 +127,11 @@ public class AvatarEditor {
 			default:
 				Log.e("helper.AvatarEditor", "Error: Cannot set hat to " + itemSelected + " because it does not exist");
 		}
+		//change displayed image
 		avatar_fragment.setHat(bodyPart);
+		//record which body part is set
 		bodyParts.put("hat", bodyPart);
+		//update database
 		saveAvatar();
 	}
 
@@ -134,6 +140,7 @@ public class AvatarEditor {
 	 * @param itemSelected the name of the item selected
 	 */
 	private void setLeftArm(String itemSelected) {
+		//the id of the image resource for the body part
 		Integer bodyPart = 0;
 		switch(itemSelected){
 			case "Strong":
@@ -151,8 +158,11 @@ public class AvatarEditor {
 			default:
 				Log.e("AvatarEditor", "Error: Cannot set left arm to " + itemSelected + " because it does not exist");
 		}
+		//update displayed image
 		avatar_fragment.setLeftArm(bodyPart);
+		//record which image is displayed
 		bodyParts.put("leftArm", bodyPart);
+		//update the database
 		saveAvatar();
 	}
 
@@ -161,6 +171,7 @@ public class AvatarEditor {
 	 * @param itemSelected the item selected's name
 	 */
 	private void setRightArm(String itemSelected) {
+		//the id of the image resource for the body part
 		Integer bodyPart = 0;
 		switch(itemSelected){
 			case "Strong":
@@ -178,8 +189,11 @@ public class AvatarEditor {
 			default:
 				Log.e("AvatarEditor", "Error: Cannot set right arm to " + itemSelected + " because it does not exist");
 		}
+		//change image displayed
 		avatar_fragment.setRightArm(bodyPart);
+		//record the currently set bodyparts
 		bodyParts.put("rightArm", bodyPart);
+		//update database
 		saveAvatar();
 	}
 
@@ -265,13 +279,12 @@ public class AvatarEditor {
 	}
 
 	/**
-     * Saves the avatar so it can be retrieved
+     * Saves the avatar to the database so it can be retrieved persistently
      */
     private Boolean saveAvatar(){
 
 		Log.d("helper.AvatarEditor", "Saving avatar to database");
 
-		//AvatarEditor ae = new AvatarEditor();
 		Context context = null;
 		try {
 			context = (Application) Class.forName("android.app.AppGlobals").getMethod("getInitialApplication").invoke(null, (Object[]) null);
@@ -293,7 +306,5 @@ public class AvatarEditor {
 		avatar.setBodyParts(bodyParts);
 		user.setAvatar(avatar);
 		return DatabaseHelper.updateUser(context, userID, user);
-
     }
-
 }

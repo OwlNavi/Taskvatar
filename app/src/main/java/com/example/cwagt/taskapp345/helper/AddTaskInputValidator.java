@@ -7,29 +7,38 @@ import java.util.regex.Pattern;
  * Created by cwagt on 15/09/2018.
  *
  * This class is used to validate the input for users trying to add new tasks to the system
+ *
+ * Call this class whenever you want to validate a task e.g
+ *
+ * if(AddTaskInputValidator.validateTask(taskName, taskDescription, taskTime){
+ *     //add task to database
+ * }
+ *
  */
 
 public class AddTaskInputValidator {
 
     /**
-     * returns a string containing errors in validation, or an emptpy string if it validates correctly
+     * returns a string containing errors in validation, or an empty string if it validates correctly
      * @param taskName the name of the task should be a string of characters
      * @param taskDescription a description of the task, a string of characters
      * @param time the time, in valid HH:MM format
      * @return the validation message, or "" on success
      */
     public static String validateTask(String taskName, String taskDescription, String time){
+        //empty string = no errors
         String message = "";
 
         message += validateName(taskName);
         message += validateDescription(taskDescription);
         message += validateTime(time);
 
+        //return errors found
         return message;
     }
 
     /**
-     * validates a task name
+     * validates a task name via regular expressions
      * @param name the persons name
      * @return error message, or "" for successful validation
      */
@@ -37,12 +46,13 @@ public class AddTaskInputValidator {
         //Check length
         if(name.length() > 32) return "Task name must be less than 32 characters.\n";
 
+        //regex pattern
         String patternString = "[a-zA-Z 0-9'?!]+";
 
         Pattern pattern = Pattern.compile(patternString);
         Matcher matcher = pattern.matcher(name);
 
-        //fauled validation
+        //failed validation
         if(!matcher.matches()){
             return "Task Name must contain only valid characters\n";
         }
@@ -60,6 +70,7 @@ public class AddTaskInputValidator {
         //Check length
         if(time.length() > 5) return "Task time must in the format HH:MM\n";
 
+        //regex pattern
         String patternString = "[0-2]?[0-9]:[0-5][0-9]";
 
         Pattern pattern = Pattern.compile(patternString);

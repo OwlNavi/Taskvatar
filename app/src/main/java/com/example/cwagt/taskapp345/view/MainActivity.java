@@ -59,8 +59,6 @@ public class MainActivity extends AppCompatActivity  {
         //create and add an AvatarFragment to the activity
 		displayAvatar();
 
-
-
         //Toolbar  on the top of the screen
         Toolbar toolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
@@ -76,17 +74,10 @@ public class MainActivity extends AppCompatActivity  {
 		Long userID = preferences.getLong("currentUser", 0);
 		Log.d("MainActivity", "Current User " + Long.toString(userID));
 
-
-		/*
-		//get the current user from the database
-		String selection = DatabaseColumnNames.User._ID + " = ?";
-		String[] selectionArgs = new String[]{Long.toString(userID)};
-		ArrayList<User> users = DatabaseHelper.readUsers(context, selection, selectionArgs);
-		User currentUser = users.get(0);
-		*/
 		//Get a list of tasks for the current user
 		final List<Task> taskList = DatabaseHelper.readAllTasks(context, userID);
 
+		//if the task list is empty suggest that the user go to the add task screen
 		if(taskList.isEmpty()){
 			//show message
 			AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -115,10 +106,11 @@ public class MainActivity extends AppCompatActivity  {
 		taskRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 		taskRecyclerView.setAdapter(mAdapter);
 
-		//update tasksCompleted
+		//update tasksCompleted counter on the screen
 		User user = DatabaseHelper.readUser(context, userID);
 		textTasksCompleted.setText("" + user.getPoints());
 
+		//set an alarm for each task
 		for(Task task: taskList){
 			System.out.println("Setting alarm for " + task.getName() + " " + task.getTime());
 			String time = task.getTime();
@@ -301,7 +293,4 @@ public class MainActivity extends AppCompatActivity  {
 		DatabaseHelper.closeDatabase(this);
 		super.onDestroy();
 	}
-
-
-
 }

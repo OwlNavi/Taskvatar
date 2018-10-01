@@ -22,7 +22,9 @@ import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.Task._ID;
 import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.User.*;
 
 /**
- * This is the database helper, which abstracts the database. You just call the methods and the DatabaseHelper class will do it for you
+ * This is the database helper, which abstracts the database.
+ * You just call the methods and the DatabaseHelper class will do it for you
+ * Whenever you want persistent behavior you should be calling DatabaseHelper
  *
  * Be sure to use return types sensibly:
  *   The create* methods return the rowID of the newly created item, or -1
@@ -30,7 +32,7 @@ import static com.example.cwagt.taskapp345.helper.DatabaseColumnNames.User.*;
  *   The update* methods return a boolean depending on the success or failure of the operation
  *   The delete* methods return the number of rows affected
  *
- * If you add/delete/change ANYTHING, don't forget to increment the database version
+ * If you add/delete/change ANYTHING, don't forget to increment the database version to reset the DB
  */
 public class DatabaseHelper extends SQLiteOpenHelper{
 

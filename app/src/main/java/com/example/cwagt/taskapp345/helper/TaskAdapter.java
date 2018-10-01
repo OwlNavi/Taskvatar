@@ -20,7 +20,7 @@ import java.util.List;
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 /**
- * This class manages the Task RecyclerView list.
+ * This class manages the Task RecyclerView list for the main activity
  * We use this class to populate and handle the list items.
  */
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> {
@@ -94,6 +94,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 		//find the view item that we display the tasks on
 		final RecyclerView recyclerView = parent.findViewById(R.id.taskList);
 
+		//set the onclick task event to change task status to completed/uncompleted
 		itemView.setOnClickListener(new View.OnClickListener() {
 
 			@SuppressLint("SetTextI18n")

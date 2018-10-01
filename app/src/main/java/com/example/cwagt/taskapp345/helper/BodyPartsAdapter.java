@@ -12,11 +12,20 @@ import android.widget.TextView;
 import com.example.cwagt.taskapp345.R;
 import java.util.List;
 
+/**
+ * This class populates recycler lists of body parts for use in the AvatarHome activity
+ */
 public class BodyPartsAdapter extends RecyclerView.Adapter<BodyPartsAdapter.AvatarViewHolder>{
 
+    //list of body parts to display
     private List<String> bodyPartsList;
     private LayoutInflater mInflater;
 
+    /**
+     * Initialise context and list of parts to display
+     * @param context the current context
+     * @param bodyPartsList list of parts to display
+     */
     public BodyPartsAdapter(Context context, List<String> bodyPartsList) {
         this.mInflater = LayoutInflater.from(context);
         this.bodyPartsList = bodyPartsList;
@@ -26,6 +35,7 @@ public class BodyPartsAdapter extends RecyclerView.Adapter<BodyPartsAdapter.Avat
     public AvatarViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.body_part_row, parent, false);
 
+        //set the onclick feature for debugging
         final RecyclerView recyclerView = parent.findViewById(R.id.bodyPartsRecyclerView);
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(recyclerView.getContext(),
                 recyclerView, new RecyclerItemClickListener.ClickListener() {
@@ -44,6 +54,11 @@ public class BodyPartsAdapter extends RecyclerView.Adapter<BodyPartsAdapter.Avat
         return new AvatarViewHolder(view);
     }
 
+    /**
+     * Modify the view holder to display contents on screen
+     * @param holder the view holder
+     * @param position the item to set
+     */
     @Override
     public void onBindViewHolder(AvatarViewHolder holder, int position) {
         String bodyPart = bodyPartsList.get(position);

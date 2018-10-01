@@ -25,7 +25,8 @@ import static android.preference.PreferenceManager.getDefaultSharedPreferences;
  *
  * Modified from TaskAdapter
  * Similar class setup to TaskAdapter, modified to populate a list of users rather than a list of
- * tasks
+ * tasks.
+ * Used on UserHome activity
  */
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> {
@@ -72,6 +73,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
 		//Reference to the RecyclerView the tasks are displayed in
 		final RecyclerView recyclerView = parent.findViewById(R.id.userList);
 
+		//set the delete button onclick event
 		final Button deleteButton = itemView.findViewById(R.id.delete_user_button);
 		deleteButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -95,7 +97,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
 			}
 		});
 
-		//add onclick listener for the edit button
+		//add onclick listener for the edit button and take to edit user function
 		final Button editButton = itemView.findViewById(R.id.edit_user_button);
 		editButton.setOnClickListener(new View.OnClickListener() {
 			@Override
